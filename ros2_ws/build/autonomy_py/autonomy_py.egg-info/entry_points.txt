@@ -1,0 +1,3 @@
+[console_scripts]
+drone_controller = autonomy_py.drone_controller:main
+
