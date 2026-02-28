@@ -1,6 +1,7 @@
 from setuptools import find_packages, setup
-
-package_name = 'autonomy_py'
+import os
+from glob import glob
+package_name = 'drone_launch'
 
 setup(
     name=package_name,
@@ -10,6 +11,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name), glob('launch/*launch.py'))
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -24,8 +26,6 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            #executable is drone_controller = package name.script name:script funciton 
-            "drone_hover = autonomy_py.drone_hover:main"
         ],
     },
 )

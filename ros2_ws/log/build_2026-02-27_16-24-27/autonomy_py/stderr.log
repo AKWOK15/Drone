@@ -1,5 +1,0 @@
-  File "/home/aidankwok/drone/ros2_ws/install/autonomy_py/lib/python3.10/site-packages/autonomy_py/drone_controller.py", line 12
-    self.mode_client() = self.create_client(SetMode,  '/mavros/set_mode')
-    ^^^^^^^^^^^^^^^^^^
-SyntaxError: cannot assign to function call here. Maybe you meant '==' instead of '='?
-
