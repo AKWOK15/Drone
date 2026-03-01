@@ -1,0 +1,177 @@
+[0.000000] (-) TimerEvent: {}
+[0.001734] (autonomy_py) JobQueued: {'identifier': 'autonomy_py', 'dependencies': OrderedDict()}
+[0.002046] (rgb_camera_py) JobQueued: {'identifier': 'rgb_camera_py', 'dependencies': OrderedDict()}
+[0.002470] (drone_launch) JobQueued: {'identifier': 'drone_launch', 'dependencies': OrderedDict([('autonomy_py', '/home/aidankwok/drone/ros2_ws/install/autonomy_py')])}
+[0.002726] (autonomy_py) JobStarted: {'identifier': 'autonomy_py'}
+[0.042836] (rgb_camera_py) JobStarted: {'identifier': 'rgb_camera_py'}
+[0.097241] (-) TimerEvent: {}
+[0.198209] (-) TimerEvent: {}
+[0.299144] (-) TimerEvent: {}
+[0.400472] (-) TimerEvent: {}
+[0.501473] (-) TimerEvent: {}
+[0.603043] (-) TimerEvent: {}
+[0.703832] (-) TimerEvent: {}
+[0.804658] (-) TimerEvent: {}
+[0.905589] (-) TimerEvent: {}
+[1.006650] (-) TimerEvent: {}
+[1.107664] (-) TimerEvent: {}
+[1.209155] (-) TimerEvent: {}
+[1.310353] (-) TimerEvent: {}
+[1.411075] (-) TimerEvent: {}
+[1.511807] (-) TimerEvent: {}
+[1.612715] (-) TimerEvent: {}
+[1.714000] (-) TimerEvent: {}
+[1.814757] (-) TimerEvent: {}
+[1.915525] (-) TimerEvent: {}
+[2.016390] (-) TimerEvent: {}
+[2.117380] (-) TimerEvent: {}
+[2.218056] (-) TimerEvent: {}
+[2.318740] (-) TimerEvent: {}
+[2.419398] (-) TimerEvent: {}
+[2.520074] (-) TimerEvent: {}
+[2.620911] (-) TimerEvent: {}
+[2.722065] (-) TimerEvent: {}
+[2.822910] (-) TimerEvent: {}
+[2.924128] (-) TimerEvent: {}
+[3.025013] (-) TimerEvent: {}
+[3.126160] (-) TimerEvent: {}
+[3.227371] (-) TimerEvent: {}
+[3.328169] (-) TimerEvent: {}
+[3.429152] (-) TimerEvent: {}
+[3.529891] (-) TimerEvent: {}
+[3.630744] (-) TimerEvent: {}
+[3.731484] (-) TimerEvent: {}
+[3.832207] (-) TimerEvent: {}
+[3.933119] (-) TimerEvent: {}
+[4.033850] (-) TimerEvent: {}
+[4.134635] (-) TimerEvent: {}
+[4.235486] (-) TimerEvent: {}
+[4.336681] (-) TimerEvent: {}
+[4.437403] (-) TimerEvent: {}
+[4.538430] (-) TimerEvent: {}
+[4.639538] (-) TimerEvent: {}
+[4.741878] (-) TimerEvent: {}
+[4.804683] (rgb_camera_py) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/rgb_camera_py', 'build', '--build-base', '/home/aidankwok/drone/ros2_ws/build/rgb_camera_py/build', 'install', '--record', '/home/aidankwok/drone/ros2_ws/build/rgb_camera_py/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/aidankwok/drone/ros2_ws/src/rgb_camera_py', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'aidankwok', 'SSH_CLIENT': '137.146.134.34 57125 22', 'XDG_SESSION_TYPE': 'tty', 'GIT_ASKPASS': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/extensions/git/dist/askpass.sh', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib', 'BROWSER': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/bin/helpers/browser.sh', 'MOTD_SHOWN': 'pam', 'HOME': '/home/aidankwok', 'OLDPWD': '/home/aidankwok/drone', 'TERM_PROGRAM_VERSION': '1.109.0', 'VSCODE_IPC_HOOK_CLI': '/run/user/1000/vscode-ipc-172859b1-7edd-48ca-bf8c-1846e4386b14.sock', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/extensions/git/dist/askpass-main.js', 'VSCODE_GIT_ASKPASS_NODE': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/node', 'SSL_CERT_FILE': '/usr/lib/ssl/certs/ca-certificates.crt', 'VSCODE_PYTHON_AUTOACTIVATE_GUARD': '1', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'ROS_DISTRO': 'humble', 'LOGNAME': 'aidankwok', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'CLAUDE_CODE_SSE_PORT': '47908', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'XDG_SESSION_ID': '1', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/bin/remote-cli:/home/aidankwok/.local/bin:/opt/ros/humble/bin:/home/aidankwok/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/aidankwok/.local/bin:/home/aidankwok/.local/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'SSL_CERT_DIR': '/usr/lib/ssl/certs', 'LANG': 'en_US.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1000/vscode-git-e8a5f79b4f.sock', 'TERM_PROGRAM': 'vscode', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'PWD': '/home/aidankwok/drone/ros2_ws/build/rgb_camera_py', 'LC_ALL': 'en_US.UTF-8', 'SSH_CONNECTION': '137.146.134.34 57125 137.146.126.138 22', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/aidankwok/drone/ros2_ws/build/rgb_camera_py/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/aidankwok/drone/ros2_ws/install/rgb_camera_py/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1'}, 'shell': False}
+[4.825261] (autonomy_py) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/autonomy_py', 'build', '--build-base', '/home/aidankwok/drone/ros2_ws/build/autonomy_py/build', 'install', '--record', '/home/aidankwok/drone/ros2_ws/build/autonomy_py/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/aidankwok/drone/ros2_ws/src/autonomy_py', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'aidankwok', 'SSH_CLIENT': '137.146.134.34 57125 22', 'XDG_SESSION_TYPE': 'tty', 'GIT_ASKPASS': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/extensions/git/dist/askpass.sh', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib', 'BROWSER': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/bin/helpers/browser.sh', 'MOTD_SHOWN': 'pam', 'HOME': '/home/aidankwok', 'OLDPWD': '/home/aidankwok/drone', 'TERM_PROGRAM_VERSION': '1.109.0', 'VSCODE_IPC_HOOK_CLI': '/run/user/1000/vscode-ipc-172859b1-7edd-48ca-bf8c-1846e4386b14.sock', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/extensions/git/dist/askpass-main.js', 'VSCODE_GIT_ASKPASS_NODE': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/node', 'SSL_CERT_FILE': '/usr/lib/ssl/certs/ca-certificates.crt', 'VSCODE_PYTHON_AUTOACTIVATE_GUARD': '1', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'ROS_DISTRO': 'humble', 'LOGNAME': 'aidankwok', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'CLAUDE_CODE_SSE_PORT': '47908', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'XDG_SESSION_ID': '1', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/bin/remote-cli:/home/aidankwok/.local/bin:/opt/ros/humble/bin:/home/aidankwok/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/aidankwok/.local/bin:/home/aidankwok/.local/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'SSL_CERT_DIR': '/usr/lib/ssl/certs', 'LANG': 'en_US.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1000/vscode-git-e8a5f79b4f.sock', 'TERM_PROGRAM': 'vscode', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'PWD': '/home/aidankwok/drone/ros2_ws/build/autonomy_py', 'LC_ALL': 'en_US.UTF-8', 'SSH_CONNECTION': '137.146.134.34 57125 137.146.126.138 22', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/aidankwok/drone/ros2_ws/build/autonomy_py/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/aidankwok/drone/ros2_ws/install/autonomy_py/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1'}, 'shell': False}
+[4.842030] (-) TimerEvent: {}
+[4.943033] (-) TimerEvent: {}
+[5.043996] (-) TimerEvent: {}
+[5.144847] (-) TimerEvent: {}
+[5.245790] (-) TimerEvent: {}
+[5.346631] (-) TimerEvent: {}
+[5.447445] (-) TimerEvent: {}
+[5.548336] (-) TimerEvent: {}
+[5.649186] (-) TimerEvent: {}
+[5.749926] (-) TimerEvent: {}
+[5.850677] (-) TimerEvent: {}
+[5.951614] (-) TimerEvent: {}
+[6.052440] (-) TimerEvent: {}
+[6.069798] (rgb_camera_py) StdoutLine: {'line': b'running egg_info\n'}
+[6.074565] (rgb_camera_py) StdoutLine: {'line': b'writing ../../build/rgb_camera_py/rgb_camera_py.egg-info/PKG-INFO\n'}
+[6.076359] (rgb_camera_py) StdoutLine: {'line': b'writing dependency_links to ../../build/rgb_camera_py/rgb_camera_py.egg-info/dependency_links.txt\n'}
+[6.078897] (rgb_camera_py) StdoutLine: {'line': b'writing entry points to ../../build/rgb_camera_py/rgb_camera_py.egg-info/entry_points.txt\n'}
+[6.080339] (rgb_camera_py) StdoutLine: {'line': b'writing requirements to ../../build/rgb_camera_py/rgb_camera_py.egg-info/requires.txt\n'}
+[6.081721] (rgb_camera_py) StdoutLine: {'line': b'writing top-level names to ../../build/rgb_camera_py/rgb_camera_py.egg-info/top_level.txt\n'}
+[6.091653] (rgb_camera_py) StdoutLine: {'line': b"reading manifest file '../../build/rgb_camera_py/rgb_camera_py.egg-info/SOURCES.txt'\n"}
+[6.096445] (rgb_camera_py) StdoutLine: {'line': b"writing manifest file '../../build/rgb_camera_py/rgb_camera_py.egg-info/SOURCES.txt'\n"}
+[6.097776] (rgb_camera_py) StdoutLine: {'line': b'running build\n'}
+[6.099356] (rgb_camera_py) StdoutLine: {'line': b'running build_py\n'}
+[6.100431] (rgb_camera_py) StdoutLine: {'line': b'running install\n'}
+[6.101962] (rgb_camera_py) StdoutLine: {'line': b'running install_lib\n'}
+[6.108925] (rgb_camera_py) StdoutLine: {'line': b'running install_data\n'}
+[6.109987] (rgb_camera_py) StdoutLine: {'line': b'running install_egg_info\n'}
+[6.120975] (rgb_camera_py) StdoutLine: {'line': b"removing '/home/aidankwok/drone/ros2_ws/install/rgb_camera_py/lib/python3.10/site-packages/rgb_camera_py-0.0.0-py3.10.egg-info' (and everything under it)\n"}
+[6.122126] (autonomy_py) StdoutLine: {'line': b'running egg_info\n'}
+[6.123771] (rgb_camera_py) StdoutLine: {'line': b'Copying ../../build/rgb_camera_py/rgb_camera_py.egg-info to /home/aidankwok/drone/ros2_ws/install/rgb_camera_py/lib/python3.10/site-packages/rgb_camera_py-0.0.0-py3.10.egg-info\n'}
+[6.125858] (autonomy_py) StdoutLine: {'line': b'writing ../../build/autonomy_py/autonomy_py.egg-info/PKG-INFO\n'}
+[6.127065] (autonomy_py) StdoutLine: {'line': b'writing dependency_links to ../../build/autonomy_py/autonomy_py.egg-info/dependency_links.txt\n'}
+[6.128185] (autonomy_py) StdoutLine: {'line': b'writing entry points to ../../build/autonomy_py/autonomy_py.egg-info/entry_points.txt\n'}
+[6.129255] (autonomy_py) StdoutLine: {'line': b'writing requirements to ../../build/autonomy_py/autonomy_py.egg-info/requires.txt\n'}
+[6.130096] (autonomy_py) StdoutLine: {'line': b'writing top-level names to ../../build/autonomy_py/autonomy_py.egg-info/top_level.txt\n'}
+[6.132271] (rgb_camera_py) StdoutLine: {'line': b'running install_scripts\n'}
+[6.140006] (autonomy_py) StdoutLine: {'line': b"reading manifest file '../../build/autonomy_py/autonomy_py.egg-info/SOURCES.txt'\n"}
+[6.144645] (autonomy_py) StdoutLine: {'line': b"writing manifest file '../../build/autonomy_py/autonomy_py.egg-info/SOURCES.txt'\n"}
+[6.145723] (autonomy_py) StdoutLine: {'line': b'running build\n'}
+[6.146479] (autonomy_py) StdoutLine: {'line': b'running build_py\n'}
+[6.147884] (autonomy_py) StdoutLine: {'line': b'running install\n'}
+[6.149453] (autonomy_py) StdoutLine: {'line': b'running install_lib\n'}
+[6.152603] (-) TimerEvent: {}
+[6.157825] (autonomy_py) StdoutLine: {'line': b'running install_data\n'}
+[6.159367] (autonomy_py) StdoutLine: {'line': b'running install_egg_info\n'}
+[6.168587] (autonomy_py) StdoutLine: {'line': b"removing '/home/aidankwok/drone/ros2_ws/install/autonomy_py/lib/python3.10/site-packages/autonomy_py-0.0.0-py3.10.egg-info' (and everything under it)\n"}
+[6.170726] (autonomy_py) StdoutLine: {'line': b'Copying ../../build/autonomy_py/autonomy_py.egg-info to /home/aidankwok/drone/ros2_ws/install/autonomy_py/lib/python3.10/site-packages/autonomy_py-0.0.0-py3.10.egg-info\n'}
+[6.180573] (autonomy_py) StdoutLine: {'line': b'running install_scripts\n'}
+[6.235484] (rgb_camera_py) StdoutLine: {'line': b"writing list of installed files to '/home/aidankwok/drone/ros2_ws/build/rgb_camera_py/install.log'\n"}
+[6.252995] (-) TimerEvent: {}
+[6.299770] (autonomy_py) StdoutLine: {'line': b'Installing drone_hover script to /home/aidankwok/drone/ros2_ws/install/autonomy_py/lib/autonomy_py\n'}
+[6.303709] (autonomy_py) StdoutLine: {'line': b"writing list of installed files to '/home/aidankwok/drone/ros2_ws/build/autonomy_py/install.log'\n"}
+[6.353421] (-) TimerEvent: {}
+[6.409168] (rgb_camera_py) CommandEnded: {'returncode': 0}
+[6.453640] (-) TimerEvent: {}
+[6.483559] (rgb_camera_py) JobEnded: {'identifier': 'rgb_camera_py', 'rc': 0}
+[6.488592] (autonomy_py) CommandEnded: {'returncode': 0}
+[6.524014] (autonomy_py) JobEnded: {'identifier': 'autonomy_py', 'rc': 0}
+[6.528296] (drone_launch) JobStarted: {'identifier': 'drone_launch'}
+[6.553807] (-) TimerEvent: {}
+[6.654503] (-) TimerEvent: {}
+[6.755204] (-) TimerEvent: {}
+[6.856005] (-) TimerEvent: {}
+[6.956760] (-) TimerEvent: {}
+[7.057541] (-) TimerEvent: {}
+[7.158238] (-) TimerEvent: {}
+[7.259042] (-) TimerEvent: {}
+[7.359735] (-) TimerEvent: {}
+[7.460435] (-) TimerEvent: {}
+[7.561244] (-) TimerEvent: {}
+[7.661975] (-) TimerEvent: {}
+[7.762805] (-) TimerEvent: {}
+[7.863920] (-) TimerEvent: {}
+[7.965200] (-) TimerEvent: {}
+[8.065935] (-) TimerEvent: {}
+[8.166625] (-) TimerEvent: {}
+[8.267336] (-) TimerEvent: {}
+[8.368042] (-) TimerEvent: {}
+[8.468741] (-) TimerEvent: {}
+[8.569528] (-) TimerEvent: {}
+[8.670230] (-) TimerEvent: {}
+[8.770905] (-) TimerEvent: {}
+[8.871639] (-) TimerEvent: {}
+[8.972458] (-) TimerEvent: {}
+[9.073560] (-) TimerEvent: {}
+[9.174596] (-) TimerEvent: {}
+[9.275422] (-) TimerEvent: {}
+[9.376390] (-) TimerEvent: {}
+[9.444727] (drone_launch) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/drone_launch', 'build', '--build-base', '/home/aidankwok/drone/ros2_ws/build/drone_launch/build', 'install', '--record', '/home/aidankwok/drone/ros2_ws/build/drone_launch/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/aidankwok/drone/ros2_ws/src/drone_launch', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'aidankwok', 'SSH_CLIENT': '137.146.134.34 57125 22', 'XDG_SESSION_TYPE': 'tty', 'GIT_ASKPASS': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/extensions/git/dist/askpass.sh', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib', 'BROWSER': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/bin/helpers/browser.sh', 'MOTD_SHOWN': 'pam', 'HOME': '/home/aidankwok', 'OLDPWD': '/home/aidankwok/drone', 'TERM_PROGRAM_VERSION': '1.109.0', 'VSCODE_IPC_HOOK_CLI': '/run/user/1000/vscode-ipc-172859b1-7edd-48ca-bf8c-1846e4386b14.sock', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/extensions/git/dist/askpass-main.js', 'VSCODE_GIT_ASKPASS_NODE': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/node', 'SSL_CERT_FILE': '/usr/lib/ssl/certs/ca-certificates.crt', 'VSCODE_PYTHON_AUTOACTIVATE_GUARD': '1', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'ROS_DISTRO': 'humble', 'LOGNAME': 'aidankwok', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'CLAUDE_CODE_SSE_PORT': '47908', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'XDG_SESSION_ID': '1', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/home/aidankwok/.vscode-server/cli/servers/Stable-bdd88df003631aaa0bcbe057cb0a940b80a476fa/server/bin/remote-cli:/home/aidankwok/.local/bin:/opt/ros/humble/bin:/home/aidankwok/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/aidankwok/.local/bin:/home/aidankwok/.local/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'SSL_CERT_DIR': '/usr/lib/ssl/certs', 'LANG': 'en_US.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1000/vscode-git-e8a5f79b4f.sock', 'TERM_PROGRAM': 'vscode', 'AMENT_PREFIX_PATH': '/home/aidankwok/drone/ros2_ws/install/autonomy_py:/opt/ros/humble', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'PWD': '/home/aidankwok/drone/ros2_ws/build/drone_launch', 'LC_ALL': 'en_US.UTF-8', 'SSH_CONNECTION': '137.146.134.34 57125 137.146.126.138 22', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/aidankwok/drone/ros2_ws/build/drone_launch/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/aidankwok/drone/ros2_ws/install/drone_launch/lib/python3.10/site-packages:/home/aidankwok/drone/ros2_ws/install/autonomy_py/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1'}, 'shell': False}
+[9.476533] (-) TimerEvent: {}
+[9.577280] (-) TimerEvent: {}
+[9.678123] (-) TimerEvent: {}
+[9.778807] (-) TimerEvent: {}
+[9.879488] (-) TimerEvent: {}
+[9.980186] (-) TimerEvent: {}
+[10.080981] (-) TimerEvent: {}
+[10.181654] (-) TimerEvent: {}
+[10.282313] (-) TimerEvent: {}
+[10.383496] (-) TimerEvent: {}
+[10.484193] (-) TimerEvent: {}
+[10.554814] (drone_launch) StdoutLine: {'line': b'running egg_info\n'}
+[10.558338] (drone_launch) StdoutLine: {'line': b'writing ../../build/drone_launch/drone_launch.egg-info/PKG-INFO\n'}
+[10.559522] (drone_launch) StdoutLine: {'line': b'writing dependency_links to ../../build/drone_launch/drone_launch.egg-info/dependency_links.txt\n'}
+[10.560478] (drone_launch) StdoutLine: {'line': b'writing entry points to ../../build/drone_launch/drone_launch.egg-info/entry_points.txt\n'}
+[10.561357] (drone_launch) StdoutLine: {'line': b'writing requirements to ../../build/drone_launch/drone_launch.egg-info/requires.txt\n'}
+[10.562087] (drone_launch) StdoutLine: {'line': b'writing top-level names to ../../build/drone_launch/drone_launch.egg-info/top_level.txt\n'}
+[10.566009] (drone_launch) StdoutLine: {'line': b"reading manifest file '../../build/drone_launch/drone_launch.egg-info/SOURCES.txt'\n"}
+[10.570033] (drone_launch) StdoutLine: {'line': b"writing manifest file '../../build/drone_launch/drone_launch.egg-info/SOURCES.txt'\n"}
+[10.571400] (drone_launch) StdoutLine: {'line': b'running build\n'}
+[10.572187] (drone_launch) StdoutLine: {'line': b'running install\n'}
+[10.572901] (drone_launch) StdoutLine: {'line': b'running install_data\n'}
+[10.573724] (drone_launch) StdoutLine: {'line': b'running install_egg_info\n'}
+[10.582739] (drone_launch) StdoutLine: {'line': b"removing '/home/aidankwok/drone/ros2_ws/install/drone_launch/lib/python3.10/site-packages/drone_launch-0.0.0-py3.10.egg-info' (and everything under it)\n"}
+[10.584318] (-) TimerEvent: {}
+[10.584840] (drone_launch) StdoutLine: {'line': b'Copying ../../build/drone_launch/drone_launch.egg-info to /home/aidankwok/drone/ros2_ws/install/drone_launch/lib/python3.10/site-packages/drone_launch-0.0.0-py3.10.egg-info\n'}
+[10.590077] (drone_launch) StdoutLine: {'line': b'running install_scripts\n'}
+[10.671043] (drone_launch) StdoutLine: {'line': b"writing list of installed files to '/home/aidankwok/drone/ros2_ws/build/drone_launch/install.log'\n"}
+[10.684594] (-) TimerEvent: {}
+[10.785828] (-) TimerEvent: {}
+[10.791359] (drone_launch) CommandEnded: {'returncode': 0}
+[10.825847] (drone_launch) JobEnded: {'identifier': 'drone_launch', 'rc': 0}
+[10.829255] (-) EventReactorShutdown: {}

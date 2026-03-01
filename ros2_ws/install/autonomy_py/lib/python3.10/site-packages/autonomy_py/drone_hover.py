@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 from geometry_msgs.msg import PoseStamped
+from geographic_msgs.msg import GeoPoseStamped
 import rclpy
 from rclpy.node import Node
+from rclpy.qos import QoSProfile, ReliabilityPolicy
 from mavros_msgs.srv import CommandBool, SetMode, CommandTOL
-
+from mavros_msgs.msg import State
+qos = QoSProfile(depth=10, reliability=ReliabilityPolicy.BEST_EFFORT)
 class Drone(Node):
     #COde came from https://github.com/mavlink/mavros/blob/ros2/mavros_examples/mavros_examples/flight_drone.py
     def __init__(self):
@@ -21,15 +24,17 @@ class Drone(Node):
         self.position_publisher = self.create_publisher(PoseStamped, '/mavros/setpoint_position/local', 10)
         
         #Get position from fcu
-        self.position_subscriber = self.create_subscription(PoseStamped, '/mavros/local_position/pose', self.position_callback, 10)
+        self.position_subscriber = self.create_subscription(PoseStamped, '/mavros/local_position/pose', self.position_callback, qos)
         self.cur_pose = None
+        self.state = State()
+        self.state_subscriber = self.create_subscription(State, '/mavros/state', self.state_callback, 10)
 
     
     
     def set_position(self, x, y, z):
         pose = PoseStamped()
         pose.header.stamp = self.get_clock().now().to_msg()
-        pose.pose.position.x = x  # need .pose.position
+        pose.pose.position.x = x
         pose.pose.position.y = y
         pose.pose.position.z = z
         self.position_publisher.publish(pose)
@@ -38,7 +43,12 @@ class Drone(Node):
          self.cur_pose = msg
         # self.cur_position[0] = msg.pose.position.x
     
+    def state_callback(self, msg):
+        self.state = msg
+    
     def arm(self):
+        while not self.arm_client.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('Waiting for arming service...')
         req = CommandBool.Request()
         req.value = True
         #Sends request
@@ -52,6 +62,7 @@ class Drone(Node):
                 self.get_logger().info('Vehicle armed successfully')
                 return True
             else:
+                self.get_logger().warn(f'Failed to arm vehicle: success={future.result().success}, result={future.result().result}')
                 self.get_logger().warn('Failed to arm vehicle')
                 return False
         else:
@@ -65,12 +76,12 @@ class Drone(Node):
 
         future = self.arm_client.call_async(req)
         rclpy.spin_until_future_complete(self, future)
-
         if future.result() is not None:
             if future.result().success:
                 self.get_logger().info('Vehicle disarmed successfully')
                 return True
             else:
+                self.get_logger().warn(f'Failed to arm vehicle: success={future.result().success}, result={future.result().result}')
                 self.get_logger().warn('Failed to disarm vehicle')
                 return False
         else:
@@ -86,6 +97,7 @@ class Drone(Node):
         Common modes: STABILIZED, GUIDED, RTL, LAND
         """
         req = SetMode.Request()
+        req.base_mode = 0
         req.custom_mode = mode
 
         future = self.mode_client.call_async(req)
@@ -97,30 +109,31 @@ class Drone(Node):
                 return True
             else:
                 self.get_logger().warn(f'Failed to set mode to {mode}')
+                self.get_logger().warn(f'Failed to set mode: mode_sent={future.result().mode_sent}')
                 return False
         else:
             self.get_logger().error('Set mode service call failed')
             return False
     
-    def takeoff(self):
-        req = CommandTOL.Request()
-        req.value = True
-        #Sends request
-        future = self.takeoff_client.call_async(req)
-        #Listens for request
-        #Waits for request
-        rclpy.spin_until_future_complete(self, future)
+    # def takeoff(self):
+    #     req = CommandTOL.Request()
+    #     req.value = True
+    #     #Sends request
+    #     future = self.takeoff_client.call_async(req)
+    #     #Listens for request
+    #     #Waits for request
+    #     rclpy.spin_until_future_complete(self, future)
 
-        if future.result() is not None:
-            if future.result().success:
-                self.get_logger().info('Takeoff successful')
-                return True
-            else:
-                self.get_logger().warn('Failed to takeoff')
-                return False
-        else:
-            self.get_logger().error('Failed to takeoff')
-            return False
+    #     if future.result() is not None:
+    #         if future.result().success:
+    #             self.get_logger().info('Takeoff successful')
+    #             return True
+    #         else:
+    #             self.get_logger().warn('Failed to takeoff')
+    #             return False
+    #     else:
+    #         self.get_logger().error('Failed to takeoff')
+    #         return False
 def main(args=None):
     #Starts ROS 2 engine
     rclpy.init(args=args)
@@ -130,13 +143,24 @@ def main(args=None):
         # if not drone.set_mode('GUIDED'):
         #     drone.get_logger().error('Failed to set GUIDED mode. Exiting...')
         #     return
+        drone.get_logger().info('Waiting for FCU connection...')
+        while rclpy.ok() and not drone.state.connected:
+            rclpy.spin_once(drone, timeout_sec=0.1)
+
+        drone.get_logger().info('FCU connected!')
         drone.get_logger().info('Arming the vehicle...')
+        for _ in range(50):
+            drone.set_position(0.0, 0.0, 3.0)
+            rclpy.spin_once(drone, timeout_sec=0.05)
+        if not drone.set_mode('GUIDED'):
+            drone.get_logger().error('Failed to set GUIDED mode. Exiting...')
+            return
         if not drone.arm():
             drone.get_logger().error('Failed to arm vehicle. Exiting...')
             return
         x_goal = 0.0
         y_goal = 0.0
-        z_goal = 1.0
+        z_goal = 3.0
         while rclpy.ok():
             drone.set_position(x_goal, y_goal, z_goal)
             #callbacks like subscribers don't run automaitcally in background

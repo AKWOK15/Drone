@@ -1,0 +1,24 @@
+[4.483s] Invoking command in '/home/aidankwok/drone/ros2_ws/src/autonomy_py': PYTHONPATH=/home/aidankwok/drone/ros2_ws/build/autonomy_py/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/aidankwok/drone/ros2_ws/install/autonomy_py/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/autonomy_py build --build-base /home/aidankwok/drone/ros2_ws/build/autonomy_py/build install --record /home/aidankwok/drone/ros2_ws/build/autonomy_py/install.log --single-version-externally-managed install_data
+[5.772s] running egg_info
+[5.776s] writing ../../build/autonomy_py/autonomy_py.egg-info/PKG-INFO
+[5.778s] writing dependency_links to ../../build/autonomy_py/autonomy_py.egg-info/dependency_links.txt
+[5.781s] writing entry points to ../../build/autonomy_py/autonomy_py.egg-info/entry_points.txt
+[5.781s] writing requirements to ../../build/autonomy_py/autonomy_py.egg-info/requires.txt
+[5.782s] writing top-level names to ../../build/autonomy_py/autonomy_py.egg-info/top_level.txt
+[5.790s] reading manifest file '../../build/autonomy_py/autonomy_py.egg-info/SOURCES.txt'
+[5.794s] writing manifest file '../../build/autonomy_py/autonomy_py.egg-info/SOURCES.txt'
+[5.796s] running build
+[5.797s] running build_py
+[5.798s] copying autonomy_py/drone_hover.py -> /home/aidankwok/drone/ros2_ws/build/autonomy_py/build/lib/autonomy_py
+[5.799s] running install
+[5.800s] running install_lib
+[5.805s] copying /home/aidankwok/drone/ros2_ws/build/autonomy_py/build/lib/autonomy_py/drone_hover.py -> /home/aidankwok/drone/ros2_ws/install/autonomy_py/lib/python3.10/site-packages/autonomy_py
+[5.809s] byte-compiling /home/aidankwok/drone/ros2_ws/install/autonomy_py/lib/python3.10/site-packages/autonomy_py/drone_hover.py to drone_hover.cpython-310.pyc
+[5.813s] running install_data
+[5.814s] running install_egg_info
+[5.823s] removing '/home/aidankwok/drone/ros2_ws/install/autonomy_py/lib/python3.10/site-packages/autonomy_py-0.0.0-py3.10.egg-info' (and everything under it)
+[5.827s] Copying ../../build/autonomy_py/autonomy_py.egg-info to /home/aidankwok/drone/ros2_ws/install/autonomy_py/lib/python3.10/site-packages/autonomy_py-0.0.0-py3.10.egg-info
+[5.833s] running install_scripts
+[5.925s] Installing drone_hover script to /home/aidankwok/drone/ros2_ws/install/autonomy_py/lib/autonomy_py
+[5.927s] writing list of installed files to '/home/aidankwok/drone/ros2_ws/build/autonomy_py/install.log'
+[6.130s] Invoked command in '/home/aidankwok/drone/ros2_ws/src/autonomy_py' returned '0': PYTHONPATH=/home/aidankwok/drone/ros2_ws/build/autonomy_py/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/aidankwok/drone/ros2_ws/install/autonomy_py/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/autonomy_py build --build-base /home/aidankwok/drone/ros2_ws/build/autonomy_py/build install --record /home/aidankwok/drone/ros2_ws/build/autonomy_py/install.log --single-version-externally-managed install_data

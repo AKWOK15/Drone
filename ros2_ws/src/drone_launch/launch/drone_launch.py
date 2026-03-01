@@ -5,11 +5,10 @@ def generate_launch_description():
     mavros_node =  Node(
             package='mavros',
             executable='mavros_node',
-            name='mavros',
             parameters=[
                 {
                     'fcu_url': 'udp://127.0.0.1:14550@',
-                    'plugin_denylist': "['param']"
+                    'plugin_denylist': ['param']
                 }
             ]
         )
