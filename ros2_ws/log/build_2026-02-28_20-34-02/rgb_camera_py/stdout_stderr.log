@@ -1,0 +1,31 @@
+running egg_info
+creating ../../build/rgb_camera_py/rgb_camera_py.egg-info
+writing ../../build/rgb_camera_py/rgb_camera_py.egg-info/PKG-INFO
+writing dependency_links to ../../build/rgb_camera_py/rgb_camera_py.egg-info/dependency_links.txt
+writing entry points to ../../build/rgb_camera_py/rgb_camera_py.egg-info/entry_points.txt
+writing requirements to ../../build/rgb_camera_py/rgb_camera_py.egg-info/requires.txt
+writing top-level names to ../../build/rgb_camera_py/rgb_camera_py.egg-info/top_level.txt
+writing manifest file '../../build/rgb_camera_py/rgb_camera_py.egg-info/SOURCES.txt'
+reading manifest file '../../build/rgb_camera_py/rgb_camera_py.egg-info/SOURCES.txt'
+writing manifest file '../../build/rgb_camera_py/rgb_camera_py.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/aidankwok/drone/ros2_ws/build/rgb_camera_py/build
+creating /home/aidankwok/drone/ros2_ws/build/rgb_camera_py/build/lib
+creating /home/aidankwok/drone/ros2_ws/build/rgb_camera_py/build/lib/rgb_camera_py
+copying rgb_camera_py/__init__.py -> /home/aidankwok/drone/ros2_ws/build/rgb_camera_py/build/lib/rgb_camera_py
+running install
+running install_lib
+creating /home/aidankwok/drone/ros2_ws/install/rgb_camera_py/lib/python3.10/site-packages/rgb_camera_py
+copying /home/aidankwok/drone/ros2_ws/build/rgb_camera_py/build/lib/rgb_camera_py/__init__.py -> /home/aidankwok/drone/ros2_ws/install/rgb_camera_py/lib/python3.10/site-packages/rgb_camera_py
+byte-compiling /home/aidankwok/drone/ros2_ws/install/rgb_camera_py/lib/python3.10/site-packages/rgb_camera_py/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /home/aidankwok/drone/ros2_ws/install/rgb_camera_py/share/ament_index
+creating /home/aidankwok/drone/ros2_ws/install/rgb_camera_py/share/ament_index/resource_index
+creating /home/aidankwok/drone/ros2_ws/install/rgb_camera_py/share/ament_index/resource_index/packages
+copying resource/rgb_camera_py -> /home/aidankwok/drone/ros2_ws/install/rgb_camera_py/share/ament_index/resource_index/packages
+copying package.xml -> /home/aidankwok/drone/ros2_ws/install/rgb_camera_py/share/rgb_camera_py
+running install_egg_info
+Copying ../../build/rgb_camera_py/rgb_camera_py.egg-info to /home/aidankwok/drone/ros2_ws/install/rgb_camera_py/lib/python3.10/site-packages/rgb_camera_py-0.0.0-py3.10.egg-info
+running install_scripts
+writing list of installed files to '/home/aidankwok/drone/ros2_ws/build/rgb_camera_py/install.log'

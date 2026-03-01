@@ -8,7 +8,8 @@ def generate_launch_description():
             name='mavros',
             parameters=[
                 {
-                    'fcu_url': 'udp://127.0.0.1:14550@'
+                    'fcu_url': 'udp://127.0.0.1:14550@',
+                    'plugin_denylist': "['param']"
                 }
             ]
         )
