@@ -1,3 +1,0 @@
-[console_scripts]
-drone_hover = autonomy_py.drone_hover:main
-
