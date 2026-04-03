@@ -27,6 +27,7 @@ mono_right.setResolution(dai.MonoCameraProperties.SensorResolution.THE_400_P)
 # Stereo depth
 stereo = pipeline.create(dai.node.StereoDepth)
 stereo.setLeftRightCheck(True)
+stereo.setDepthAlign(dai.CameraBoardSocket.CAM_A)
 mono_left.out.link(stereo.left)
 mono_right.out.link(stereo.right)
 
@@ -111,20 +112,28 @@ with dai.Device(pipeline) as device:
             coord_x = detection.spatialCoordinates.x
             coord_y = detection.spatialCoordinates.y
             coord_z = detection.spatialCoordinates.z
-            x_min = max(0, int(detection.xmin))
-            y_min = max(0, int(detection.ymin))
             
-            x_max = min(int(detection.xmax), 1)
-            y_max = min(int(detection.ymax), 1)
+            print(f'coord_x: {coord_x}')
+            print(f'coord_y: {coord_y}')
+            print(f'coord_z: {coord_z}')
+    
+            x_min = max(0, int(detection.xmin * DET_INPUT_SIZE[0]))
+            y_min = max(0, int(detection.ymin * DET_INPUT_SIZE[1]))
+            x_max = min(DET_INPUT_SIZE[0], int(detection.xmax * DET_INPUT_SIZE[0]))
+            y_max = min(DET_INPUT_SIZE[1], int(detection.ymax * DET_INPUT_SIZE[1]))
+            # print(f'x_min: {x_min}')
+            # print(f'y_min: {y_min}')
+            # print(f'x_max: {x_max}')
+            # print(f'y_max: {y_max}')
 
             # Calculate coordinates
             # x = int(xmin*DET_INPUT_SIZE[0])
             # y = int(ymin*DET_INPUT_SIZE[1])
             # w = int(xmax*DET_INPUT_SIZE[0]-xmin*DET_INPUT_SIZE[0])
             # h = int(ymax*DET_INPUT_SIZE[1]-ymin*DET_INPUT_SIZE[1])
-            bbox = (x_min, y_min, x_max, y_max)
-            cv2.rectangle(preview_frame, bbox, (0, 0, 255), 2)
-            cv2.putText(preview_frame, f'Depth: {coord_z}mm', (int(x_min), int(y_max)), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255))
+
+            cv2.rectangle(preview_frame, (x_min, y_min), (x_max, y_max), (0, 0, 255), 2)
+            cv2.putText(preview_frame, f'Depth: {coord_z} mm', (int(x_min), int(y_max)), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255))
             
             print(f"Detection confidence: {detection.confidence:.2f}, depth: {coord_z:.0f}mm")
             
