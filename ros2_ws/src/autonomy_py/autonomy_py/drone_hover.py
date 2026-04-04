@@ -7,7 +7,12 @@ from rclpy.qos import QoSProfile, ReliabilityPolicy
 from mavros_msgs.srv import CommandBool, SetMode, CommandTOL
 from mavros_msgs.msg import State
 
-from drone_class import Drone
+#Need to add the autonomy_py. because after colcon build, scripts get installed to:
+#install/autonomy_py/lib/python3.x/site-packages/autonomy_py/
+#sys.path sees only autonomy_py, so drone_class can't be found, need autonomy_py.drone_class
+#sys.path is basically a var that determines where on the file system Python will look for module to import 
+#when you run import, python will search directory and then every other direcoty in sys.path 
+from autonomy_py.drone_class import Drone
 qos = QoSProfile(depth=10, reliability=ReliabilityPolicy.BEST_EFFORT)
 
 

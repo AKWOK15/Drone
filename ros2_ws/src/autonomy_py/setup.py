@@ -26,6 +26,7 @@ setup(
         'console_scripts': [
             #executable is drone_controller = package name.script name:script funciton 
             "drone_hover = autonomy_py.drone_hover:main"
+            
         ],
     },
 )

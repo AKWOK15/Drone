@@ -8,6 +8,7 @@ function killSubproc(){
 
 trap killSubproc INT TERM EXIT
 
+sudo chmod g+r /dev/ttyAMA0
 mavlink-routerd -c ~/Drone/config/mavlink-router/main.conf &
 
 cd oak_d_vins_cpp
