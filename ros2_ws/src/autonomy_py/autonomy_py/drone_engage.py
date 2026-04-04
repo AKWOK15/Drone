@@ -5,10 +5,13 @@ import cv2
 
 # Model input size must match what the blob was compiled for
 DET_INPUT_SIZE = (640, 640)  # adjust to match your gun model blob
-FPS = 30
+FPS = 10
 #create preview Video
+#mp4v
 fourcc = cv2.VideoWriter_fourcc(*'avc1')
-out = cv2.VideoWriter('preview.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
+#Record frames 
+out_preview = cv2.VideoWriter('preview.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
+out_disparity = cv2.VideoWriter('disparity.mp4', fourcc, FPS, (1920, 1080))
 # Get blob (or set blob_path manually if you have one)
 blob_path = '/home/aidankwok/Drone/gun_model/weights-2_openvino_2022.1_6shave.blob'
 
@@ -38,6 +41,11 @@ mono_right.setResolution(dai.MonoCameraProperties.SensorResolution.THE_400_P)
 stereo = pipeline.create(dai.node.StereoDepth)
 stereo.setLeftRightCheck(True)
 stereo.setDepthAlign(dai.CameraBoardSocket.CAM_A)
+# HIGH_DENSITY specifically configures the stereo matching algorithm to maximize the number of valid depth pixels — it trades off some accuracy/range for denser coverage. The other common preset is HIGH_ACCURACY, which does the opposite.
+stereo.setDefaultProfilePreset(dai.node.StereoDepth.PresetMode.HIGH_DENSITY)
+# APplies median filter to raw disparity map
+#Replaces raw value with median value of neighbros 
+stereo.initialConfig.setMedianFilter(dai.MedianFilter.KERNEL_5x5)
 
 #Linking
 mono_left.out.link(stereo.left)
@@ -94,9 +102,9 @@ preview_out.setStreamName("preview")
 rgb_cam.preview.link(preview_out.input)
 
 # Disparity output (optional, for visualization)
-# disparity_out = pipeline.create(dai.node.XLinkOut)
-# disparity_out.setStreamName("disparity")
-# stereo.disparity.link(disparity_out.input)
+disparity_out = pipeline.create(dai.node.XLinkOut)
+disparity_out.setStreamName("disparity")
+stereo.disparity.link(disparity_out.input)
 
 # Run
 
@@ -104,65 +112,74 @@ with dai.Device(pipeline) as device:
     device.setLogLevel(dai.LogLevel.DEBUG)
     device.setLogOutputLevel(dai.LogLevel.DEBUG)
     q_det = device.getOutputQueue(name="detections", maxSize=4, blocking=False)
-    # q_disp = device.getOutputQueue(name="disparity", maxSize=1, blocking=False)
+    q_disp = device.getOutputQueue(name="disparity", maxSize=2, blocking=False)
     q_prev = device.getOutputQueue(name="preview", maxSize=4, blocking=False)
     detections = None
-    while True:
-        q_name = device.getQueueEvent()
-        print(f'q_name: {q_name}')
-        if q_name == 'detections':
-            in_det = q_det.get()
-            detections = in_det.detections
-            #Send ROS message here
-        if q_name == 'preview':
-            
-            preview_frame = q_prev.get()
-            preview_frame = preview_frame.getCvFrame()
-            if detections:
-                for detection in detections:
-                    coord_x = detection.spatialCoordinates.x
-                    coord_y = detection.spatialCoordinates.y
-                    coord_z = detection.spatialCoordinates.z
-                    
-                    print(f'coord_x: {coord_x}')
-                    print(f'coord_y: {coord_y}')
-                    print(f'coord_z: {coord_z}')
-                    #detections.xmin outputs float between 0 and 1
-                    x_min = max(0, int(detection.xmin * DET_INPUT_SIZE[0]))
-                    y_min = max(0, int(detection.ymin * DET_INPUT_SIZE[1]))
-                    x_max = min(DET_INPUT_SIZE[0], int(detection.xmax * DET_INPUT_SIZE[0]))
-                    y_max = min(DET_INPUT_SIZE[1], int(detection.ymax * DET_INPUT_SIZE[1]))
-                    # print(f'x_min: {x_min}')
-                    # print(f'y_min: {y_min}')
-                    # print(f'x_max: {x_max}')
-                    # print(f'y_max: {y_max}')
+    try:
+        while True:
+            q_name = device.getQueueEvent()
+            print(f'q_name: {q_name}')
+            if q_name == 'detections':
+                in_det = q_det.get()
+                detections = in_det.detections
+                #Send ROS message here
+            elif q_name == 'preview':
+                preview_frame = q_prev.get()
+                preview_frame = preview_frame.getCvFrame()
+                if detections:
+                    for detection in detections:
+                        #yolo is giving x, y, stereodepth gives z
+                        coord_x = detection.spatialCoordinates.x
+                        coord_y = detection.spatialCoordinates.y
+                        coord_z = detection.spatialCoordinates.z
+                        
+                        print(f'coord_x: {coord_x}')
+                        print(f'coord_y: {coord_y}')
+                        print(f'coord_z: {coord_z}')
+                        #detections.xmin outputs float between 0 and 1
+                        x_min = max(0, int(detection.xmin * DET_INPUT_SIZE[0]))
+                        y_min = max(0, int(detection.ymin * DET_INPUT_SIZE[1]))
+                        x_max = min(DET_INPUT_SIZE[0], int(detection.xmax * DET_INPUT_SIZE[0]))
+                        y_max = min(DET_INPUT_SIZE[1], int(detection.ymax * DET_INPUT_SIZE[1]))
+                        # print(f'x_min: {x_min}')
+                        # print(f'y_min: {y_min}')
+                        # print(f'x_max: {x_max}')
+                        # print(f'y_max: {y_max}')
 
-                    cv2.rectangle(preview_frame, (x_min, y_min), (x_max, y_max), (0, 0, 255), 2)
-                    cv2.putText(preview_frame, f'Depth: {coord_z} mm', (int(x_min), int(y_max)), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255))
-                    
-                    print(f"Detection confidence: {detection.confidence:.2f}, depth: {coord_z:.0f}mm")
+                        cv2.rectangle(preview_frame, (x_min, y_min), (x_max, y_max), (0, 0, 255), 2)
+                        cv2.putText(preview_frame, f'Depth: {coord_z} mm', (int(x_min), int(y_max)), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), thickness=5)
+                        
+                        print(f"Detection confidence: {detection.confidence:.2f}, depth: {coord_z:.0f}mm")
+                
+                out_preview.write(preview_frame)
+            elif q_name == "disparity":
+                in_disp = q_disp.get()
+                disp_frame = in_disp.getCvFrame()
+                disp_norm = (disp_frame * (255 / stereo.getMaxDisparity())).astype('uint8')
+                disp_colored = cv2.applyColorMap(disp_norm, cv2.COLORMAP_JET)
+                height, width, channels = disp_colored.shape
+                # print(f'height: {height}')
+                # print(f'width: {width}')
+                # print(f'shape: {shape}')
+                out_disparity.write(disp_colored)
             
-            out.write(preview_frame)
+            
         
-        # print("made it to for loop")
+
         
             
             
 
-        # Visualize disparity
-        # in_disp = q_disp.get()
-        # disp_frame = in_disp.getCvFrame()
-        # disp_norm = (disp_frame * (255 / stereo.getMaxDisparity())).astype('uint8')
-        # disp_colored = cv2.applyColorMap(disp_norm, cv2.COLORMAP_JET)
-        # cv2.imwrite("disparity.png", disp_colored)
+        
         
         #Get preview
         # height, width, channels = preview_frame.shape
-        # print(f'height: {height}')
-        # print(f'width: {width}')
-    
         
-    out.release()
-    print('done')
-    
-    
+    except KeyboardInterrupt:
+        pass
+    finally:
+        out_preview.release()
+        out_disparity.release()
+        print('done')
+        
+        
