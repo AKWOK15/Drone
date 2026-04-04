@@ -94,12 +94,12 @@ rgb_cam.preview.link(preview_out.input)
 # Run
 
 with dai.Device(pipeline) as device:
-    # device.setLogLevel(dai.LogLevel.TRACE)
-    # device.setLogOutputLevel(dai.LogLevel.TRACE)
-    q_det = device.getOutputQueue(name="detections", maxSize=1, blocking=False)
+    device.setLogLevel(dai.LogLevel.DEBUG)
+    device.setLogOutputLevel(dai.LogLevel.DEBUG)
+    q_det = device.getOutputQueue(name="detections", maxSize=4, blocking=False)
     # q_disp = device.getOutputQueue(name="disparity", maxSize=1, blocking=False)
-    q_prev = device.getOutputQueue(name="preview", maxSize=1, blocking=False)
-    while True:
+    q_prev = device.getOutputQueue(name="preview", maxSize=4, blocking=False)
+    for x in range(4):
         print('waiting for detection')
         #halts until it receives message from device 
         in_det = q_det.get()
@@ -116,7 +116,7 @@ with dai.Device(pipeline) as device:
             print(f'coord_x: {coord_x}')
             print(f'coord_y: {coord_y}')
             print(f'coord_z: {coord_z}')
-    
+            #detections.xmin outputs float between 0 and 1
             x_min = max(0, int(detection.xmin * DET_INPUT_SIZE[0]))
             y_min = max(0, int(detection.ymin * DET_INPUT_SIZE[1]))
             x_max = min(DET_INPUT_SIZE[0], int(detection.xmax * DET_INPUT_SIZE[0]))
