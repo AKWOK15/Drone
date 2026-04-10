@@ -14,3 +14,6 @@
 	path = depthai-core
 	url = https://github.com/luxonis/depthai-core.git
 	branch = v2.25.0
+[submodule "ros2_ws/src/pid"]
+	path = ros2_ws/src/pid
+	url = https://github.com/JMU-ROBOTICS-VIVA/jmu_ros2_util

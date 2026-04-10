@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'autonomy_py'
+package_name = 'perception_py'
 
 setup(
     name=package_name,
@@ -24,9 +24,10 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            #executable is drone_controller = package name.script name:script funciton 
-            "drone_hover = autonomy_py.drone_hover:main"
             
+            #executable is drone_controller = package name.script name:script funciton 
+            "track=perception_py.track:main"
+      
         ],
     },
 )

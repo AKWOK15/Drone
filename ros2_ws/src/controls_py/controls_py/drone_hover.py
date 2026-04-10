@@ -12,7 +12,7 @@ from mavros_msgs.msg import State
 #sys.path sees only autonomy_py, so drone_class can't be found, need autonomy_py.drone_class
 #sys.path is basically a var that determines where on the file system Python will look for module to import 
 #when you run import, python will search directory and then every other direcoty in sys.path 
-from autonomy_py.drone_class import Drone
+from controls_py.drone_class import Drone
 qos = QoSProfile(depth=10, reliability=ReliabilityPolicy.BEST_EFFORT)
 
 
@@ -21,10 +21,6 @@ def main(args=None):
     rclpy.init(args=args)
     try:
         drone = Drone()
-        # drone.get_logger().info('Setting mode to GUIDED')
-        # if not drone.set_mode('GUIDED'):
-        #     drone.get_logger().error('Failed to set GUIDED mode. Exiting...')
-        #     return
         drone.get_logger().info('Waiting for FCU connection...')
         while rclpy.ok() and not drone.state.connected:
             rclpy.spin_once(drone, timeout_sec=0.1)
@@ -34,6 +30,7 @@ def main(args=None):
         for _ in range(50):
             drone.set_position(0.0, 0.0, 3.0)
             rclpy.spin_once(drone, timeout_sec=0.05)
+        drone.get_logger().info('Setting mode to GUIDED')
         if not drone.set_mode('GUIDED'):
             drone.get_logger().error('Failed to set GUIDED mode. Exiting...')
             return
