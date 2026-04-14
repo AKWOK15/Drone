@@ -119,7 +119,7 @@ class Drone(Node):
             return False
 
     #duration is in seconds
-    def hold_position(x_goal, y_goal, z_goal, duration):
+    def hold_position(self, x_goal, y_goal, z_goal, duration):
         cur_time = time.time()
         while cur_time - time.time() < duration:
             self.set_position(x_goal, y_goal, z_goal)
@@ -128,8 +128,9 @@ class Drone(Node):
             self.get_logger().info(f'Current altitude: {z:.2f}m') 
         self.get_logger().info('Finished holding position')
 
-    def go_to_position(x_goal, y_goal, z_goal):
-        while abs(z - goal_z) > 0.1:
+    def go_to_position(self, x_goal, y_goal, z_goal):
+        z = self.cur_pose.pose.position.z
+        while abs(z - z_goal) > 0.1:
             self.set_position(x_goal, y_goal, z_goal)
             rclpy.spin_once(self, timeout_sec=0.05)
             z = self.cur_pose.pose.position.z

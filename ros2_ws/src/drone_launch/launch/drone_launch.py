@@ -18,14 +18,14 @@ def generate_launch_description():
         name='drone_hover_node'
     )
     
-    track_node = Node(
-        package='perception_py',
-        executable='track',
-        name='track_node'
-    )
+    # track_node = Node(
+    #     package='perception_py',
+    #     executable='track',
+    #     name='track_node'
+    # )
     
     return LaunchDescription([
         mavros_node,
         drone_hover_node,
-        track_node
+        # track_node
     ])

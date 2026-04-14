@@ -50,7 +50,7 @@ def main(args=None):
         # Flight loop
         x_goal = 0.0
         y_goal = 0.0
-        z_goal = 1.5
+        z_goal = 100.0
 
         while rclpy.ok():
             drone.go_to_position(x_goal, y_goal, z_goal)
