@@ -6,6 +6,8 @@ from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy
 from mavros_msgs.srv import CommandBool, SetMode, CommandTOL
 from mavros_msgs.msg import State
+import time
+
 qos = QoSProfile(depth=10, reliability=ReliabilityPolicy.BEST_EFFORT)
 
 class Drone(Node):
@@ -29,7 +31,7 @@ class Drone(Node):
         self.cur_pose = None
         self.state = State()
         self.state_subscriber = self.create_subscription(State, '/mavros/state', self.state_callback, 10)
-
+       
     
     
     def set_position(self, x, y, z):
@@ -41,7 +43,7 @@ class Drone(Node):
         self.position_publisher.publish(pose)
     
     def position_callback(self, msg):
-         self.cur_pose = msg
+        self.cur_pose = msg
         # self.cur_position[0] = msg.pose.position.x
     
     def state_callback(self, msg):
@@ -115,7 +117,26 @@ class Drone(Node):
         else:
             self.get_logger().error('Set mode service call failed')
             return False
-    
+
+    #duration is in seconds
+    def hold_position(x_goal, y_goal, z_goal, duration):
+        cur_time = time.time()
+        while cur_time - time.time() < duration:
+            self.set_position(x_goal, y_goal, z_goal)
+            rclpy.spin_once(self, timeout_sec=0.05)                                                 
+            z = self.cur_pose.pose.position.z
+            self.get_logger().info(f'Current altitude: {z:.2f}m') 
+        self.get_logger().info('Finished holding position')
+
+    def go_to_position(x_goal, y_goal, z_goal):
+        while abs(z - goal_z) > 0.1:
+            self.set_position(x_goal, y_goal, z_goal)
+            rclpy.spin_once(self, timeout_sec=0.05)
+            z = self.cur_pose.pose.position.z
+            self.get_logger().info(f'Current altitude: {z:.2f}m') 
+        self.get_logger().info('Finished going to position')
+        return True
+
     # def takeoff(self):
     #     req = CommandTOL.Request()
     #     req.value = True
