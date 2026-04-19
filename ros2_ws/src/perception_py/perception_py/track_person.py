@@ -6,18 +6,19 @@ from geometry_msgs.msg import Point
 from rclpy.node import Node
 from mavros_msgs.srv import CommandBool, SetMode, CommandTOL
 from mavros_msgs.msg import State
+from ultralytics import YOLO
 # Model input size must match what the blob was compiled for
 import numpy as np
-print(cv2.__file__)
-print(f'dai version: {dai.__version__}')
-print(f'cv2 version: {cv2.__version__}')
+import time
+#from perception_py.fps_counter import FPSCounter
+from fps_counter import FPSCounter
 class Track(Node):
     def __init__(self):
         super().__init__('track')
         #Queue size is 10
         self.point_publisher = self.create_publisher(Point, 'topic', 10)
         
-    
+
     #publisher
     
     def set_point(self, msg):
@@ -71,10 +72,15 @@ def main(args=None):
     DET_INPUT_SIZE = (640, 640)  # adjust to match your gun model blob
     mag_width = 0.1
     mag_height = 0.05
-    FPS = 30
+    FPS = 10
     fourcc = cv2.VideoWriter_fourcc(*'avc1')
     #Record frames 
-    out_preview = cv2.VideoWriter('track_person.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
+    out_preview = cv2.VideoWriter('track_person.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1])
+    )
+    out_cropped = cv2.VideoWriter('cropped_track_person.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
+    gun_model_path = 'weapon_detection_2.0.pt'
+    gun_model = YOLO(gun_model_path)
+    fps_counter = FPSCounter()
     try:
         track = Track()
         x_goal = 0.0
@@ -115,31 +121,8 @@ def main(args=None):
         mono_left.out.link(stereo.left)
         mono_right.out.link(stereo.right)
         
-#        # Gun detection mode
-#        gun_detection_network = pipeline.create(dai.node.YoloDetectionNetwork)
-#        gun_detection_network.setConfidenceThreshold(0.5)
-#        gun_detection_network.setBlobPath(gun_blob_path)
-#        # YOLO-specific — must match how your model was trained/exported
-#        gun_detection_network.setNumClasses(1)           # adjust to your class count
-#        #how many values to descibe boudning box, x_center, y_center, width, heigh 
-#        gun_detection_network.setCoordinateSize(4)
-#        # gun_detection_network.setAnchors([...])          # must match your model's anchors
-#        # gun_detection_network.setAnchorMasks({...})      # must match your model's anchor masks
-#        gun_detection_network.setIouThreshold(0.5)
-#
-#        #Samples depth from center 50% of the bounding box
-#        gun_detection_network.setBoundingBoxScaleFactor(0.5)
-#
-#        #Allows overwriting in case frames pile up
-#        gun_detection_network.input.setBlocking(False)
         # Person detection model (spatial = gives x,y,z coordinates)
         person_detection_network = pipeline.create(dai.node.YoloSpatialDetectionNetwork)
-        # blob = dai.OpenVINO.Blob("/home/aidankwok/Drone/person_model/yolov8n_openvino_2022.1_6shave.blob")
-        # print('hello')
-        # for name, tensor in blob.networkInputs.items():
-        #     print(f"Input: {name}, shape: {tensor.dims}")
-        # for name, tensor in blob.networkOutputs.items():
-        #     print(f"Output: {name}, shape: {tensor.dims}")
         person_detection_network.setConfidenceThreshold(0.2)
         person_detection_network.setBlobPath('/home/aidankwok/Drone/person_model/yolov8n_openvino_2022.1_6shave.blob')
         #Ignore anything closer than 100 mm
@@ -186,8 +169,6 @@ def main(args=None):
                 frame = img_frame.getCvFrame()
 
 
-                print(f"frame shape: {frame.shape}, dtype: {frame.dtype}, min: {frame.min()}, max: {frame.max()}")
-                print(f'detections: {detections}')
                  
                 for detection in detections.detections:
                     # Denormalize bounding box to frame pixel coordinates
@@ -207,57 +188,53 @@ def main(args=None):
                     point_msg.z = z_mm
                     track.set_point(point_msg)
 
-                    #Magnify bounding box
-                    temp_mag_x1 = int(x1 - (x1*mag_width)) 
-                    temp_mag_y1 = int(y1 - (y1*mag_height))
-                    temp_mag_x2 = int(x2 + (x2*mag_width)) 
-                    temp_mag_y2 = int(y2 + (y2*mag_height))
+                   # Magnify bounding box
+                   # temp_mag_x1 = int(x1 - (x1*mag_width)) 
+                   # temp_mag_y1 = int(y1 - (y1*mag_height))
+                   # temp_mag_x2 = int(x2 + (x2*mag_width)) 
+                   # temp_mag_y2 = int(y2 + (y2*mag_height))
                     
-                    #Check boundary conditions
-                    mag_x1 = temp_mag_x1 if temp_mag_x1 >=0 else 0
-                    mag_y1 = temp_mag_y1 if temp_mag_y1 >=0 else 0
-                    
-                    mag_x2 = temp_mag_x2 if temp_mag_x2 <= DET_INPUT_SIZE[0] else DET_INPUT_SIZE[0]
-                    mag_y2 = temp_mag_y2 if temp_mag_y2 <= DET_INPUT_SIZE[1] else DET_INPUT_SIZE[1]
+                    ##Check boundary conditions
+                    #mag_x1 = temp_mag_x1 if temp_mag_x1 >=0 else 0
+                    #mag_y1 = temp_mag_y1 if temp_mag_y1 >=0 else 0
+                    #
+                    #mag_x2 = temp_mag_x2 if temp_mag_x2 <= DET_INPUT_SIZE[0] else DET_INPUT_SIZE[0]
+                    #mag_y2 = temp_mag_y2 if temp_mag_y2 <= DET_INPUT_SIZE[1] else DET_INPUT_SIZE[1]
 
-                    print(f'x1: {x1}')
-                    print(f'y1:{y1}')
-                    print(f'x2: {x2}')
-                    print(f'y2: {y2}')
 
-                    
-                    print(f'mag_x1: {mag_x1}')
-                    print(f'mag_y1:{mag_y1}')
-                    print(f'mag_x2: {mag_x2}')
-                    print(f'mag_y2: {mag_y2}')
-                    cropped = frame[mag_y1:mag_y2, mag_x1:mag_x2]
-                    #cropped = cv2.resize(cropped, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]), cv2.INTER_CUBIC
-                    cropped = resizeAndPad(cropped, (640, 640))
-                    #cv2.imshow('Cropped', cropped)
-                    cv2.imwrite("cropped.jpg", cropped)
+                    #
+                    #cropped = frame[mag_y1:mag_y2, mag_x1:mag_x2]
+                    #cropped = resizeAndPad(cropped, (640, 640))
+                    #
+
+                    #prediction = gun_model.predict(cropped)
+                    #for result in prediction:
+                    #    out_cropped.write(result.plot()) 
                     # Draw bounding box
                     cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
                     
                     # Draw depth and confidence label
-                    label = f"Person {detection.confidence:.0%} | Z: {z_mm:.0f}mm"
-                    cv2.putText(frame, label, (x1, y1 - 10),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+                    label = f"Person {detection.confidence:.0%} | Depth: {z_mm:.0f} mm"
+                    cv2.putText(frame, label, (10, 60),
+                                cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
 
                     # Draw crosshair at center of box
                     cx = (x1 + x2) // 2
                     cy = (y1 + y2) // 2
                     cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
 
-                # Always write frame (even with no detections)
-
-                out_preview.write(frame)                
-                rclpy.spin_once(track, timeout_sec=0.05)
+                    # Always write frame (even with no detections)
+                    fps_counter.tick()
+                    frame = fps_counter.draw(frame)
+                    out_preview.write(frame)                
+                    rclpy.spin_once(track, timeout_sec=0.05)
     except KeyboardInterrupt:
         track.get_logger().info('Flight interrupted by user')
     except Exception as e:
         track.get_logger().error(f'An error occurred: {e}')
     finally:
         out_preview.release()
+        out_cropped.release()
         track.destroy_node()
         rclpy.shutdown()
             
