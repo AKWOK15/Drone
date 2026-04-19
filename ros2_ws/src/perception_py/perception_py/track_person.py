@@ -6,10 +6,10 @@ from geometry_msgs.msg import Point
 from rclpy.node import Node
 from mavros_msgs.srv import CommandBool, SetMode, CommandTOL
 from mavros_msgs.msg import State
-import blobconverter
 # Model input size must match what the blob was compiled for
 
 print(f'dai version: {dai.__version__}')
+print(f'cv2 version: {cv2.__version__}')
 class Track(Node):
     def __init__(self):
         super().__init__('track')
