@@ -151,7 +151,7 @@ def main(args=None):
                         coord_x = t.spatialCoordinates.x
                         coord_y = t.spatialCoordinates.y
                         coord_z = t.spatialCoordinates.z
-                        track.set_point(x, y, z)
+                        #track.set_point(x, y, z)
                         print(f'coord_x: {coord_x}')
                         print(f'coord_y: {coord_y}')
                         print(f'coord_z: {coord_z}')
