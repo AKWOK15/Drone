@@ -26,7 +26,7 @@ setup(
         'console_scripts': [
             
             #executable is drone_controller = package name.script name:script funciton 
-            "track=perception_py.track:main"
+            "track_person=perception_py.track_person:main"
       
         ],
     },
