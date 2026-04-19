@@ -7,7 +7,8 @@ from rclpy.node import Node
 from mavros_msgs.srv import CommandBool, SetMode, CommandTOL
 from mavros_msgs.msg import State
 # Model input size must match what the blob was compiled for
-
+import numpy as np
+print(cv2.__file__)
 print(f'dai version: {dai.__version__}')
 print(f'cv2 version: {cv2.__version__}')
 class Track(Node):
@@ -21,12 +22,55 @@ class Track(Node):
     
     def set_point(self, msg):
         self.point_publisher.publish(msg)
+def resizeAndPad(img, size, padColor=0):
+
+    h, w = img.shape[:2]
+    sh, sw = size
+
+    # interpolation method
+    if h > sh or w > sw: # shrinking image
+        interp = cv2.INTER_AREA
+    else: # stretching image
+        interp = cv2.INTER_CUBIC
+
+    # aspect ratio of image
+    aspect = w/h  # if on Python 2, you might need to cast as a float: float(w)/h
+
+    # compute scaling and pad sizing
+    if aspect > 1: # horizontal image
+        new_w = sw
+        new_h = np.round(new_w/aspect).astype(int)
+        pad_vert = (sh-new_h)/2
+        pad_top, pad_bot = np.floor(pad_vert).astype(int), np.ceil(pad_vert).astype(int)
+        pad_left, pad_right = 0, 0
+    elif aspect < 1: # vertical image
+        new_h = sh
+        new_w = np.round(new_h*aspect).astype(int)
+        pad_horz = (sw-new_w)/2
+        pad_left, pad_right = np.floor(pad_horz).astype(int), np.ceil(pad_horz).astype(int)
+        pad_top, pad_bot = 0, 0
+    else: # square image
+        new_h, new_w = sh, sw
+        pad_left, pad_right, pad_top, pad_bot = 0, 0, 0, 0
+
+    # set pad color
+    if len(img.shape) is 3 and not isinstance(padColor, (list, tuple, np.ndarray)): # color image but only one color provided
+        padColor = [padColor]*3
+
+    # scale and pad
+    scaled_img = cv2.resize(img, (new_w, new_h), interpolation=interp)
+    scaled_img = cv2.copyMakeBorder(scaled_img, pad_top, pad_bot, pad_left, pad_right, borderType=cv2.BORDER_CONSTANT, value=padColor)
+
+    return scaled_img
     
 def main(args=None):    
     rclpy.init(args=args)
     #create preview Video
     #mp4v
+    #First value is width, second is height
     DET_INPUT_SIZE = (640, 640)  # adjust to match your gun model blob
+    mag_width = 0.1
+    mag_height = 0.05
     FPS = 30
     fourcc = cv2.VideoWriter_fourcc(*'avc1')
     #Record frames 
@@ -163,9 +207,37 @@ def main(args=None):
                     point_msg.z = z_mm
                     track.set_point(point_msg)
 
+                    #Magnify bounding box
+                    temp_mag_x1 = int(x1 - (x1*mag_width)) 
+                    temp_mag_y1 = int(y1 - (y1*mag_height))
+                    temp_mag_x2 = int(x2 + (x2*mag_width)) 
+                    temp_mag_y2 = int(y2 + (y2*mag_height))
+                    
+                    #Check boundary conditions
+                    mag_x1 = temp_mag_x1 if temp_mag_x1 >=0 else 0
+                    mag_y1 = temp_mag_y1 if temp_mag_y1 >=0 else 0
+                    
+                    mag_x2 = temp_mag_x2 if temp_mag_x2 <= DET_INPUT_SIZE[0] else DET_INPUT_SIZE[0]
+                    mag_y2 = temp_mag_y2 if temp_mag_y2 <= DET_INPUT_SIZE[1] else DET_INPUT_SIZE[1]
+
+                    print(f'x1: {x1}')
+                    print(f'y1:{y1}')
+                    print(f'x2: {x2}')
+                    print(f'y2: {y2}')
+
+                    
+                    print(f'mag_x1: {mag_x1}')
+                    print(f'mag_y1:{mag_y1}')
+                    print(f'mag_x2: {mag_x2}')
+                    print(f'mag_y2: {mag_y2}')
+                    cropped = frame[mag_y1:mag_y2, mag_x1:mag_x2]
+                    #cropped = cv2.resize(cropped, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]), cv2.INTER_CUBIC
+                    cropped = resizeAndPad(cropped, (640, 640))
+                    #cv2.imshow('Cropped', cropped)
+                    cv2.imwrite("cropped.jpg", cropped)
                     # Draw bounding box
                     cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-
+                    
                     # Draw depth and confidence label
                     label = f"Person {detection.confidence:.0%} | Z: {z_mm:.0f}mm"
                     cv2.putText(frame, label, (x1, y1 - 10),
