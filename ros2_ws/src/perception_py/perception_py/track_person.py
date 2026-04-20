@@ -23,43 +23,46 @@ def resizeAndPad(img, size, padColor=0):
 	h, w = img.shape[:2]
 	sh, sw = size
 
-	if h > sh or w > sw:
-		interp = cv2.INTER_AREA
-	else:
-		interp = cv2.INTER_CUBIC
+	interp = cv2.INTER_AREA if (h > sh or w > sw) else cv2.INTER_CUBIC
 
-	aspect = w/h
+	aspect = w / h
 
 	if aspect > 1:
 		new_w = sw
-		new_h = np.round(new_w/aspect).astype(int)
-		pad_vert = (sh-new_h)/2
-		pad_top, pad_bot = np.floor(pad_vert).astype(int), np.ceil(pad_vert).astype(int)
+		new_h = np.round(new_w / aspect).astype(int)
+		scale = sw / w
+		pad_vert = (sh - new_h) / 2
+		pad_top = np.floor(pad_vert).astype(int)
+		pad_bot = np.ceil(pad_vert).astype(int)
 		pad_left, pad_right = 0, 0
 	elif aspect < 1:
 		new_h = sh
-		new_w = np.round(new_h*aspect).astype(int)
-		pad_horz = (sw-new_w)/2
-		pad_left, pad_right = np.floor(pad_horz).astype(int), np.ceil(pad_horz).astype(int)
+		new_w = np.round(new_h * aspect).astype(int)
+		scale = sh / h
+		pad_horz = (sw - new_w) / 2
+		pad_left = np.floor(pad_horz).astype(int)
+		pad_right = np.ceil(pad_horz).astype(int)
 		pad_top, pad_bot = 0, 0
 	else:
 		new_h, new_w = sh, sw
+		scale = sh / h
 		pad_left, pad_right, pad_top, pad_bot = 0, 0, 0, 0
 
-	if len(img.shape) is 3 and not isinstance(padColor, (list, tuple, np.ndarray)):
-		padColor = [padColor]*3
+	if len(img.shape) == 3 and not isinstance(padColor, (list, tuple, np.ndarray)):
+		padColor = [padColor] * 3
 
 	scaled_img = cv2.resize(img, (new_w, new_h), interpolation=interp)
-	scaled_img = cv2.copyMakeBorder(scaled_img, pad_top, pad_bot, pad_left, pad_right, borderType=cv2.BORDER_CONSTANT, value=padColor)
+	scaled_img = cv2.copyMakeBorder(scaled_img, pad_top, pad_bot, pad_left, pad_right,
+									borderType=cv2.BORDER_CONSTANT, value=padColor)
 
-	return scaled_img
+	return scaled_img, pad_left, pad_top, scale
 
 def main(args=None):
 	rclpy.init(args=args)
 
 	DET_INPUT_SIZE = (640, 640)
-	mag_width = 0.1
-	mag_height = 0.05
+	mag_width = 0.05
+	mag_height = 0.0
 	FPS = 10
 	fourcc = cv2.VideoWriter_fourcc(*'avc1')
 	out_preview = cv2.VideoWriter('track_person.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
@@ -139,8 +142,6 @@ def main(args=None):
 
 		print('made it to pipeline')
 		with dai.Device(pipeline) as device:
-			#device.setLogLevel(dai.LogLevel.DEBUG)
-			#device.setLogOutputLevel(dai.LogLevel.DEBUG)
 			q_preview = device.getOutputQueue(name="preview", maxSize=4, blocking=False)
 			q_tracklets = device.getOutputQueue(name="tracklets", maxSize=4, blocking=False)
 
@@ -171,23 +172,6 @@ def main(args=None):
 					point_msg.z = z_mm
 					track.set_point(point_msg)
 					print(f'id: {t.id}')
-					# Magnify bounding box
-					# temp_mag_x1 = int(x1 - (x1*mag_width))
-					# temp_mag_y1 = int(y1 - (y1*mag_height))
-					# temp_mag_x2 = int(x2 + (x2*mag_width))
-					# temp_mag_y2 = int(y2 + (y2*mag_height))
-
-					# Check boundary conditions
-					# mag_x1 = temp_mag_x1 if temp_mag_x1 >=0 else 0
-					# mag_y1 = temp_mag_y1 if temp_mag_y1 >=0 else 0
-					# mag_x2 = temp_mag_x2 if temp_mag_x2 <= DET_INPUT_SIZE[0] else DET_INPUT_SIZE[0]
-					# mag_y2 = temp_mag_y2 if temp_mag_y2 <= DET_INPUT_SIZE[1] else DET_INPUT_SIZE[1]
-
-					# cropped = frame[mag_y1:mag_y2, mag_x1:mag_x2]
-					# cropped = resizeAndPad(cropped, (640, 640))
-					# prediction = gun_model.predict(cropped)
-					# for result in prediction:
-					#	  out_cropped.write(result.plot())
 
 					# Draw bounding box
 					cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
@@ -201,6 +185,51 @@ def main(args=None):
 					cx = (x1 + x2) // 2
 					cy = (y1 + y2) // 2
 					cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
+
+					# Expand bounding box for gun detection crop
+					temp_mag_x1 = int(x1 - (x1 * mag_width))
+					temp_mag_y1 = int(y1 - (y1 * mag_height))
+					temp_mag_x2 = int(x2 + (x2 * mag_width))
+					temp_mag_y2 = int(y2 - (y2 - y1)//2)
+
+					# Clamp to frame boundaries
+					mag_x1 = max(temp_mag_x1, 0)
+					mag_y1 = max(temp_mag_y1, 0)
+					mag_x2 = min(temp_mag_x2, DET_INPUT_SIZE[0])
+					mag_y2 = min(temp_mag_y2, DET_INPUT_SIZE[1])
+
+					cropped = frame[mag_y1:mag_y2, mag_x1:mag_x2]
+
+					# Resize + pad crop to 640x640; returns pad offsets and scale factor
+					cropped_padded, pad_left, pad_top, scale = resizeAndPad(cropped, (640, 640))
+
+					prediction = gun_model.predict(cropped_padded)
+					for result in prediction:
+						if len(result.boxes) == 0:
+							continue
+						box = result.boxes[0]
+						bb_x1, bb_y1, bb_x2, bb_y2 = map(int, box.xyxy[0])
+						out_cropped.write(result.plot())
+
+						# Step 1: Remove padding offset (same top-left offset for all corners)
+						np_x1 = bb_x1 - pad_left
+						np_y1 = bb_y1 - pad_top
+						np_x2 = bb_x2 - pad_left
+						np_y2 = bb_y2 - pad_top
+
+						# Step 2: Undo resize scale to get coords in crop-local space
+						nr_x1 = int(np_x1 / scale)
+						nr_y1 = int(np_y1 / scale)
+						nr_x2 = int(np_x2 / scale)
+						nr_y2 = int(np_y2 / scale)
+
+						# Step 3: Translate from crop-local to original frame space
+						og_x1 = nr_x1 + mag_x1
+						og_y1 = nr_y1 + mag_y1
+						og_x2 = nr_x2 + mag_x1
+						og_y2 = nr_y2 + mag_y1
+
+						cv2.rectangle(frame, (og_x1, og_y1), (og_x2, og_y2), (0, 0, 255), 3)
 
 				# Always write frame (even with no detections) - outside for loop
 				fps_counter.tick()
