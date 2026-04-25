@@ -12,20 +12,25 @@ def generate_launch_description():
             }
         ]
     )
+	#When I call drone class from within hover node, ROS2 will look up parameters registered to that node name
     drone_hover_node = Node(
         package='controls_py',
         executable='drone_hover',
-        name='drone_hover_node'
+		name='drone_hover',
+		parameters=[
+			{
+				'height_goal': 2.0
+			}
+		]
     )
     
     track_person_node = Node(
         package='perception_py',
         executable='track_person',
-        name='track_person_node'
     )
     
     return LaunchDescription([
         mavros_node,
-        #drone_hover_node,
-        track_person_node
+        drone_hover_node,
+        #track_person_node
     ])

@@ -13,7 +13,8 @@ from fps_counter import FPSCounter
 
 class Track(Node):
 	def __init__(self):
-		super().__init__('track')
+		#Node name
+		super().__init__('track_person')
 		self.point_publisher = self.create_publisher(Point, 'topic', 10)
 
 	def set_point(self, msg):
@@ -68,7 +69,7 @@ def main(args=None):
 	out_preview = cv2.VideoWriter('track_person.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
 	out_cropped = cv2.VideoWriter('cropped_track_person.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
 	gun_model_path = 'weapon_detection_2.0.pt'
-	gun_model = YOLO(gun_model_path)
+	# gun_model = YOLO(gun_model_path)
 	fps_counter = FPSCounter()
 
 	try:
@@ -82,6 +83,7 @@ def main(args=None):
 		rgb_cam.setBoardSocket(dai.CameraBoardSocket.CAM_A)
 		rgb_cam.setPreviewSize(DET_INPUT_SIZE[0], DET_INPUT_SIZE[1])
 		rgb_cam.setInterleaved(False)
+		rgb_cam.setImageOrientation(dai.CameraImageOrientation.ROTATE_180_DEG)
 		rgb_cam.setResolution(dai.ColorCameraProperties.SensorResolution.THE_1080_P)
 
 		mono_left = pipeline.create(dai.node.MonoCamera)
@@ -97,6 +99,12 @@ def main(args=None):
 		stereo.setDepthAlign(dai.CameraBoardSocket.CAM_A)
 		stereo.setDefaultProfilePreset(dai.node.StereoDepth.PresetMode.HIGH_DENSITY)
 		stereo.initialConfig.setMedianFilter(dai.MedianFilter.KERNEL_5x5)
+
+		rotate_stereo_manip = pipeline.createImageManip()
+		rotate_stereo_manip.initialConfig.setVerticalFlip(True)
+		rotate_stereo_manip.initialConfig.setHorizontalFlip(True)
+		rotate_stereo_manip.setFrameType(dai.ImgFrame.Type.RAW16)
+		rotate_stereo_manip.setMaxOutputFrameSize(4147200)		
 
 		mono_left.out.link(stereo.left)
 		mono_right.out.link(stereo.right)
@@ -126,7 +134,8 @@ def main(args=None):
 
 		# Linking
 		rgb_cam.preview.link(person_detection_network.input)
-		stereo.depth.link(person_detection_network.inputDepth)
+		stereo.depth.link(rotate_stereo_manip.inputImage)
+		rotate_stereo_manip.out.link(person_detection_network.inputDepth)
 
 		# Frame on which tracking will be performed
 		person_detection_network.passthrough.link(object_tracker.inputTrackerFrame)
@@ -203,7 +212,8 @@ def main(args=None):
 					# Resize + pad crop to 640x640; returns pad offsets and scale factor
 					cropped_padded, pad_left, pad_top, scale = resizeAndPad(cropped, (640, 640))
 
-					prediction = gun_model.predict(cropped_padded)
+					# prediction = gun_model.predict(cropped_padded)
+					prediction = []
 					for result in prediction:
 						if len(result.boxes) == 0:
 							continue

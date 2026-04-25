@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 from geometry_msgs.msg import PoseStamped
 from geographic_msgs.msg import GeoPoseStamped
 import rclpy
@@ -18,61 +18,72 @@ qos = QoSProfile(depth=10, reliability=ReliabilityPolicy.BEST_EFFORT)
 
 
 def main(args=None):
-    # Starts ROS 2 engine
-    rclpy.init(args=args)
+	# Starts ROS 2 engine
+	rclpy.init(args=args)
 
-    try:
-        drone = Drone()
-        
+	try:
+		# Give drone class the same name as name specified in launch file to pass parameter
+		drone = Drone(node_name='drone_hover')
+		height_goal = drone.get_parameter('height_goal').get_parameter_value().double_value
+		# Take off one meter above where we currently are
+		takeoff_height = drone.cur_pose.pose.position.z + 1.0
+		# Wait for FCU connection
+		drone.get_logger().info('Waiting for FCU connection...')
+		while rclpy.ok() and not drone.state.connected:
+			rclpy.spin_once(drone, timeout_sec=0.1)
+		drone.get_logger().info('FCU connected!')
+		
+		# Pre-arm: stream setpoints before requesting mode/arm
+		drone.get_logger().info('Arming the vehicle...')
+		for _ in range(50):
+			drone.set_position(drone.cur_pose.pose.position.x, drone.cur_pose.pose.position.y, drone.cur_pose.pose.position.z)
+			rclpy.spin_once(drone, timeout_sec=0.05)
+		
+		
+		# Set mode
+		drone.get_logger().info('Setting mode to GUIDED')
+		if not drone.set_mode('GUIDED'):
+			drone.get_logger().error('Failed to set GUIDED mode. Exiting...')
+			return
+		# Arm
+		if not drone.arm():
+			drone.get_logger().error('Failed to arm vehicle. Exiting...')
+			return
 
-        # Wait for FCU connection
-        drone.get_logger().info('Waiting for FCU connection...')
-        while rclpy.ok() and not drone.state.connected:
-            rclpy.spin_once(drone, timeout_sec=0.1)
-        drone.get_logger().info('FCU connected!')
+		# Takeoff
+		if not drone.takeoff(takeoff_height):
+			drone.get_logger().error('Failed to takeoff. Exiting...')
+			return
+	
+		# Flight loop
+		x_goal = drone.cur_pose.pose.position.x 
+		y_goal = drone.cur_pose.pose.position.y
+		z_goal = drone.cur_pose.pose.position.z + height_goal
 
-        # Pre-arm: stream setpoints before requesting mode/arm
-        drone.get_logger().info('Arming the vehicle...')
-        for _ in range(50):
-            drone.set_position(0.0, 0.0, 3.0)
-            rclpy.spin_once(drone, timeout_sec=0.05)
+		while rclpy.ok():
+			#Getting to proper altitude for takeoff
+			while drone.cur_pose.pose.position.z < 0.95 * takeoff_height:
+				print(f'Taking off to proper altitude, cur altitude: {drone.cur_pose.pose.position.z}')
+			drone.go_to_position(x_goal, y_goal, z_goal)
+			drone.hold_position(x_goal, y_goal, z_goal, 15)
 
-        # Set mode and arm
-        drone.get_logger().info('Setting mode to GUIDED')
-        if not drone.set_mode('GUIDED'):
-            drone.get_logger().error('Failed to set GUIDED mode. Exiting...')
-            return
+			if not drone.set_mode('LAND'):
+				drone.get_logger().error('Failed to set LAND. Attempting to autonomously land')
+				x_goal = 0.0
+				y_goal = 0.0
+				z_goal = 0.0
+				drone.go_to_position(x_goal, y_goal, z_goal)
+				drone.disarm()
+				return
 
-        if not drone.arm():
-            drone.get_logger().error('Failed to arm vehicle. Exiting...')
-            return
-
-        # Flight loop
-        x_goal = 0.0
-        y_goal = 0.0
-        z_goal = 100.0
-
-        while rclpy.ok():
-            drone.go_to_position(x_goal, y_goal, z_goal)
-            drone.hold_position(x_goal, y_goal, z_goal, 15)
-
-            if not drone.set_mode('LAND'):
-                drone.get_logger().error('Failed to set LAND. Attempting to autonomously land')
-                x_goal = 0.0
-                y_goal = 0.0
-                z_goal = 0.0
-                drone.go_to_position(x_goal, y_goal, z_goal)
-                drone.disarm()
-                return
-
-    except KeyboardInterrupt:
-        drone.get_logger().info('Flight interrupted by user')
-    except Exception as e:
-        drone.get_logger().error(f'An error occurred: {e}')
-    finally:
-        drone.destroy_node()
-        rclpy.shutdown()
+	except KeyboardInterrupt:
+		drone.get_logger().info('Flight interrupted by user')
+	except Exception as e:
+		drone.get_logger().error(f'An error occurred: {e}')
+	finally:
+		drone.destroy_node()
+		rclpy.shutdown()
 
 
 if __name__ == '__main__':
-    main()
+	main()
