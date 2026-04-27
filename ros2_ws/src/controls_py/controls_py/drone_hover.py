@@ -25,30 +25,48 @@ def main(args=None):
 		# Give drone class the same name as name specified in launch file to pass parameter
 		drone = Drone(node_name='drone_hover')
 		height_goal = drone.get_parameter('height_goal').get_parameter_value().double_value
+		drone.get_logger().info(f'height_goal: {height_goal}')
 		# Take off one meter above where we currently are
-		takeoff_height = drone.cur_pose.pose.position.z + 1.0
 		# Wait for FCU connection
 		drone.get_logger().info('Waiting for FCU connection...')
 		while rclpy.ok() and not drone.state.connected:
 			rclpy.spin_once(drone, timeout_sec=0.1)
 		drone.get_logger().info('FCU connected!')
+		drone.get_logger().info(f'drone_get_position: {drone.get_position()}')	
+		while drone.get_position() == None:	
+			drone.get_logger().info('Waiting for drone position')	
+			rclpy.spin_once(drone, timeout_sec=0.1)	
+		takeoff_height = drone.get_position().pose.position.z + 0.5
 		
 		# Pre-arm: stream setpoints before requesting mode/arm
 		drone.get_logger().info('Arming the vehicle...')
 		for _ in range(50):
-			drone.set_position(drone.cur_pose.pose.position.x, drone.cur_pose.pose.position.y, drone.cur_pose.pose.position.z)
+			drone.set_position(drone.get_position().pose.position.x, drone.get_position().pose.position.y, drone.get_position().pose.position.z)
 			rclpy.spin_once(drone, timeout_sec=0.05)
 		
 		
-		# Set mode
+		# After set_mode call, wait for GUIDED confirmation
 		drone.get_logger().info('Setting mode to GUIDED')
 		if not drone.set_mode('GUIDED'):
 			drone.get_logger().error('Failed to set GUIDED mode. Exiting...')
 			return
+
+		# Wait for FC to actually be in GUIDED
+		while drone.state.mode != 'GUIDED':
+			drone.get_logger().info(f'Waiting for GUIDED mode, current: {drone.state.mode}')
+			rclpy.spin_once(drone, timeout_sec=0.1)
+
 		# Arm
 		if not drone.arm():
 			drone.get_logger().error('Failed to arm vehicle. Exiting...')
 			return
+
+		# Wait for FC to actually be armed
+		while not drone.state.armed:
+			drone.get_logger().info('Waiting for vehicle to arm...')
+			rclpy.spin_once(drone, timeout_sec=0.1)
+
+		drone.get_logger().info('Armed! Sending takeoff...')
 
 		# Takeoff
 		if not drone.takeoff(takeoff_height):
@@ -56,14 +74,15 @@ def main(args=None):
 			return
 	
 		# Flight loop
-		x_goal = drone.cur_pose.pose.position.x 
-		y_goal = drone.cur_pose.pose.position.y
-		z_goal = drone.cur_pose.pose.position.z + height_goal
+		x_goal = drone.get_position().pose.position.x 
+		y_goal = drone.get_position().pose.position.y
+		z_goal = drone.get_position().pose.position.z + height_goal
 
 		while rclpy.ok():
 			#Getting to proper altitude for takeoff
-			while drone.cur_pose.pose.position.z < 0.95 * takeoff_height:
-				print(f'Taking off to proper altitude, cur altitude: {drone.cur_pose.pose.position.z}')
+			while drone.get_position().pose.position.z < 0.95 * takeoff_height:
+				drone.get_logger().info(f'Taking off to proper altitude, cur altitude: {drone.get_position().pose.position.z}')
+				rclpy.spin_once(drone, timeout_sec=0.1)
 			drone.go_to_position(x_goal, y_goal, z_goal)
 			drone.hold_position(x_goal, y_goal, z_goal, 15)
 

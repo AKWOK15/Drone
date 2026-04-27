@@ -17,7 +17,7 @@ class Drone(Node):
 		#This i sth enode name i see when I run ros2 list
 		
 		super().__init__(node_name)
-		self.declare_parameter('height_goal', 2.0)
+		self.declare_parameter('height_goal')
 		#These are services
 		#Need a respone/acknowledgement
 		self.arm_client = self.create_client(CommandBool,  '/mavros/cmd/arming')
@@ -33,7 +33,8 @@ class Drone(Node):
 		self.state = State()
 		self.state_subscriber = self.create_subscription(State, '/mavros/state', self.state_callback, 10)
 	   
-	
+	def get_position(self):
+		return self.cur_pose	
 	
 	def set_position(self, x, y, z):
 		pose = PoseStamped()
@@ -122,7 +123,7 @@ class Drone(Node):
 	#duration is in seconds
 	def hold_position(self, x_goal, y_goal, z_goal, duration):
 		cur_time = time.time()
-		while cur_time - time.time() < duration:
+		while time.time() - cur_time < duration:
 			self.set_position(x_goal, y_goal, z_goal)
 			rclpy.spin_once(self, timeout_sec=0.05)													
 			z = self.cur_pose.pose.position.z
@@ -147,6 +148,9 @@ class Drone(Node):
 		req = CommandTOL.Request()
 		req.altitude = altitude
 		req.min_pitch = 0.0
+		req.yaw = 0.0
+		req.latitude = 0.0
+		req.longitude = 0.0
 		#Sends request
 		future = self.takeoff_client.call_async(req)
 		#Listens for request
@@ -154,6 +158,7 @@ class Drone(Node):
 		rclpy.spin_until_future_complete(self, future)
 
 		if future.result() is not None:
+			self.get_logger().info(f'takeoff result: {future.result()}')
 			if future.result().success:
 				self.get_logger().info('Takeoff successful')
 				return True

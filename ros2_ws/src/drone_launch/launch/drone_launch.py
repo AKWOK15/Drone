@@ -19,7 +19,7 @@ def generate_launch_description():
 		name='drone_hover',
 		parameters=[
 			{
-				'height_goal': 2.0
+				'height_goal': 1.0
 			}
 		]
     )
