@@ -16,7 +16,6 @@ def generate_launch_description():
     drone_hover_node = Node(
         package='controls_py',
         executable='drone_hover',
-		name='drone_hover',
 		parameters=[
 			{
 				'height_goal': 1.0
