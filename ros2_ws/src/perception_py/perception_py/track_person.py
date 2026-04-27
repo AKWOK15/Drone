@@ -10,6 +10,8 @@ from ultralytics import YOLO
 import numpy as np
 import time
 from fps_counter import FPSCounter
+import numpy as np
+from inference_sdk import InferenceHTTPClient 
 
 class Track(Node):
 	def __init__(self):
@@ -68,8 +70,11 @@ def main(args=None):
 	fourcc = cv2.VideoWriter_fourcc(*'avc1')
 	out_preview = cv2.VideoWriter('track_person.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
 	out_cropped = cv2.VideoWriter('cropped_track_person.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
-	gun_model_path = 'weapon_detection_2.0.pt'
-	# gun_model = YOLO(gun_model_path)
+	# 2. Connect to your workspace
+	client = InferenceHTTPClient(
+	api_url="https://serverless.roboflow.com",
+	api_key="1dUvrWAbdffrk9p2hfU0"
+	)
 	fps_counter = FPSCounter()
 
 	try:
@@ -212,15 +217,25 @@ def main(args=None):
 					# Resize + pad crop to 640x640; returns pad offsets and scale factor
 					cropped_padded, pad_left, pad_top, scale = resizeAndPad(cropped, (640, 640))
 
-					# prediction = gun_model.predict(cropped_padded)
-					prediction = []
-					for result in prediction:
-						if len(result.boxes) == 0:
-							continue
-						box = result.boxes[0]
-						bb_x1, bb_y1, bb_x2, bb_y2 = map(int, box.xyxy[0])
-						out_cropped.write(result.plot())
-
+					result = client.run_workflow(
+						workspace_name="aidans-workspace-dqphd",
+						workflow_id="general-segmentation-api-5",
+						images={"image": cropped_padded},
+						parameters={"classes": "Gun"},
+						use_cache=True
+					)                  
+														
+					predictions = result[0]['predictions']
+										
+					for pred in predictions.get("predictions"):
+						# if len(result.boxes) == 0:
+						# 	continue
+						# box = result.boxes[0]
+						# bb_x1, bb_y1, bb_x2, bb_y2 = map(int, box.xyxy[0])
+						# out_cropped.write(result.plot())
+						x, y, w, h = int(pred['x']), int(pred['y']), int(pred['width']), int(pred['height'])
+						bb_x1, bb_y1 = x - w//2, y - h//2
+						bb_x2, bb_y2 = x + w//2, y + h//2
 						# Step 1: Remove padding offset (same top-left offset for all corners)
 						np_x1 = bb_x1 - pad_left
 						np_y1 = bb_y1 - pad_top
