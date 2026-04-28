@@ -21,5 +21,5 @@ class FPSCounter:
     def draw(self, frame):
         fps_text = f"FPS: {self.fps():.1f}"
         cv2.putText(frame, fps_text, (10, 30),
-                    cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         return frame

@@ -17,10 +17,23 @@ class Track(Node):
 	def __init__(self):
 		#Node name
 		super().__init__('track_person')
-		self.point_publisher = self.create_publisher(Point, 'topic', 10)
+		self.point_publisher = self.create_publisher(Point, 'person_position', 10)
 
 	def set_point(self, msg):
 		self.point_publisher.publish(msg)
+	
+	#Convert point from depthai SpaitalDetectionNetwork coordinates to Ardupilot
+	def convert_point(self, frame_x, frame_y, frame_z):
+		msg = Point()
+		#Frame is vertical 2D plane whereas Ardupilot is horizontal 2D plane
+		#frame_z is the depth and Ardupilot x is forward, assuming that coordinate frame is FRAME_BODY_OFFSET_NED
+		#Convert from mm to meters
+		msg.x = int(frame_z/1000)
+		#frame x is 0 at center of frame and positive to the right, ardupilot y is positive to the right
+		msg.y = int(frame_x/1000)
+		#frame y is 0 at center and is height, Ardupilot z is altitude. If you go down, frame y and ArduPilot z increase. 
+		msg.z = int(frame_y/1000)
+		self.set_point(msg)
 
 def resizeAndPad(img, size, padColor=0):
 	h, w = img.shape[:2]
@@ -64,8 +77,9 @@ def main(args=None):
 	rclpy.init(args=args)
 
 	DET_INPUT_SIZE = (640, 640)
-	mag_width = 0.05
-	mag_height = 0.0
+	mag_width = 0.09
+	mag_height = 0.02
+	shooter_id = -1
 	FPS = 10
 	fourcc = cv2.VideoWriter_fourcc(*'avc1')
 	out_preview = cv2.VideoWriter('track_person.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
@@ -128,7 +142,7 @@ def main(args=None):
 		object_tracker = pipeline.create(dai.node.ObjectTracker)
 		object_tracker.setDetectionLabelsToTrack([0])
 		object_tracker.setTrackerType(dai.TrackerType.ZERO_TERM_COLOR_HISTOGRAM)
-		object_tracker.setTrackerIdAssignmentPolicy(dai.TrackerIdAssignmentPolicy.SMALLEST_ID)
+		object_tracker.setTrackerIdAssignmentPolicy(dai.TrackerIdAssignmentPolicy.UNIQUE_ID)
 
 		# Outputs
 		xout_frame = pipeline.create(dai.node.XLinkOut)
@@ -152,8 +166,6 @@ def main(args=None):
 		object_tracker.passthroughTrackerFrame.link(xout_frame.input)
 		object_tracker.out.link(tracker_output.input)
 
-		point_msg = Point()
-
 		print('made it to pipeline')
 		with dai.Device(pipeline) as device:
 			q_preview = device.getOutputQueue(name="preview", maxSize=4, blocking=False)
@@ -170,7 +182,8 @@ def main(args=None):
 						continue
 					if t.status == dai.Tracklet.TrackingStatus.REMOVED:
 						continue
-
+					if t.id != shooter_id and shooter_id != -1:
+						continue
 					roi = t.roi.denormalize(frame.shape[1], frame.shape[0])
 					x1 = int(roi.topLeft().x)
 					y1 = int(roi.topLeft().y)
@@ -181,81 +194,82 @@ def main(args=None):
 					y_mm = t.spatialCoordinates.y
 					z_mm = t.spatialCoordinates.z
 
-					point_msg.x = x_mm
-					point_msg.y = y_mm
-					point_msg.z = z_mm
-					track.set_point(point_msg)
+					
+					
+					
 					print(f'id: {t.id}')
 
 					# Draw bounding box
 					cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
-					# Draw track ID and depth
-					label = f"ID:{t.id} | Depth: {z_mm:.0f} mm"
-					cv2.putText(frame, label, (x1, y1 - 10),
-								cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+			
 
 					# Draw crosshair at center of box
 					cx = (x1 + x2) // 2
 					cy = (y1 + y2) // 2
 					cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
+					if shooter_id == -1:
+						# Expand bounding box for gun detection crop
+						temp_mag_x1 = int(x1 - (x1 * mag_width))
+						temp_mag_y1 = int(y1 - (y1 * mag_height))
+						temp_mag_x2 = int(x2 + (x2 * mag_width))
+						temp_mag_y2 = int(y2 - (y2 - y1)//1.5)
 
-					# Expand bounding box for gun detection crop
-					temp_mag_x1 = int(x1 - (x1 * mag_width))
-					temp_mag_y1 = int(y1 - (y1 * mag_height))
-					temp_mag_x2 = int(x2 + (x2 * mag_width))
-					temp_mag_y2 = int(y2 - (y2 - y1)//2)
+						# Clamp to frame boundaries
+						mag_x1 = max(temp_mag_x1, 0)
+						mag_y1 = max(temp_mag_y1, 0)
+						mag_x2 = min(temp_mag_x2, DET_INPUT_SIZE[0])
+						mag_y2 = min(temp_mag_y2, DET_INPUT_SIZE[1])
 
-					# Clamp to frame boundaries
-					mag_x1 = max(temp_mag_x1, 0)
-					mag_y1 = max(temp_mag_y1, 0)
-					mag_x2 = min(temp_mag_x2, DET_INPUT_SIZE[0])
-					mag_y2 = min(temp_mag_y2, DET_INPUT_SIZE[1])
+						cropped = frame[mag_y1:mag_y2, mag_x1:mag_x2]
 
-					cropped = frame[mag_y1:mag_y2, mag_x1:mag_x2]
+						# Resize + pad crop to 640x640; returns pad offsets and scale factor
+						cropped_padded, pad_left, pad_top, scale = resizeAndPad(cropped, (640, 640))
+						out_cropped.write(cropped_padded)
+						result = client.run_workflow(
+							workspace_name="aidans-workspace-dqphd",
+							workflow_id="general-segmentation-api-5",
+							images={"image": cropped_padded},
+							parameters={"classes": "Gun"},
+							use_cache=True
+						)                  
+															
+						predictions = result[0]['predictions']
+						print(f'predictions: {predictions}')						
+						for pred in predictions.get("predictions"):
+							# if len(result.boxes) == 0:
+							# 	continue
+							# box = result.boxes[0]
+							# bb_x1, bb_y1, bb_x2, bb_y2 = map(int, box.xyxy[0])
+							# out_cropped.write(result.plot())
+							x, y, w, h = int(pred['x']), int(pred['y']), int(pred['width']), int(pred['height'])
+							bb_x1, bb_y1 = x - w//2, y - h//2
+							bb_x2, bb_y2 = x + w//2, y + h//2
+							# Step 1: Remove padding offset (same top-left offset for all corners)
+							np_x1 = bb_x1 - pad_left
+							np_y1 = bb_y1 - pad_top
+							np_x2 = bb_x2 - pad_left
+							np_y2 = bb_y2 - pad_top
 
-					# Resize + pad crop to 640x640; returns pad offsets and scale factor
-					cropped_padded, pad_left, pad_top, scale = resizeAndPad(cropped, (640, 640))
+							# Step 2: Undo resize scale to get coords in crop-local space
+							nr_x1 = int(np_x1 / scale)
+							nr_y1 = int(np_y1 / scale)
+							nr_x2 = int(np_x2 / scale)
+							nr_y2 = int(np_y2 / scale)
 
-					result = client.run_workflow(
-						workspace_name="aidans-workspace-dqphd",
-						workflow_id="general-segmentation-api-5",
-						images={"image": cropped_padded},
-						parameters={"classes": "Gun"},
-						use_cache=True
-					)                  
-														
-					predictions = result[0]['predictions']
-										
-					for pred in predictions.get("predictions"):
-						# if len(result.boxes) == 0:
-						# 	continue
-						# box = result.boxes[0]
-						# bb_x1, bb_y1, bb_x2, bb_y2 = map(int, box.xyxy[0])
-						# out_cropped.write(result.plot())
-						x, y, w, h = int(pred['x']), int(pred['y']), int(pred['width']), int(pred['height'])
-						bb_x1, bb_y1 = x - w//2, y - h//2
-						bb_x2, bb_y2 = x + w//2, y + h//2
-						# Step 1: Remove padding offset (same top-left offset for all corners)
-						np_x1 = bb_x1 - pad_left
-						np_y1 = bb_y1 - pad_top
-						np_x2 = bb_x2 - pad_left
-						np_y2 = bb_y2 - pad_top
+							# Step 3: Translate from crop-local to original frame space
+							og_x1 = nr_x1 + mag_x1
+							og_y1 = nr_y1 + mag_y1
+							og_x2 = nr_x2 + mag_x1
+							og_y2 = nr_y2 + mag_y1
 
-						# Step 2: Undo resize scale to get coords in crop-local space
-						nr_x1 = int(np_x1 / scale)
-						nr_y1 = int(np_y1 / scale)
-						nr_x2 = int(np_x2 / scale)
-						nr_y2 = int(np_y2 / scale)
-
-						# Step 3: Translate from crop-local to original frame space
-						og_x1 = nr_x1 + mag_x1
-						og_y1 = nr_y1 + mag_y1
-						og_x2 = nr_x2 + mag_x1
-						og_y2 = nr_y2 + mag_y1
-
-						cv2.rectangle(frame, (og_x1, og_y1), (og_x2, og_y2), (0, 0, 255), 3)
-
+							cv2.rectangle(frame, (og_x1, og_y1), (og_x2, og_y2), (0, 0, 255), 3)
+							shooter_id = t.id
+							print(f'shooter_id: {shooter_id}')
+					if shooter_id != -1:
+						self.convert_point(x_mm, y_mm, z_mm)
+						label = f"Shooter ID: {shooter_id} | X: {x_mm:.0f} | Y: {y_mm:.0f} | Depth: {z_mm:.0f} mm"
+						cv2.putText(frame, label, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
 				# Always write frame (even with no detections) - outside for loop
 				fps_counter.tick()
 				frame = fps_counter.draw(frame)
