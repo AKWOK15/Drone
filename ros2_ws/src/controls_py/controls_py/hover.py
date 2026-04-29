@@ -27,8 +27,13 @@ class Drone(Node):
 		#Just streaming dat acontiniously 
 		self.position_publisher = self.create_publisher(PositionTarget, '/mavros/setpoint_raw/local', 10)
 		
-		#Get position from fcu
-		self.position_subscriber = self.create_subscription(PositionTarget, '/mavros/setpoint_raw/target_local', self.position_callback, qos)
+		# Subscribe to actual current position from FCU (local frame, meters relative to home)
+		self.position_subscriber = self.create_subscription(
+			PoseStamped,
+			'/mavros/local_position/pose',
+			self.position_callback,
+			qos
+		)
 		self.cur_position = None
 		self.state = State()
 		self.state_subscriber = self.create_subscription(State, '/mavros/state', self.state_callback, 10)
@@ -45,6 +50,7 @@ class Drone(Node):
 		self.position_publisher.publish(msg)
 	
 	def position_callback(self, msg):
+		# PoseStamped: position lives at msg.pose.position.x/y/z
 		self.cur_position = msg
 	
 	def state_callback(self, msg):
@@ -123,28 +129,25 @@ class Drone(Node):
 	#duration is in seconds
 	def hold_position(self, x_goal, y_goal, z_goal, duration):
 		self.get_logger().info('Started hold_position')
-		self.get_logger().info(f'Frame coordinate frame: {self.cur_position.coordinate_frame}')
+		self.get_logger().info(f'z_goal: {z_goal}')
 		cur_time = time.time()
 		while time.time() - cur_time < duration:
 			self.set_position(x_goal, y_goal, z_goal)
 			rclpy.spin_once(self, timeout_sec=0.05)													
-			# z = self.cur_position.position.z
-			# self.get_logger().info(f'Current altitude: {z:.2f}m') 
+			z = self.cur_position.pose.position.z
+			self.get_logger().info(f'z: {z:.2f}m') 
 		self.get_logger().info('Finished hold_position')
 
 	def go_to_position(self, x_goal, y_goal, z_goal):
-		z = self.cur_position.position.z
+		z = self.cur_position.pose.position.z
 		self.get_logger().info('Started go_to_position')
+		self.get_logger().info(f'z_goal: {z_goal}')
 		while abs(z - z_goal) > 0.1:
+			self.get_logger().info(f'abs(z - z goal): {abs(z-z_goal)}')
 			self.set_position(x_goal, y_goal, z_goal)
 			rclpy.spin_once(self, timeout_sec=0.05)
-			z = self.cur_position.position.z
-			# x = self.cur_position.position.x			
-			# y = self.cur_position.position.y
-			# z = self.cur_position.position.z
-			# self.get_logger().info(f'Current x: {x:.2f}m') 
-			# self.get_logger().info(f'Current y: {y:.2f}m') 
-			# self.get_logger().info(f'Current z:: {z:.2f}m') 
+			z = self.cur_position.pose.position.z
+			self.get_logger().info(f'z: {z:.2f}m')
 		self.get_logger().info('Finished go_to_position')
 		return True
 
@@ -152,9 +155,9 @@ class Drone(Node):
 		req = CommandTOL.Request()
 		req.altitude = altitude
 		req.min_pitch = 0.0
-		req.yaw = 0.0
-		req.latitude = 0.0
-		req.longitude = 0.0
+		# req.yaw = 0.0
+		# req.latitude = 0.0
+		# req.longitude = 0.0
 		#Sends request
 		future = self.takeoff_client.call_async(req)
 		#Listens for request
@@ -164,8 +167,9 @@ class Drone(Node):
 		if future.result() is not None:
 			self.get_logger().info(f'takeoff result: {future.result()}')
 			if future.result().success:
-				while self.cur_position.position.z < 0.95 * altitude:
-					self.get_logger().info(f'Taking off to proper altitude, cur altitude: {drone.cur_position.position.z}')
+				self.get_logger().info('Taking off to altitude: {altitude}')
+				while self.cur_position.pose.position.z < 0.95 * altitude:
+					self.get_logger().info(f'z: {self.cur_position.pose.position.z:.2f}')
 					rclpy.spin_once(self, timeout_sec=0.05)
 				return True
 			else:
@@ -196,14 +200,19 @@ def main(args=None):
 		while rclpy.ok() and not drone.state.connected:
 			rclpy.spin_once(drone, timeout_sec=0.1)
 		drone.get_logger().info('FCU connected!')
-		while drone.cur_position == None:	
-			drone.get_logger().info('Waiting for drone position')	
+		
+		# Wait for first position message from FCU
+		while drone.cur_position is None:	
+			# drone.get_logger().info('Waiting for drone position')	
 			rclpy.spin_once(drone, timeout_sec=0.1)	
 		
 		# Pre-arm: stream setpoints before requesting mode/arm
-		
 		for _ in range(50):
-			drone.set_position(drone.cur_position.position.x, drone.cur_position.position.y, drone.cur_position.position.z)
+			drone.set_position(
+				drone.cur_position.pose.position.x,
+				drone.cur_position.pose.position.y,
+				drone.cur_position.pose.position.z
+			)
 			rclpy.spin_once(drone, timeout_sec=0.05)
 		
 		
@@ -229,17 +238,19 @@ def main(args=None):
 			rclpy.spin_once(drone, timeout_sec=0.1)
 
 		drone.get_logger().info('Armed! Sending takeoff...')
-		z_start = drone.cur_position.position.z
+		z_start = drone.cur_position.pose.position.z
 		takeoff_height = drone.get_parameter('takeoff_height').get_parameter_value().double_value + z_start 
+		drone.get_logger().info(f'z_start: {z_start}')
+		drone.get_logger().info(f'takeoff_height : {takeoff_height}')
 		# Takeoff
 		if not drone.takeoff(takeoff_height):
 			return
 	
 		while rclpy.ok():
-			#Getting to proper altitude for takeoff
-			x_goal = self.cur_position.position.x				
-			y_goal = self.cur_position.position.y
-			z_goal = self.cur_position.position.z + height_goal 
+			# Getting to proper altitude for hover
+			x_goal = drone.cur_position.pose.position.x				
+			y_goal = drone.cur_position.pose.position.y
+			z_goal = drone.cur_position.pose.position.z + height_goal 
 			drone.go_to_position(x_goal, y_goal, z_goal)
 			drone.hold_position(x_goal, y_goal, z_goal, 5)
 			if drone.set_mode('RTL'):
@@ -249,7 +260,7 @@ def main(args=None):
 				drone.get_logger().info('RTL failed. Land engaged. Attempting to autonomously land')
 				break
 			else:
-				drone.get_logger.info('Land failed. Manually land')
+				drone.get_logger().info('Land failed. Manually land')
 				x_goal = 0.0
 				y_goal = 0.0
 				z_goal = 0.0

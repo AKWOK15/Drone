@@ -26,7 +26,7 @@ def generate_launch_description():
     
     intercept_node = Node(
         package='controls_py',
-        executable='intercept'
+        executable='intercept',
         parameters=[
 			{
 				'height_goal': 0.5,
