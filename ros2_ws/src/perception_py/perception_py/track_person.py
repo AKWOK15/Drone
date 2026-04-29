@@ -2,6 +2,7 @@
 import depthai as dai
 import cv2
 import rclpy
+from std_msgs.msg import Int8
 from geometry_msgs.msg import Point
 from rclpy.node import Node
 from mavros_msgs.srv import CommandBool, SetMode, CommandTOL
@@ -20,10 +21,12 @@ class Track(Node):
 		#Node name
 		super().__init__('track_person')
 		self.point_publisher = self.create_publisher(Point, 'person_position', 10)
-
-	def set_point(self, msg):
+		self.fps_publisher = self.create_publisher(Int8, 'fps', 10)
+	def publish_point(self, msg):
 		self.point_publisher.publish(msg)
-	
+
+	def publish_fps(self, msg):
+		self.fps_publisher.publish(msg)	
 	#Convert point from depthai SpaitalDetectionNetwork coordinates to Ardupilot
 	def convert_point(self, frame_x, frame_y, frame_z):
 		msg = Point()
@@ -35,7 +38,7 @@ class Track(Node):
 		msg.y = frame_x/1000
 		#frame y is 0 at center and is height, Ardupilot z is altitude. If you go down, frame y and ArduPilot z increase. 
 		msg.z = frame_y/1000
-		self.set_point(msg)
+		self.publish_point(msg)
 
 def resizeAndPad(img, size, padColor=0):
 	h, w = img.shape[:2]
@@ -289,6 +292,9 @@ def main(args=None):
 				fps_counter.tick()
 				frame = fps_counter.draw(frame)
 				print(f'fps: {fps_counter.fps()}')
+				fps_msg = Int8()
+				fps_msg.data = int(fps_counter.fps())
+				track.publish_fps(fps_msg)		
 				# Non-blocking enqueue — drop frame if writer thread is behind
 				if not frame_queue.full():
 					frame_queue.put(frame.copy())

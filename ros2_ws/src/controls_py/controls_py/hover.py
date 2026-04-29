@@ -133,7 +133,7 @@ class Drone(Node):
 		cur_time = time.time()
 		while time.time() - cur_time < duration:
 			self.set_position(x_goal, y_goal, z_goal)
-			rclpy.spin_once(self, timeout_sec=0.001)													
+			rclpy.spin_once(self, timeout_sec=0.05)													
 			z = self.cur_position.pose.position.z
 			self.get_logger().info(f'z: {z:.2f}m') 
 		self.get_logger().info('Finished hold_position')
@@ -145,7 +145,7 @@ class Drone(Node):
 		while abs(z - z_goal) > 0.1:
 			self.get_logger().info(f'abs(z - z goal): {abs(z-z_goal)}')
 			self.set_position(x_goal, y_goal, z_goal)
-			rclpy.spin_once(self, timeout_sec=0.001)
+			rclpy.spin_once(self, timeout_sec=0.05)
 			z = self.cur_position.pose.position.z
 			self.get_logger().info(f'z: {z:.2f}m')
 		self.get_logger().info('Finished go_to_position')
@@ -170,7 +170,7 @@ class Drone(Node):
 				self.get_logger().info('Taking off to altitude: {altitude}')
 				while self.cur_position.pose.position.z < 0.95 * altitude:
 					self.get_logger().info(f'z: {self.cur_position.pose.position.z:.2f}')
-					rclpy.spin_once(self, timeout_sec=0.001)
+					rclpy.spin_once(self, timeout_sec=0.05)
 				return True
 			else:
 				self.get_logger().warn('Failed to takeoff')
@@ -213,7 +213,7 @@ def main(args=None):
 				drone.cur_position.pose.position.y,
 				drone.cur_position.pose.position.z
 			)
-			rclpy.spin_once(drone, timeout_sec=0.001)
+			rclpy.spin_once(drone, timeout_sec=0.05)
 		
 		
 		# After set_mode call, wait for GUIDED confirmation
