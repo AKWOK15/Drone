@@ -16,7 +16,9 @@ class Drone(Node):
 		#Super constructor registers node with ros2 and lets me use its funcitonalliy 
 		
 		super().__init__('hover')
-		self.declare_parameter('height_goal', 1.0)
+		self.declare_parameter('down', 0.0)
+		self.declare_parameter('forward', 0.0)
+		self.declare_parameter('right', 0.0)
 		self.declare_parameter('takeoff_height', 0.5)
 		#These are services
 		#Need a respone/acknowledgement
@@ -25,9 +27,10 @@ class Drone(Node):
 		self.takeoff_client = self.create_client(CommandTOL,  '/mavros/cmd/takeoff')
 		#PoseStamped is a message type you publish to a topic
 		#Just streaming dat acontiniously 
-		self.position_publisher = self.create_publisher(PositionTarget, '/mavros/setpoint_raw/local', 10)
-		
-		# Subscribe to actual current position from FCU (local frame, meters relative to home)
+		self.frd_position_publisher = self.create_publisher(PositionTarget, '/mavros/setpoint_raw/local', 10)
+	
+		# north, east, down
+		self.ned_position_publisher = self.create_publisher(PoseStamped, '/mavros/setpoint_position/local', 20)	
 		self.position_subscriber = self.create_subscription(
 			PoseStamped,
 			'/mavros/local_position/pose',
@@ -35,19 +38,23 @@ class Drone(Node):
 			qos
 		)
 		self.cur_position = None
+		self.home = None
 		self.state = State()
 		self.state_subscriber = self.create_subscription(State, '/mavros/state', self.state_callback, 10)
 	   
-	def set_position(self, x, y, z):
+	def set_frd_position(self, forward, right, down):
 		msg = PositionTarget()
 		msg.header.frame_id = "home"
 		msg.coordinate_frame = 9
 		msg.type_mask = 0b110111111000
-		msg.position.x = x
-		msg.position.y = y
-		msg.position.z = z 
+		msg.position.x = forward
+		msg.position.y = right
+		msg.position.z = down
 		msg.header.stamp = self.get_clock().now().to_msg()
-		self.position_publisher.publish(msg)
+		self.frd_position_publisher.publish(msg)
+	
+	def set_ned_position(self, goal_pose):
+		self.ned_position_publisher.publish(goal_pose)
 	
 	def position_callback(self, msg):
 		# PoseStamped: position lives at msg.pose.position.x/y/z
@@ -99,8 +106,6 @@ class Drone(Node):
 			self.get_logger().error('Disarming service call failed')
 			return False
 	
-	
-		
 	def set_mode(self, mode):
 		"""
 		Set flight mode.
@@ -126,31 +131,31 @@ class Drone(Node):
 			self.get_logger().error('Set mode service call failed')
 			return False
 
-	#duration is in seconds
-	def hold_position(self, x_goal, y_goal, z_goal, duration):
-		self.get_logger().info('Started hold_position')
-		self.get_logger().info(f'z_goal: {z_goal}')
+	
+	def frd_move(self, duration):
+		forward = self.get_parameter('forward').get_parameter_value().double_value
+		right = self.get_parameter('right').get_parameter_value().double_value
+		down = self.get_parameter('down').get_parameter_value().double_value
+		self.get_logger().info('Started frd_move')
 		cur_time = time.time()
 		while time.time() - cur_time < duration:
-			self.set_position(x_goal, y_goal, z_goal)
-			rclpy.spin_once(self, timeout_sec=0.05)													
-			z = self.cur_position.pose.position.z
-			self.get_logger().info(f'z: {z:.2f}m') 
-		self.get_logger().info('Finished hold_position')
-
-	def go_to_position(self, x_goal, y_goal, z_goal):
-		z = self.cur_position.pose.position.z
-		self.get_logger().info('Started go_to_position')
-		self.get_logger().info(f'z_goal: {z_goal}')
-		while abs(z - z_goal) > 0.1:
-			self.get_logger().info(f'abs(z - z goal): {abs(z-z_goal)}')
-			self.set_position(x_goal, y_goal, z_goal)
+			self.set_frd_position(forward, right, down)
 			rclpy.spin_once(self, timeout_sec=0.05)
-			z = self.cur_position.pose.position.z
-			self.get_logger().info(f'z: {z:.2f}m')
-		self.get_logger().info('Finished go_to_position')
+		self.get_logger().info('Finished frd_move')
 		return True
-
+	
+	# north, east, down
+	def ned_move(self, goal_pose):
+		self.get_logger().info('Started ned_move')
+		while (
+			abs(self.cur_position.pose.position.x - goal_pose.pose.position.x) > 0.4 or
+			abs(self.cur_position.pose.position.y - goal_pose.pose.position.y) > 0.4 or
+			abs(self.cur_position.pose.position.z - goal_pose.pose.position.z) > 0.2
+		):
+			self.set_ned_position(goal_pose)
+			rclpy.spin_once(self, timeout_sec=0.05)
+		self.get_logger().info('Finished ned_move')
+		
 	def takeoff(self, altitude):
 		req = CommandTOL.Request()
 		req.altitude = altitude
@@ -160,14 +165,12 @@ class Drone(Node):
 		# req.longitude = 0.0
 		#Sends request
 		future = self.takeoff_client.call_async(req)
-		#Listens for request
-		#Waits for request
 		rclpy.spin_until_future_complete(self, future)
 
 		if future.result() is not None:
 			self.get_logger().info(f'takeoff result: {future.result()}')
 			if future.result().success:
-				self.get_logger().info('Taking off to altitude: {altitude}')
+				self.get_logger().info(f'Taking off to altitude: {altitude}')
 				while self.cur_position.pose.position.z < 0.95 * altitude:
 					self.get_logger().info(f'z: {self.cur_position.pose.position.z:.2f}')
 					rclpy.spin_once(self, timeout_sec=0.05)
@@ -179,21 +182,12 @@ class Drone(Node):
 			self.get_logger().error('Failed to takeoff')
 			return False
 
-# Need to add the autonomy_py. because after colcon build, scripts get installed to:
-# install/autonomy_py/lib/python3.x/site-packages/autonomy_py/
-# sys.path sees only autonomy_py, so drone_class can't be found, need autonomy_py.drone_class
-# sys.path is basically a var that determines where on the file system Python will look for module to import
-# when you run import, python will search directory and then every other directory in sys.path
-
-
 
 def main(args=None):
-	# Starts ROS 2 engine
 	rclpy.init(args=args)
 	drone = None
 	try:
 		drone = Drone()
-		height_goal = drone.get_parameter('height_goal').get_parameter_value().double_value
 		 
 		# Wait for FCU connection
 		drone.get_logger().info('Waiting for FCU connection...')
@@ -203,18 +197,12 @@ def main(args=None):
 		
 		# Wait for first position message from FCU
 		while drone.cur_position is None:	
-			# drone.get_logger().info('Waiting for drone position')	
 			rclpy.spin_once(drone, timeout_sec=0.1)	
 		
 		# Pre-arm: stream setpoints before requesting mode/arm
 		for _ in range(50):
-			drone.set_position(
-				drone.cur_position.pose.position.x,
-				drone.cur_position.pose.position.y,
-				drone.cur_position.pose.position.z
-			)
+			drone.set_frd_position(0.0, 0.0, 0.0)
 			rclpy.spin_once(drone, timeout_sec=0.05)
-		
 		
 		# After set_mode call, wait for GUIDED confirmation
 		drone.get_logger().info('Setting mode to GUIDED')
@@ -227,7 +215,6 @@ def main(args=None):
 			drone.get_logger().info(f'Waiting for GUIDED mode, current: {drone.state.mode}')
 			rclpy.spin_once(drone, timeout_sec=0.1)
 
-
 		# Arm
 		if not drone.arm():
 			return
@@ -238,21 +225,18 @@ def main(args=None):
 			rclpy.spin_once(drone, timeout_sec=0.1)
 
 		drone.get_logger().info('Armed! Sending takeoff...')
+		drone.home = drone.cur_position
 		z_start = drone.cur_position.pose.position.z
 		takeoff_height = drone.get_parameter('takeoff_height').get_parameter_value().double_value + z_start 
 		drone.get_logger().info(f'z_start: {z_start}')
-		drone.get_logger().info(f'takeoff_height : {takeoff_height}')
+		drone.get_logger().info(f'takeoff_height: {takeoff_height}')
+
 		# Takeoff
 		if not drone.takeoff(takeoff_height):
 			return
-	
+
 		while rclpy.ok():
-			# Getting to proper altitude for hover
-			x_goal = drone.cur_position.pose.position.x				
-			y_goal = drone.cur_position.pose.position.y
-			z_goal = drone.cur_position.pose.position.z + height_goal 
-			drone.go_to_position(x_goal, y_goal, z_goal)
-			drone.hold_position(x_goal, y_goal, z_goal, 5)
+			drone.frd_move(1.5)			
 			if drone.set_mode('RTL'):
 				drone.get_logger().info('RTL engaged, letting FC handle return')
 				break
@@ -260,11 +244,8 @@ def main(args=None):
 				drone.get_logger().info('RTL failed. Land engaged. Attempting to autonomously land')
 				break
 			else:
-				drone.get_logger().info('Land failed. Manually land')
-				x_goal = 0.0
-				y_goal = 0.0
-				z_goal = 0.0
-				drone.go_to_position(x_goal, y_goal, z_goal)
+				drone.get_logger().info('Land failed. Flying home manually.')
+				drone.ned_move(drone.home)
 				drone.disarm()
 				return
 
@@ -273,7 +254,8 @@ def main(args=None):
 	except Exception as e:
 		drone.get_logger().error(f'An error occurred: {e}')
 	finally:
-		drone.destroy_node()
+		if drone is not None:
+			drone.destroy_node()
 		rclpy.shutdown()
 
 

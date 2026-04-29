@@ -18,8 +18,10 @@ def generate_launch_description():
         executable='hover',
 		parameters=[
 			{
-				'height_goal': 0.5,
-				'takeoff_height': 0.2
+				'takeoff_height': 0.2,
+				'forward': 1,
+				'right': 0,
+				'down': 0
 			}
 		]
     )
@@ -29,7 +31,6 @@ def generate_launch_description():
         executable='intercept',
         parameters=[
 			{
-				'height_goal': 0.5,
 				'takeoff_height': 0.2
 			}
 		]

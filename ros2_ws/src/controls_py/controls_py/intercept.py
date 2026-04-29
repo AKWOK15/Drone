@@ -8,7 +8,7 @@ from rclpy.qos import QoSProfile, ReliabilityPolicy
 from mavros_msgs.srv import CommandBool, SetMode, CommandTOL
 from mavros_msgs.msg import State, PositionTarget
 import time
-from std.msgs.msg import Int8
+from std_msgs.msg import Int8
 
 qos = QoSProfile(depth=10, reliability=ReliabilityPolicy.BEST_EFFORT)
 
@@ -20,10 +20,9 @@ class Drone(Node):
 	# Code came from https://github.com/mavlink/mavros/blob/ros2/mavros_examples/mavros_examples/flight_drone.py
 	def __init__(self):
 		super().__init__('intercept')
-		self.declare_parameter('height_goal', 1.0)
 		self.declare_parameter('takeoff_height', 0.5)
 		self.target = None
-		self.cur_position = None
+		self.ned_cur_position = None
 		self.state = State()
 		self.home = None
 		self.fps = 0
@@ -38,10 +37,11 @@ class Drone(Node):
 		self.takeoff_client = self.create_client(CommandTOL, '/mavros/cmd/takeoff')
 
 		# Publishers
-		self.position_publisher = self.create_publisher(PositionTarget, '/mavros/setpoint_raw/local', 10)
+		self.frd_position_publisher = self.create_publisher(PositionTarget, '/mavros/setpoint_raw/local', 10)
+		self.ned_position_publisher = self.create_publisher(PoseStamped, '/mavros/setpoint_position/local', 20)
 
 		# Subscribers
-		self.position_subscriber = self.create_subscription(
+		self.ned_position_subscriber = self.create_subscription(
 			PoseStamped,
 			'/mavros/local_position/pose',
 			self.position_callback,
@@ -50,12 +50,11 @@ class Drone(Node):
 		self.state_subscriber = self.create_subscription(State, '/mavros/state', self.state_callback, 10)
 		self.person_position_subscriber = self.create_subscription(Point, 'person_position', self.person_position_callback, 10)
 		self.fps_subscriber = self.create_subscription(Int8, 'fps', self.fps_callback, 10)
-		
-		# Watchdog timer: fires every second, checks how long since last person_position
+
+		# Watchdog timer: fires every 0.5s, checks how long since last person_position
 		self.watchdog_timer = self.create_timer(0.5, self.person_position_watchdog)
 
-
- -------------------------------------------------------------------------
+	# -------------------------------------------------------------------------
 	# Watchdog
 	# -------------------------------------------------------------------------
 
@@ -83,11 +82,9 @@ class Drone(Node):
 		elif self.set_mode('LAND'):
 			self.get_logger().warn('RTL failed from watchdog. LAND engaged.')
 		else:
-			self.get_logger().error('Both RTL and LAND failed from watchdog. Attempting manual land.')
-			while abs(self.cur_position.pose.position.z - self.home.position.z) > 0.2:
-				self.set_position(True)
-				rclpy.spin_once(self, timeout_sec=0.05)
-			self.get_logger().info('Landed')
+			self.get_logger().error('Both RTL and LAND failed. Flying home manually.')
+			self.ned_move(self.home)
+			self.get_logger().info('Reached home.')
 
 	# -------------------------------------------------------------------------
 	# Callbacks
@@ -103,37 +100,55 @@ class Drone(Node):
 			self.rtl_triggered = False
 
 	def position_callback(self, msg):
-		self.cur_position = msg
+		self.ned_cur_position = msg
 
 	def state_callback(self, msg):
 		self.state = msg
 
 	def fps_callback(self, msg):
 		self.fps = msg.data
+
 	# -------------------------------------------------------------------------
 	# Flight commands
 	# -------------------------------------------------------------------------
 
-	# Set home in case it needs to manually land
 	def set_home(self, msg):
+		# Stores full PoseStamped so ned_move can use it directly
 		self.home = msg
 		self.get_logger().info(f'Set home: {msg}')
 
-	def set_position(self, home=False):
+	def set_frd_position(self, forward, right, down):
+		"""Publish a body-frame offset setpoint (MAV_FRAME_BODY_OFFSET_NED).
+		x=forward, y=right, z=down."""
 		msg = PositionTarget()
 		msg.header.frame_id = "home"
 		msg.coordinate_frame = 9
 		msg.type_mask = 0b110111111000
-		if home:
-			msg.position.x = self.home.pose.position.x
-			msg.position.y = self.home.pose.position.y
-			msg.position.z = self.home.pose.position.z
-		else:
-			msg.position.x = self.target.x
-			msg.position.y = self.target.y
-			msg.position.z = self.target.z
+		msg.position.x = forward
+		msg.position.y = right
+		msg.position.z = down
 		msg.header.stamp = self.get_clock().now().to_msg()
-		self.position_publisher.publish(msg)
+		self.frd_position_publisher.publish(msg)
+
+	def frd_move(self):
+		"""Publish one tracking setpoint toward self.target in body frame."""
+		self.set_frd_position(self.target.x, self.target.y, self.target.z)
+
+	def set_ned_position(self, goal_pose):
+		"""Publish a world-frame (ENU) position setpoint via PoseStamped."""
+		self.ned_position_publisher.publish(goal_pose)
+
+	def ned_move(self, goal_pose):
+		"""Fly to goal_pose in world frame and wait for convergence on all 3 axes."""
+		self.get_logger().info('Started ned_move')
+		while (
+			abs(self.ned_cur_position.pose.position.x - goal_pose.pose.position.x) > 0.3 or
+			abs(self.ned_cur_position.pose.position.y - goal_pose.pose.position.y) > 0.3 or
+			abs(self.ned_cur_position.pose.position.z - goal_pose.pose.position.z) > 0.2
+		):
+			self.set_ned_position(goal_pose)
+			rclpy.spin_once(self, timeout_sec=0.05)
+		self.get_logger().info('Finished ned_move')
 
 	def arm(self):
 		self.get_logger().info('Arm started')
@@ -190,14 +205,6 @@ class Drone(Node):
 			self.get_logger().error('Set mode service call failed')
 			return False
 
-	def hold_position(self, duration):
-		self.get_logger().info('Started hold_position')
-		cur_time = time.time()
-		while time.time() - cur_time < duration:
-			self.set_position()
-			rclpy.spin_once(self, timeout_sec=0.05)
-		self.get_logger().info('Finished hold_position')
-
 	def takeoff(self, altitude):
 		req = CommandTOL.Request()
 		req.altitude = altitude
@@ -211,8 +218,8 @@ class Drone(Node):
 		if future.result() is not None:
 			self.get_logger().info(f'Takeoff result: {future.result()}')
 			if future.result().success:
-				while self.cur_position.pose.position.z < 0.95 * altitude:
-					self.get_logger().info(f'Taking off, current altitude: {self.cur_position.pose.position.z}')
+				while self.ned_cur_position.pose.position.z < 0.95 * altitude:
+					self.get_logger().info(f'Taking off, current altitude: {self.ned_cur_position.pose.position.z}')
 					rclpy.spin_once(self, timeout_sec=0.05)
 				return True
 			else:
@@ -228,7 +235,6 @@ def main(args=None):
 	drone = None
 	try:
 		drone = Drone()
-		height_goal = drone.get_parameter('height_goal').get_parameter_value().double_value
 
 		# Wait for FCU connection
 		drone.get_logger().info('Waiting for FCU connection...')
@@ -236,16 +242,15 @@ def main(args=None):
 			rclpy.spin_once(drone, timeout_sec=0.1)
 		drone.get_logger().info('FCU connected!')
 
-		while drone.cur_position is None:
+		while drone.ned_cur_position is None:
 			drone.get_logger().info('Waiting for drone position...')
 			rclpy.spin_once(drone, timeout_sec=0.1)
 
-		drone.set_home(drone.cur_position)
+		drone.set_home(drone.ned_cur_position)
 
 		# Pre-arm: stream setpoints before requesting mode/arm
 		for _ in range(50):
-			drone.set_position(True)
-			# don't want timeout to be too low because if ROS executor is busy during short spin, setpoint stream could dropbs
+			drone.set_frd_position(0.0, 0.0, 0.0)
 			rclpy.spin_once(drone, timeout_sec=0.05)
 
 		drone.get_logger().info('Setting mode to GUIDED')
@@ -262,12 +267,13 @@ def main(args=None):
 		while drone.target is None:
 			rclpy.spin_once(drone, timeout_sec=0.1)
 
-		drone.get_logger().info('Target acquired. Proceeding to arm.')
-		
+		drone.get_logger().info('Target acquired. Proceeding to wait for FPS.')
+
 		drone.get_logger().info(f'Waiting for {drone.required_fps} fps')
 		while drone.fps < drone.required_fps:
 			drone.get_logger().info(f'fps: {drone.fps}')
 			rclpy.spin_once(drone, timeout_sec=0.1)
+
 		if not drone.arm():
 			return
 
@@ -276,22 +282,17 @@ def main(args=None):
 			rclpy.spin_once(drone, timeout_sec=0.1)
 
 		drone.get_logger().info('Armed! Sending takeoff...')
-		z_start = drone.cur_position.pose.position.z
+		z_start = drone.ned_cur_position.pose.position.z
 		takeoff_height = drone.get_parameter('takeoff_height').get_parameter_value().double_value + z_start
 		if not drone.takeoff(takeoff_height):
 			return
 
-		# Main flight loop — watchdog runs automatically via timer
-		while rclpy.ok():
-			while not drone.rtl_triggered:
-				drone.set_position()
-				rclpy.spin_once(drone, timeout_sec=0.05)
-			# If watchdog triggered RTL, let the FC handle it and exit the loop
-			if drone.rtl_triggered:
-				drone.get_logger().info('No new messages from track_person. Moving to RTL')
-				break
-
+		while rclpy.ok() and not drone.rtl_triggered:
+			drone.frd_move()
 			rclpy.spin_once(drone, timeout_sec=0.05)
+
+		if drone.rtl_triggered:
+			drone.get_logger().info('RTL triggered — exiting flight loop.')
 
 	except KeyboardInterrupt:
 		drone.get_logger().info('Flight interrupted by user')
