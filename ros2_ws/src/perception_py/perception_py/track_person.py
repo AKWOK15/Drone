@@ -9,6 +9,8 @@ from mavros_msgs.msg import State
 from ultralytics import YOLO
 import numpy as np
 import time
+import threading
+import queue
 from fps_counter import FPSCounter
 import numpy as np
 from inference_sdk import InferenceHTTPClient 
@@ -28,11 +30,11 @@ class Track(Node):
 		#Frame is vertical 2D plane whereas Ardupilot is horizontal 2D plane
 		#frame_z is the depth and Ardupilot x is forward, assuming that coordinate frame is FRAME_BODY_OFFSET_NED
 		#Convert from mm to meters
-		msg.x = int(frame_z/1000)
+		msg.x = frame_z/1000
 		#frame x is 0 at center of frame and positive to the right, ardupilot y is positive to the right
-		msg.y = int(frame_x/1000)
+		msg.y = frame_x/1000
 		#frame y is 0 at center and is height, Ardupilot z is altitude. If you go down, frame y and ArduPilot z increase. 
-		msg.z = int(frame_y/1000)
+		msg.z = frame_y/1000
 		self.set_point(msg)
 
 def resizeAndPad(img, size, padColor=0):
@@ -73,6 +75,13 @@ def resizeAndPad(img, size, padColor=0):
 
 	return scaled_img, pad_left, pad_top, scale
 
+def video_writer_thread(frame_queue, writer):
+	while True:
+		frame = frame_queue.get()
+		if frame is None:  # poison pill to stop thread
+			break
+		writer.write(frame)
+
 def main(args=None):
 	rclpy.init(args=args)
 
@@ -82,9 +91,15 @@ def main(args=None):
 	shooter_id = -1
 	FPS = 10
 	fourcc = cv2.VideoWriter_fourcc(*'avc1')
-	out_preview = cv2.VideoWriter('track_person.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
-	out_cropped = cv2.VideoWriter('cropped_track_person.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
-	# 2. Connect to your workspace
+	start_time = time.time()
+	out_preview = cv2.VideoWriter(f'track_person_{start_time}.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
+
+	# Start video writer thread
+	frame_queue = queue.Queue(maxsize=10)
+	writer_thread = threading.Thread(target=video_writer_thread, args=(frame_queue, out_preview), daemon=True)
+	writer_thread.start()
+
+	# Model API
 	client = InferenceHTTPClient(
 	api_url="https://serverless.roboflow.com",
 	api_key="1dUvrWAbdffrk9p2hfU0"
@@ -166,6 +181,7 @@ def main(args=None):
 		object_tracker.passthroughTrackerFrame.link(xout_frame.input)
 		object_tracker.out.link(tracker_output.input)
 
+		track.get_logger().info('made it to pipeline')
 		print('made it to pipeline')
 		with dai.Device(pipeline) as device:
 			q_preview = device.getOutputQueue(name="preview", maxSize=4, blocking=False)
@@ -193,21 +209,19 @@ def main(args=None):
 					x_mm = t.spatialCoordinates.x
 					y_mm = t.spatialCoordinates.y
 					z_mm = t.spatialCoordinates.z
-
-					
-					
-					
+					track.get_logger().info(f'id: {t.id}')
 					print(f'id: {t.id}')
 
 					# Draw bounding box
 					cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
-			
-
 					# Draw crosshair at center of box
 					cx = (x1 + x2) // 2
 					cy = (y1 + y2) // 2
 					cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
+					
+					cv2.putText(frame, f'ID: {t.id}', (x1, y1-10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)	
+					# If we haven't found shooter yet
 					if shooter_id == -1:
 						# Expand bounding box for gun detection crop
 						temp_mag_x1 = int(x1 - (x1 * mag_width))
@@ -225,7 +239,6 @@ def main(args=None):
 
 						# Resize + pad crop to 640x640; returns pad offsets and scale factor
 						cropped_padded, pad_left, pad_top, scale = resizeAndPad(cropped, (640, 640))
-						out_cropped.write(cropped_padded)
 						result = client.run_workflow(
 							workspace_name="aidans-workspace-dqphd",
 							workflow_id="general-segmentation-api-5",
@@ -237,14 +250,11 @@ def main(args=None):
 						predictions = result[0]['predictions']
 						print(f'predictions: {predictions}')						
 						for pred in predictions.get("predictions"):
-							# if len(result.boxes) == 0:
-							# 	continue
-							# box = result.boxes[0]
-							# bb_x1, bb_y1, bb_x2, bb_y2 = map(int, box.xyxy[0])
-							# out_cropped.write(result.plot())
 							x, y, w, h = int(pred['x']), int(pred['y']), int(pred['width']), int(pred['height'])
 							bb_x1, bb_y1 = x - w//2, y - h//2
 							bb_x2, bb_y2 = x + w//2, y + h//2
+							cv2.rectangle(cropped_padded, (bb_x1, bb_y1), (bb_x2, bb_y2), (0, 0, 255), 3)
+							cv2.imwrite(f'cropped_{start_time}.png', cropped_padded)
 							# Step 1: Remove padding offset (same top-left offset for all corners)
 							np_x1 = bb_x1 - pad_left
 							np_y1 = bb_y1 - pad_top
@@ -265,26 +275,37 @@ def main(args=None):
 
 							cv2.rectangle(frame, (og_x1, og_y1), (og_x2, og_y2), (0, 0, 255), 3)
 							shooter_id = t.id
+							cv2.imshow('Gun detection', frame)
 							print(f'shooter_id: {shooter_id}')
+							# Wait until key press
+							cv2.waitKey(0)
+							
 					if shooter_id != -1:
-						self.convert_point(x_mm, y_mm, z_mm)
+						track.convert_point(x_mm, y_mm, z_mm)
 						label = f"Shooter ID: {shooter_id} | X: {x_mm:.0f} | Y: {y_mm:.0f} | Depth: {z_mm:.0f} mm"
 						cv2.putText(frame, label, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+
 				# Always write frame (even with no detections) - outside for loop
 				fps_counter.tick()
 				frame = fps_counter.draw(frame)
-				out_preview.write(frame)
-				rclpy.spin_once(track, timeout_sec=0.05)
+				print(f'fps: {fps_counter.fps()}')
+				# Non-blocking enqueue — drop frame if writer thread is behind
+				if not frame_queue.full():
+					frame_queue.put(frame.copy())
+
+				rclpy.spin_once(track, timeout_sec=0.001)
 
 	except KeyboardInterrupt:
 		track.get_logger().info('Flight interrupted by user')
 	except Exception as e:
 		track.get_logger().error(f'An error occurred: {e}')
 	finally:
+		# Send poison pill to stop writer thread cleanly
+		frame_queue.put(None)
+		writer_thread.join()
 		out_preview.release()
-		out_cropped.release()
 		track.destroy_node()
 		rclpy.shutdown()
-
+		cv2.destroyAllWindows()
 if __name__ == '__main__':
 	main()

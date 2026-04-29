@@ -77,7 +77,7 @@ class Drone(Node):
 			self.get_logger().error('Both RTL and LAND failed from watchdog. Attempting manual land.')
 			while abs(self.cur_position.position.z - self.home.position.z) > 0.01:
 				self.set_position(True)
-				rclpy.spin_once(self, timeout_sec=0.05)
+				rclpy.spin_once(self, timeout_sec=0.001)
 			self.get_logger().info('Landed')
 
 	# -------------------------------------------------------------------------
@@ -184,7 +184,7 @@ class Drone(Node):
 		cur_time = time.time()
 		while time.time() - cur_time < duration:
 			self.set_position()
-			rclpy.spin_once(self, timeout_sec=0.05)
+			rclpy.spin_once(self, timeout_sec=0.001)
 		self.get_logger().info('Finished hold_position')
 
 	def takeoff(self, altitude):
@@ -202,7 +202,7 @@ class Drone(Node):
 			if future.result().success:
 				while self.cur_position.position.z < 0.95 * altitude:
 					self.get_logger().info(f'Taking off, current altitude: {self.cur_position.position.z}')
-					rclpy.spin_once(self, timeout_sec=0.05)
+					rclpy.spin_once(self, timeout_sec=0.001)
 				return True
 			else:
 				self.get_logger().warn('Failed to takeoff')
@@ -234,7 +234,7 @@ def main(args=None):
 		# Pre-arm: stream setpoints before requesting mode/arm
 		for _ in range(50):
 			drone.set_position()
-			rclpy.spin_once(drone, timeout_sec=0.05)
+			rclpy.spin_once(drone, timeout_sec=0.001)
 
 		drone.get_logger().info('Setting mode to GUIDED')
 		if not drone.set_mode('GUIDED'):
@@ -273,7 +273,7 @@ def main(args=None):
 				break
 
 			drone.set_position()
-			rclpy.spin_once(drone, timeout_sec=0.05)
+			rclpy.spin_once(drone, timeout_sec=0.001)
 
 	except KeyboardInterrupt:
 		drone.get_logger().info('Flight interrupted by user')
