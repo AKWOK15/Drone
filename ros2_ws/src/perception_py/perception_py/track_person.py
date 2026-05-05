@@ -31,13 +31,13 @@ class Track(Node):
 	def convert_point(self, frame_x, frame_y, frame_z):
 		msg = Point()
 		#Frame is vertical 2D plane whereas Ardupilot is horizontal 2D plane
-		#frame_z is the depth and Ardupilot x is forward, assuming that coordinate frame is FRAME_BODY_OFFSET_NED
+		#frame_z is the depth and mavros x is forward, assuming that coordinate frame is FRAME_BODY_OFFSET_NED
 		#Convert from mm to meters
 		msg.x = frame_z/1000
-		#frame x is 0 at center of frame and positive to the right, ardupilot y is positive to the right
-		msg.y = frame_x/1000
-		#frame y is 0 at center and is height, Ardupilot z is altitude. If you go down, frame y and ArduPilot z increase. 
-		msg.z = frame_y/1000
+		#frame x is 0 at center of frame and positive to the right, mavros positive y is left
+		msg.y = -frame_x/1000
+		#frame y is 0 at center and is height, mavros z is altitude. If you go down, frame y increases but mavros z decreases 
+		msg.z = -frame_y/1000
 		self.publish_point(msg)
 
 def resizeAndPad(img, size, padColor=0):
@@ -92,7 +92,7 @@ def main(args=None):
 	mag_width = 0.09
 	mag_height = 0.02
 	shooter_id = -1
-	FPS = 10
+	FPS = 7
 	fourcc = cv2.VideoWriter_fourcc(*'avc1')
 	start_time = time.time()
 	out_preview = cv2.VideoWriter(f'track_person_{start_time}.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
@@ -278,7 +278,7 @@ def main(args=None):
 
 							cv2.rectangle(frame, (og_x1, og_y1), (og_x2, og_y2), (0, 0, 255), 3)
 							shooter_id = t.id
-							cv2.imshow('Gun detection', frame)
+							# cv2.imshow('Gun detection', frame)
 							print(f'shooter_id: {shooter_id}')
 							# Wait until key press
 							cv2.waitKey(0)
@@ -286,7 +286,7 @@ def main(args=None):
 					if shooter_id != -1:
 						track.convert_point(x_mm, y_mm, z_mm)
 						label = f"Shooter ID: {shooter_id} | X: {x_mm:.0f} | Y: {y_mm:.0f} | Depth: {z_mm:.0f} mm"
-						cv2.putText(frame, label, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+						cv2.putText(frame, label, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 2)
 
 				# Always write frame (even with no detections) - outside for loop
 				fps_counter.tick()

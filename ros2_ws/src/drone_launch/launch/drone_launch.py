@@ -15,23 +15,20 @@ def generate_launch_description():
 	#When I call drone class from within hover node, ROS2 will look up parameters registered to that node name
     hover_node = Node(
         package='controls_py',
-        executable='hover',
+        executable='hover_node',
 		parameters=[
 			{
-				'takeoff_height': 0.2,
-				'forward': 1,
-				'right': 0,
-				'down': 0
+				'takeoff_height': 1.5,
 			}
 		]
     )
     
     intercept_node = Node(
         package='controls_py',
-        executable='intercept',
+        executable='intercept_node',
         parameters=[
 			{
-				'takeoff_height': 0.2
+				'takeoff_height': 0.6
 			}
 		]
     )
@@ -43,5 +40,6 @@ def generate_launch_description():
     return LaunchDescription([
         mavros_node,
         hover_node,
-        #track_person_node
+        # intercept_node,
+        # track_person_node
     ])
