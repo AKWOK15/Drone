@@ -25,7 +25,7 @@ setup(
     entry_points={
         'console_scripts': [
             #executable is drone_controller = package name.script name:script funciton 
-            "hover_node = controls_py.hover:main",
+            "takeoff_rtl_node = controls_py.takeoff_rtl:main",
             "intercept_node = controls_py.intercept:main"
             
         ],

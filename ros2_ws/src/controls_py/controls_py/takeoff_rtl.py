@@ -67,11 +67,11 @@ def main(args=None):
 			return
 
 		while rclpy.ok():
-			goal_pose = PoseStamped()
-			goal_pose.pose.position.x = drone.home.pose.position.x + 10
-			goal_pose.pose.position.y = drone.home.pose.position.y	
-			goal_pose.pose.position.z = drone.home.pose.position.z
-			drone.enu_move(goal_pose)		
+#			goal_pose = PoseStamped()
+#			goal_pose.pose.position.x = drone.home.pose.position.x + 10
+#			goal_pose.pose.position.y = drone.home.pose.position.y	
+#			goal_pose.pose.position.z = drone.home.pose.position.z
+#			drone.enu_move(goal_pose)		
 			drone.rtl_or_land()
 
 	except KeyboardInterrupt:

@@ -12,16 +12,19 @@ import numpy as np
 import time
 import threading
 import queue
-from fps_counter import FPSCounter
+from perception_py.fps_counter import FPSCounter
 import numpy as np
 from inference_sdk import InferenceHTTPClient 
+import os
 
 class Track(Node):
 	def __init__(self):
 		#Node name
 		super().__init__('track_person')
+		self.declare_parameter('data_subfolder', 'land_rtl_node_1_05-06_14:50')
 		self.point_publisher = self.create_publisher(Point, 'person_position', 10)
 		self.fps_publisher = self.create_publisher(Int8, 'fps', 10)
+
 	def publish_point(self, msg):
 		self.point_publisher.publish(msg)
 
@@ -39,6 +42,7 @@ class Track(Node):
 		#frame y is 0 at center and is height, mavros z is altitude. If you go down, frame y increases but mavros z decreases 
 		msg.z = -frame_y/1000
 		self.publish_point(msg)
+		return msg
 
 def resizeAndPad(img, size, padColor=0):
 	h, w = img.shape[:2]
@@ -87,15 +91,19 @@ def video_writer_thread(frame_queue, writer):
 
 def main(args=None):
 	rclpy.init(args=args)
-
+	track = Track()
+	data_subfolder = track.get_parameter('data_subfolder').get_parameter_value().string_value
+	track.get_logger().info(f'data_subfolder: {data_subfolder}')
 	DET_INPUT_SIZE = (640, 640)
 	mag_width = 0.09
 	mag_height = 0.02
 	shooter_id = -1
+	shooter_confidence = 0	
 	FPS = 7
 	fourcc = cv2.VideoWriter_fourcc(*'avc1')
 	start_time = time.time()
-	out_preview = cv2.VideoWriter(f'track_person_{start_time}.mp4', fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
+	out_path = os.path.join(data_subfolder, 'track_person.mp4')
+	out_preview = cv2.VideoWriter(out_path, fourcc, FPS, (DET_INPUT_SIZE[0], DET_INPUT_SIZE[1]))
 
 	# Start video writer thread
 	frame_queue = queue.Queue(maxsize=10)
@@ -110,7 +118,6 @@ def main(args=None):
 	fps_counter = FPSCounter()
 
 	try:
-		track = Track()
 		x_goal = 0.0
 		y_goal = 0.0
 		z_goal = 0.0
@@ -254,10 +261,12 @@ def main(args=None):
 						print(f'predictions: {predictions}')						
 						for pred in predictions.get("predictions"):
 							x, y, w, h = int(pred['x']), int(pred['y']), int(pred['width']), int(pred['height'])
+							shooter_confidence = pred['confidence']
 							bb_x1, bb_y1 = x - w//2, y - h//2
 							bb_x2, bb_y2 = x + w//2, y + h//2
-							cv2.rectangle(cropped_padded, (bb_x1, bb_y1), (bb_x2, bb_y2), (0, 0, 255), 3)
-							cv2.imwrite(f'cropped_{start_time}.png', cropped_padded)
+							cv2.rectangle(cropped_padded, (bb_x1, bb_y1), (bb_x2, bb_y2), (0, 0, 255), 1)
+							cropped_padded_path = os.path.join(data_subset, "cropped.png")
+							cv2.imwrite(cropped_padded_path, cropped_padded)
 							# Step 1: Remove padding offset (same top-left offset for all corners)
 							np_x1 = bb_x1 - pad_left
 							np_y1 = bb_y1 - pad_top
@@ -284,8 +293,8 @@ def main(args=None):
 							cv2.waitKey(0)
 							
 					if shooter_id != -1:
-						track.convert_point(x_mm, y_mm, z_mm)
-						label = f"Shooter ID: {shooter_id} | X: {x_mm:.0f} | Y: {y_mm:.0f} | Depth: {z_mm:.0f} mm"
+						coordinates = track.convert_point(x_mm, y_mm, z_mm)
+						label = f"Shooter ID: {shooter_id} | Confidence: {shooter_confidence} | F: {coordinates.x:.0f} m | L: {coordinates.y:.0f} m | U: {coordinates.z:.0f} m"
 						cv2.putText(frame, label, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 2)
 
 				# Always write frame (even with no detections) - outside for loop

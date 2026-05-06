@@ -223,14 +223,20 @@ class BaseDroneNode(Node):
 		#Sends request
 		future = self.takeoff_client.call_async(req)
 		rclpy.spin_until_future_complete(self, future)
-
+		
+		duration = 5
 		if future.result() is not None:
 			self.get_logger().info(f'takeoff result: {future.result()}')
 			if future.result().success:
+				start = time.time()
 				self.get_logger().info(f'Taking off to altitude: {altitude}')
-				while self.enu_cur_position.pose.position.z < 0.95 * altitude:
+				while time.time() - start < duration:	
 					self.get_logger().info(f'enu z: {self.enu_cur_position.pose.position.z:.2f}')
 					rclpy.spin_once(self, timeout_sec=0.05)
+
+				#while self.enu_cur_position.pose.position.z < 0.95 * altitude:
+				#	self.get_logger().info(f'enu z: {self.enu_cur_position.pose.position.z:.2f}')
+				#	rclpy.spin_once(self, timeout_sec=0.05)
 				self.get_logger().info(f'Finished takeoff')
 				return True
 			else:
