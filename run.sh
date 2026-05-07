@@ -49,6 +49,8 @@ trap killSubproc INT TERM EXIT
 
 cd ros2_ws
 source install/setup.bash
-ros2 launch drone_launch drone_launch.py control_node_param:="${control_node}" data_subfolder_param:="${final_directory}" & 
+ros2 launch drone_launch drone_launch.py control_node_param:="${control_node}" data_subfolder_param:="${final_directory}" | tee ${final_directory}/log.txt &
+cd ${final_directory}
+ros2 bag record -o ros2_bag /fps /person_position /mavros/local_position/pose /mavros/setpoint_raw/local /mavros/state &
 
 wait
