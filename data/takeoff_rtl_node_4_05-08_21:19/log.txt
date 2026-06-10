@@ -1,0 +1,1433 @@
+[INFO] [launch]: All log files can be found below /home/aidankwok/.ros/log/2026-05-08-21-19-34-589184-aidankwok-1789
+[INFO] [launch]: Default logging verbosity is set to INFO
+[launch_setup] control_node: takeoff_rtl_node
+[launch_setup] data_subfolder: /home/aidankwok/Drone/data/takeoff_rtl_node_4_05-08_21:19
+[launch_setup] >>> Appending takeoff_rtl_node
+[INFO] [mavros_node-1]: process started with pid [1806]
+[INFO] [track_person-2]: process started with pid [1808]
+[INFO] [takeoff_rtl_node-3]: process started with pid [1810]
+[mavros_node-1] [INFO] [1778289574.979042237] [mavros_node]: Starting mavros_node container
+[mavros_node-1] [INFO] [1778289574.981550961] [mavros_node]: FCU URL: udp://127.0.0.1:14550@
+[mavros_node-1] [INFO] [1778289574.985242529] [mavros_node]: GCS URL: 
+[mavros_node-1] [INFO] [1778289574.988300602] [mavros_node]: UAS Prefix: /uas1
+[mavros_node-1] [INFO] [1778289574.990969806] [mavros_node]: Starting mavros router node
+[mavros_node-1] [INFO] [1778289575.029687459] [mavros_router]: Built-in SIMD instructions: ARM NEON
+[mavros_node-1] [INFO] [1778289575.031853482] [mavros_router]: Built-in MAVLink package version: 2026.3.3
+[mavros_node-1] [INFO] [1778289575.034204855] [mavros_router]: Known MAVLink dialects: common ardupilotmega ASLUAV AVSSUAS all csAirLink cubepilot development icarous loweheiser marsh matrixpilot paparazzi standard stemstudios storm32 uAvionix ualberta
+[mavros_node-1] [INFO] [1778289575.036886504] [mavros_router]: MAVROS Router started
+[mavros_node-1] [INFO] [1778289575.039928780] [mavros_node]: Starting mavros uas node
+[mavros_node-1] [INFO] [1778289575.212484052] [mavros_router]: Requested to add endpoint: type: 0, url: udp://127.0.0.1:14550@
+[mavros_node-1] [INFO] [1778289575.215272441] [mavros_router]: Endpoint link[1000] created
+[mavros_node-1] [INFO] [1778289575.220310445] [mavros_router]: link[1000] opened successfully
+[mavros_node-1] [INFO] [1778289575.225665391] [mavros_router]: Requested to add endpoint: type: 2, url: /uas1
+[mavros_node-1] [INFO] [1778289575.232825270] [mavros_router]: Endpoint link[1001] created
+[mavros_node-1] [INFO] [1778289575.223159223] [mavros]: UAS Executor started, threads: 4
+[mavros_node-1] [INFO] [1778289575.277895714] [mavros_router]: link[1000] detected remote address 1.1
+[mavros_node-1] [INFO] [1778289575.280736566] [mavros_router]: link[1001] opened successfully
+[mavros_node-1] [INFO] [1778289575.364273294] [mavros]: Plugin actuator_control created
+[mavros_node-1] [INFO] [1778289575.370980268] [mavros]: Plugin actuator_control initialized
+[mavros_node-1] [INFO] [1778289575.451548275] [mavros_router]: link[1000] detected remote address 254.190
+[mavros_node-1] [INFO] [1778289575.507774313] [mavros]: Plugin adsb created
+[mavros_node-1] [INFO] [1778289575.514896340] [mavros]: Plugin adsb initialized
+[mavros_node-1] [INFO] [1778289575.582072861] [mavros]: Plugin altitude created
+[mavros_node-1] [INFO] [1778289575.586835848] [mavros]: Plugin altitude initialized
+[mavros_node-1] [INFO] [1778289575.663581250] [mavros]: Plugin cam_imu_sync created
+[mavros_node-1] [INFO] [1778289575.668941807] [mavros]: Plugin cam_imu_sync initialized
+[mavros_node-1] [INFO] [1778289575.717775282] [mavros]: Plugin camera created
+[mavros_node-1] [INFO] [1778289575.718213854] [mavros]: Plugin camera initialized
+[mavros_node-1] [INFO] [1778289575.796798077] [mavros]: Plugin cellular_status created
+[mavros_node-1] [INFO] [1778289575.800303813] [mavros]: Plugin cellular_status initialized
+[mavros_node-1] [INFO] [1778289575.930094478] [mavros]: Plugin command created
+[mavros_node-1] [INFO] [1778289575.936101994] [mavros]: Plugin command initialized
+[mavros_node-1] [INFO] [1778289576.037145162] [mavros]: Plugin companion_process_status created
+[mavros_node-1] [INFO] [1778289576.042043186] [mavros]: Plugin companion_process_status initialized
+[mavros_node-1] [INFO] [1778289576.167136087] [mavros]: Plugin debug_value created
+[mavros_node-1] [INFO] [1778289576.173040455] [mavros]: Plugin debug_value initialized
+[mavros_node-1] [INFO] [1778289576.309568151] [mavros.distance_sensor]: DS: Plugin not configured!
+[mavros_node-1] [INFO] [1778289576.317211045] [mavros]: Plugin distance_sensor created
+[mavros_node-1] [INFO] [1778289576.317455821] [mavros]: Plugin distance_sensor initialized
+[mavros_node-1] [INFO] [1778289576.464403227] [mavros]: Plugin esc_status created
+[mavros_node-1] [INFO] [1778289576.464631281] [mavros]: Plugin esc_status initialized
+[mavros_node-1] [INFO] [1778289576.610312824] [mavros]: Plugin esc_telemetry created
+[mavros_node-1] [INFO] [1778289576.618154865] [mavros]: Plugin esc_telemetry initialized
+[mavros_node-1] [INFO] [1778289576.803589166] [mavros]: Plugin fake_gps created
+[mavros_node-1] [INFO] [1778289576.810540083] [mavros]: Plugin fake_gps initialized
+[mavros_node-1] [INFO] [1778289577.004478513] [mavros]: Plugin ftp created
+[mavros_node-1] [INFO] [1778289577.004809640] [mavros]: Plugin ftp initialized
+[mavros_node-1] [INFO] [1778289577.097687383] [mavros]: Plugin geofence created
+[mavros_node-1] [INFO] [1778289577.098254139] [mavros]: Plugin geofence initialized
+[mavros_node-1] [INFO] [1778289577.231215379] [mavros]: Plugin gimbal_control created
+[mavros_node-1] [INFO] [1778289577.241986178] [mavros]: Plugin gimbal_control initialized
+[mavros_node-1] [INFO] [1778289577.454765062] [mavros]: Plugin global_position created
+[mavros_node-1] [INFO] [1778289577.461452370] [mavros]: Plugin global_position initialized
+[mavros_node-1] [INFO] [1778289577.536422082] [mavros]: Plugin gps_input created
+[mavros_node-1] [INFO] [1778289577.536867690] [mavros]: Plugin gps_input initialized
+[mavros_node-1] [INFO] [1778289577.612068827] [mavros]: Plugin gps_rtk created
+[mavros_node-1] [INFO] [1778289577.612651471] [mavros]: Plugin gps_rtk initialized
+[mavros_node-1] [INFO] [1778289577.698692981] [mavros]: Plugin gps_status created
+[mavros_node-1] [INFO] [1778289577.698997387] [mavros]: Plugin gps_status initialized
+[mavros_node-1] [INFO] [1778289577.777288077] [mavros]: Plugin guided_target created
+[mavros_node-1] [INFO] [1778289577.777555594] [mavros]: Plugin guided_target initialized
+[mavros_node-1] [INFO] [1778289577.927577111] [mavros]: Plugin hil created
+[mavros_node-1] [INFO] [1778289577.927804424] [mavros]: Plugin hil initialized
+[mavros_node-1] [INFO] [1778289578.007477994] [mavros]: Plugin home_position created
+[mavros_node-1] [INFO] [1778289578.007761196] [mavros]: Plugin home_position initialized
+[mavros_node-1] [INFO] [1778289578.107853042] [mavros]: Plugin imu created
+[mavros_node-1] [INFO] [1778289578.108142225] [mavros]: Plugin imu initialized
+[mavros_node-1] [INFO] [1778289578.212919114] [mavros]: Plugin landing_target created
+[mavros_node-1] [INFO] [1778289578.213188556] [mavros]: Plugin landing_target initialized
+[mavros_node-1] [INFO] [1778289578.418999358] [mavros]: Plugin local_position created
+[mavros_node-1] [INFO] [1778289578.424228472] [mavros]: Plugin local_position initialized
+[mavros_node-1] [INFO] [1778289578.587508404] [mavros]: Plugin log_transfer created
+[mavros_node-1] [INFO] [1778289578.591562378] [mavros]: Plugin log_transfer initialized
+[mavros_node-1] [INFO] [1778289578.950658825] [mavros]: Plugin mag_calibration_status created
+[mavros_node-1] [INFO] [1778289578.950933508] [mavros]: Plugin mag_calibration_status initialized
+[mavros_node-1] [INFO] [1778289579.198473503] [mavros]: Plugin manual_control created
+[mavros_node-1] [INFO] [1778289579.210336166] [mavros]: Plugin manual_control initialized
+[mavros_node-1] [INFO] [1778289579.322376990] [mavros]: Plugin mocap_pose_estimate created
+[mavros_node-1] [INFO] [1778289579.325417767] [mavros]: Plugin mocap_pose_estimate initialized
+[takeoff_rtl_node-3] [INFO] [1778289579.466811510] [takeoff_rtl_node]: Waiting for FCU connection...
+[mavros_node-1] [INFO] [1778289579.509039383] [mavros]: Plugin mount_control created
+[mavros_node-1] [INFO] [1778289579.509297214] [mavros]: Plugin mount_control initialized
+[mavros_node-1] [INFO] [1778289579.603099861] [mavros]: Plugin nav_controller_output created
+[mavros_node-1] [INFO] [1778289579.603345508] [mavros]: Plugin nav_controller_output initialized
+[mavros_node-1] [INFO] [1778289579.688605803] [mavros]: Plugin obstacle_distance created
+[mavros_node-1] [INFO] [1778289579.690512050] [mavros]: Plugin obstacle_distance initialized
+[mavros_node-1] [INFO] [1778289579.796171971] [mavros]: Plugin obstacle_distance_3d created
+[mavros_node-1] [INFO] [1778289579.798496641] [mavros]: Plugin obstacle_distance_3d initialized
+[mavros_node-1] [INFO] [1778289579.889180957] [mavros]: Plugin odometry created
+[mavros_node-1] [INFO] [1778289579.895707711] [mavros]: Plugin odometry initialized
+[mavros_node-1] [INFO] [1778289580.002099072] [mavros]: Plugin onboard_computer_status created
+[mavros_node-1] [INFO] [1778289580.007351593] [mavros]: Plugin onboard_computer_status initialized
+[mavros_node-1] [INFO] [1778289580.127324385] [mavros]: Plugin open_drone_id created
+[mavros_node-1] [INFO] [1778289580.127572421] [mavros]: Plugin open_drone_id initialized
+[mavros_node-1] [INFO] [1778289580.271214689] [mavros]: Plugin optical_flow created
+[mavros_node-1] [INFO] [1778289580.271470020] [mavros]: Plugin optical_flow initialized
+[mavros_node-1] [INFO] [1778289580.271766296] [mavros]: Plugin param ignored
+[mavros_node-1] [INFO] [1778289580.426013236] [mavros]: Plugin play_tune created
+[mavros_node-1] [INFO] [1778289580.426301141] [mavros]: Plugin play_tune initialized
+[mavros_node-1] [INFO] [1778289580.626391579] [mavros]: Plugin px4flow created
+[mavros_node-1] [INFO] [1778289580.628104030] [mavros]: Plugin px4flow initialized
+[mavros_node-1] [INFO] [1778289580.832766790] [mavros]: Plugin rallypoint created
+[mavros_node-1] [INFO] [1778289580.833075565] [mavros]: Plugin rallypoint initialized
+[mavros_node-1] [INFO] [1778289580.933398671] [mavros]: Plugin rangefinder created
+[mavros_node-1] [INFO] [1778289580.933684799] [mavros]: Plugin rangefinder initialized
+[mavros_node-1] [INFO] [1778289581.048671328] [mavros]: Plugin rc_io created
+[mavros_node-1] [INFO] [1778289581.048958882] [mavros]: Plugin rc_io initialized
+[mavros_node-1] [INFO] [1778289581.147223891] [mavros]: Plugin setpoint_accel created
+[mavros_node-1] [INFO] [1778289581.147449760] [mavros]: Plugin setpoint_accel initialized
+[mavros_node-1] [INFO] [1778289581.254740525] [mavros]: Plugin setpoint_attitude created
+[mavros_node-1] [INFO] [1778289581.254998005] [mavros]: Plugin setpoint_attitude initialized
+[mavros_node-1] [INFO] [1778289581.380702077] [mavros]: Plugin setpoint_position created
+[mavros_node-1] [INFO] [1778289581.380951427] [mavros]: Plugin setpoint_position initialized
+[mavros_node-1] [INFO] [1778289581.496036605] [mavros]: Plugin setpoint_raw created
+[mavros_node-1] [INFO] [1778289581.496325233] [mavros]: Plugin setpoint_raw initialized
+[mavros_node-1] [INFO] [1778289581.621550974] [mavros]: Plugin setpoint_trajectory created
+[mavros_node-1] [INFO] [1778289581.621806620] [mavros]: Plugin setpoint_trajectory initialized
+[mavros_node-1] [INFO] [1778289581.833511096] [mavros]: Plugin setpoint_velocity created
+[mavros_node-1] [INFO] [1778289581.836431484] [mavros]: Plugin setpoint_velocity initialized
+[mavros_node-1] [INFO] [1778289581.963620009] [mavros]: Plugin sim_state created
+[mavros_node-1] [INFO] [1778289581.970801426] [mavros]: Plugin sim_state initialized
+[mavros_node-1] [INFO] [1778289582.158239783] [mavros]: Plugin sys_status created
+[mavros_node-1] [INFO] [1778289582.162080110] [mavros]: Plugin sys_status initialized
+[mavros_node-1] [INFO] [1778289582.279767161] [mavros.time]: TM: Timesync mode: MAVLINK
+[mavros_node-1] [INFO] [1778289582.325515975] [mavros]: Plugin sys_time created
+[mavros_node-1] [INFO] [1778289582.329275321] [mavros]: Plugin sys_time initialized
+[mavros_node-1] [INFO] [1778289582.449380857] [mavros]: Plugin tdr_radio created
+[mavros_node-1] [INFO] [1778289582.453921661] [mavros]: Plugin tdr_radio initialized
+[mavros_node-1] [INFO] [1778289582.593163980] [mavros]: Plugin terrain created
+[mavros_node-1] [INFO] [1778289582.593426404] [mavros]: Plugin terrain initialized
+[mavros_node-1] [INFO] [1778289582.798000780] [mavros]: Plugin trajectory created
+[mavros_node-1] [INFO] [1778289582.798291186] [mavros]: Plugin trajectory initialized
+[mavros_node-1] [INFO] [1778289582.929650648] [mavros]: Plugin tunnel created
+[mavros_node-1] [INFO] [1778289582.929958387] [mavros]: Plugin tunnel initialized
+[mavros_node-1] [INFO] [1778289583.044683384] [mavros]: Plugin vfr_hud created
+[mavros_node-1] [INFO] [1778289583.044980160] [mavros]: Plugin vfr_hud initialized
+[mavros_node-1] [INFO] [1778289583.166949963] [mavros]: Plugin vibration created
+[mavros_node-1] [INFO] [1778289583.167235127] [mavros]: Plugin vibration initialized
+[mavros_node-1] [INFO] [1778289583.332733648] [mavros]: Plugin vision_pose created
+[mavros_node-1] [INFO] [1778289583.332943758] [mavros]: Plugin vision_pose initialized
+[mavros_node-1] [INFO] [1778289583.561473056] [mavros]: Plugin vision_speed created
+[mavros_node-1] [INFO] [1778289583.561727517] [mavros]: Plugin vision_speed initialized
+[mavros_node-1] [INFO] [1778289584.086469787] [mavros]: Plugin waypoint created
+[mavros_node-1] [INFO] [1778289584.094030313] [mavros]: Plugin waypoint initialized
+[mavros_node-1] [WARN] [1778289584.216410281] [mavros.sys]: VER: broadcast request timeout, retries left 4
+[mavros_node-1] [INFO] [1778289584.338591899] [mavros]: Plugin wheel_odometry created
+[mavros_node-1] [INFO] [1778289584.338902156] [mavros]: Plugin wheel_odometry initialized
+[mavros_node-1] [INFO] [1778289584.607226385] [mavros]: Plugin wind_estimation created
+[mavros_node-1] [INFO] [1778289584.607469791] [mavros]: Plugin wind_estimation initialized
+[mavros_node-1] [INFO] [1778289584.620862668] [mavros]: Built-in SIMD instructions: ARM NEON
+[mavros_node-1] [INFO] [1778289584.621044370] [mavros]: Built-in MAVLink package version: 2026.3.3
+[mavros_node-1] [INFO] [1778289584.621101814] [mavros]: Known MAVLink dialects: common ardupilotmega ASLUAV AVSSUAS all csAirLink cubepilot development icarous loweheiser marsh matrixpilot paparazzi standard stemstudios storm32 uAvionix ualberta
+[mavros_node-1] [INFO] [1778289584.621141721] [mavros]: MAVROS UAS via /uas1 started. MY ID 1.191, TARGET ID 1.1
+[mavros_node-1] [INFO] [1778289584.802741603] [mavros.rc]: RC_CHANNELS message detected!
+[mavros_node-1] [INFO] [1778289584.808141494] [mavros.imu]: IMU: Raw IMU message used.
+[mavros_node-1] [WARN] [1778289584.808392715] [mavros.imu]: IMU: linear acceleration on RAW_IMU known on APM only.
+[mavros_node-1] [WARN] [1778289584.808462196] [mavros.imu]: IMU: ~imu/data_raw stores unscaled raw acceleration report.
+[mavros_node-1] [INFO] [1778289585.094891383] [mavros_router]: link[1001] detected remote address 1.191
+[mavros_node-1] [WARN] [1778289585.238822844] [mavros.cmd]: CMD: Unexpected command 520, result 0
+[mavros_node-1] [WARN] [1778289585.241831084] [mavros.sys]: VER: broadcast request timeout, retries left 3
+[mavros_node-1] [INFO] [1778289585.252654181] [mavros.geofence]: GF: Using MISSION_ITEM_INT
+[mavros_node-1] [INFO] [1778289585.252798791] [mavros.rallypoint]: RP: Using MISSION_ITEM_INT
+[mavros_node-1] [INFO] [1778289585.252844235] [mavros.mission]: WP: Using MISSION_ITEM_INT
+[mavros_node-1] [INFO] [1778289585.252888272] [mavros.sys]: VER: 1.1: Capabilities         0x000000000000fbef
+[mavros_node-1] [INFO] [1778289585.252932346] [mavros.sys]: VER: 1.1: Flight software:     040603ff (3837646330623239)
+[mavros_node-1] [INFO] [1778289585.252966827] [mavros.sys]: VER: 1.1: Middleware software: 00000000 (0000000000000000)
+[mavros_node-1] [INFO] [1778289585.252996734] [mavros.sys]: VER: 1.1: OS software:         00000000 (3030363438623838)
+[mavros_node-1] [INFO] [1778289585.253024919] [mavros.sys]: VER: 1.1: Board hardware:      03f50000
+[mavros_node-1] [INFO] [1778289585.253052419] [mavros.sys]: VER: 1.1: VID/PID:             1209:5740
+[mavros_node-1] [INFO] [1778289585.253081752] [mavros.sys]: VER: 1.1: UID:                 0000000000000000
+[mavros_node-1] [INFO] [1778289585.471472770] [mavros]: CON: Got HEARTBEAT, connected. FCU: ArduPilot
+[mavros_node-1] [INFO] [1778289585.472262265] [mavros.mission]: WP: detected enable_partial_push: 1
+[takeoff_rtl_node-3] [INFO] [1778289585.480280750] [takeoff_rtl_node]: FCU connected!
+[takeoff_rtl_node-3] [INFO] [1778289585.485841918] [takeoff_rtl_node]: Set home: geometry_msgs.msg.PoseStamped(header=std_msgs.msg.Header(stamp=builtin_interfaces.msg.Time(sec=1778289585, nanosec=379516752), frame_id='map'), pose=geometry_msgs.msg.Pose(position=geometry_msgs.msg.Point(x=-1.4277440309524536, y=0.1473350077867508, z=-0.18083661794662476), orientation=geometry_msgs.msg.Quaternion(x=0.016553672677726484, y=0.008774362274808505, z=-0.95794878098054, w=-0.2863269451264522)))
+[takeoff_rtl_node-3] [INFO] [1778289585.488557085] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289585.547757685] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289585.602203704] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289585.661064195] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289585.718250789] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289585.774965553] [takeoff_rtl_node]: Setting flu position
+[mavros_node-1] [INFO] [1778289585.800623036] [mavros.rc]: RC_CHANNELS message detected!
+[mavros_node-1] [INFO] [1778289585.805973372] [mavros.imu]: IMU: Raw IMU message used.
+[takeoff_rtl_node-3] [INFO] [1778289585.832592126] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289585.889717980] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289585.947316294] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.005795805] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.050251223] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.106320844] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.159413798] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.217556276] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.275541217] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.333589325] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.381567905] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.437654359] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.483204418] [takeoff_rtl_node]: Setting flu position
+[mavros_node-1] [INFO] [1778289586.529199196] [mavros.sys]: VER: 1.1: Capabilities         0x000000000000fbef
+[mavros_node-1] [INFO] [1778289586.529388824] [mavros.sys]: VER: 1.1: Flight software:     040603ff (92b0cd78)
+[mavros_node-1] [INFO] [1778289586.529445880] [mavros.sys]: VER: 1.1: Middleware software: 00000000 (        )
+[mavros_node-1] [INFO] [1778289586.529481509] [mavros.sys]: VER: 1.1: OS software:         00000000 (88b84600	@W��)
+[mavros_node-1] [INFO] [1778289586.529514213] [mavros.sys]: VER: 1.1: Board hardware:      03f50000
+[mavros_node-1] [INFO] [1778289586.529543546] [mavros.sys]: VER: 1.1: VID/PID:             1209:5740
+[mavros_node-1] [INFO] [1778289586.529573786] [mavros.sys]: VER: 1.1: UID:                 0000000000000000
+[takeoff_rtl_node-3] [INFO] [1778289586.542357852] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.599313263] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.654214392] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.660598128] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.714151432] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.769277744] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.826515079] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.885839067] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289586.948269055] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.006324811] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.047691026] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.103982572] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.158709943] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.217143975] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.274054073] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.329077867] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.379691857] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.435792404] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.473993399] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.529368340] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.585592720] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.642478521] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.658662973] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.713613935] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.769328058] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.823952689] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.883139198] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.939780093] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289587.995298385] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289588.042454582] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289588.097347119] [takeoff_rtl_node]: Setting flu position
+[takeoff_rtl_node-3] [INFO] [1778289588.152449025] [takeoff_rtl_node]: Setting mode to GUIDED
+[takeoff_rtl_node-3] [INFO] [1778289588.171281219] [takeoff_rtl_node]: Mode set to GUIDED
+[takeoff_rtl_node-3] [INFO] [1778289588.177417847] [takeoff_rtl_node]: Waiting for GUIDED mode, current: STABILIZE
+[takeoff_rtl_node-3] [INFO] [1778289588.197398997] [takeoff_rtl_node]: Waiting for GUIDED mode, current: STABILIZE
+[takeoff_rtl_node-3] [INFO] [1778289588.202682759] [takeoff_rtl_node]: Waiting for GUIDED mode, current: STABILIZE
+[takeoff_rtl_node-3] [INFO] [1778289588.209149069] [takeoff_rtl_node]: enu z: -0.08
+[takeoff_rtl_node-3] [INFO] [1778289588.214972495] [takeoff_rtl_node]: Arm started
+[takeoff_rtl_node-3] [INFO] [1778289588.257505371] [takeoff_rtl_node]: Vehicle armed successfully
+[takeoff_rtl_node-3] [INFO] [1778289588.261091107] [takeoff_rtl_node]: enu z: -0.08
+[takeoff_rtl_node-3] [INFO] [1778289588.265745429] [takeoff_rtl_node]: Waiting for vehicle to arm...
+[takeoff_rtl_node-3] [INFO] [1778289588.271758927] [takeoff_rtl_node]: Waiting for vehicle to arm...
+[takeoff_rtl_node-3] [INFO] [1778289588.277391873] [takeoff_rtl_node]: Waiting for vehicle to arm...
+[takeoff_rtl_node-3] [INFO] [1778289588.384112837] [takeoff_rtl_node]: Waiting for vehicle to arm...
+[takeoff_rtl_node-3] [INFO] [1778289588.400696138] [takeoff_rtl_node]: Waiting for vehicle to arm...
+[takeoff_rtl_node-3] [INFO] [1778289588.472001959] [takeoff_rtl_node]: Armed! Sending takeoff...
+[takeoff_rtl_node-3] [INFO] [1778289588.475575213] [takeoff_rtl_node]: takeoff_height: 1.2
+[takeoff_rtl_node-3] [INFO] [1778289588.479460263] [takeoff_rtl_node]: enu z: -0.05
+[takeoff_rtl_node-3] [INFO] [1778289588.508542058] [takeoff_rtl_node]: takeoff result: mavros_msgs.srv.CommandTOL_Response(success=True, result=0)
+[takeoff_rtl_node-3] [INFO] [1778289588.511446224] [takeoff_rtl_node]: Taking off to altitude: 1.2
+[takeoff_rtl_node-3] [INFO] [1778289588.514287669] [takeoff_rtl_node]: enu z: -0.05
+[takeoff_rtl_node-3] [INFO] [1778289588.518864566] [takeoff_rtl_node]: enu z: -0.05
+[takeoff_rtl_node-3] [INFO] [1778289588.523957292] [takeoff_rtl_node]: enu z: -0.05
+[takeoff_rtl_node-3] [INFO] [1778289588.580564226] [takeoff_rtl_node]: enu z: -0.05
+[takeoff_rtl_node-3] [INFO] [1778289588.634246215] [takeoff_rtl_node]: enu z: -0.05
+[takeoff_rtl_node-3] [INFO] [1778289588.660316270] [takeoff_rtl_node]: enu z: -0.05
+[takeoff_rtl_node-3] [INFO] [1778289588.708521017] [takeoff_rtl_node]: enu z: 0.01
+[takeoff_rtl_node-3] [INFO] [1778289588.762765373] [takeoff_rtl_node]: enu z: 0.01
+[takeoff_rtl_node-3] [INFO] [1778289588.817521985] [takeoff_rtl_node]: enu z: 0.01
+[takeoff_rtl_node-3] [INFO] [1778289588.871687526] [takeoff_rtl_node]: enu z: 0.01
+[takeoff_rtl_node-3] [INFO] [1778289588.926068900] [takeoff_rtl_node]: enu z: 0.01
+[takeoff_rtl_node-3] [INFO] [1778289588.979843555] [takeoff_rtl_node]: enu z: 0.01
+[takeoff_rtl_node-3] [INFO] [1778289589.033932542] [takeoff_rtl_node]: enu z: 0.01
+[takeoff_rtl_node-3] [INFO] [1778289589.044225199] [takeoff_rtl_node]: enu z: 0.07
+[takeoff_rtl_node-3] [INFO] [1778289589.099033385] [takeoff_rtl_node]: enu z: 0.07
+[takeoff_rtl_node-3] [INFO] [1778289589.153518981] [takeoff_rtl_node]: enu z: 0.07
+[takeoff_rtl_node-3] [INFO] [1778289589.159331629] [takeoff_rtl_node]: enu z: 0.07
+[takeoff_rtl_node-3] [INFO] [1778289589.213258155] [takeoff_rtl_node]: enu z: 0.07
+[takeoff_rtl_node-3] [INFO] [1778289589.269326018] [takeoff_rtl_node]: enu z: 0.07
+[takeoff_rtl_node-3] [INFO] [1778289589.324347685] [takeoff_rtl_node]: enu z: 0.07
+[takeoff_rtl_node-3] [INFO] [1778289589.372725671] [takeoff_rtl_node]: enu z: 0.11
+[takeoff_rtl_node-3] [INFO] [1778289589.426976195] [takeoff_rtl_node]: enu z: 0.11
+[takeoff_rtl_node-3] [INFO] [1778289589.468183598] [takeoff_rtl_node]: enu z: 0.11
+[takeoff_rtl_node-3] [INFO] [1778289589.529227800] [takeoff_rtl_node]: enu z: 0.11
+[takeoff_rtl_node-3] [INFO] [1778289589.588533884] [takeoff_rtl_node]: enu z: 0.11
+[takeoff_rtl_node-3] [INFO] [1778289589.648054040] [takeoff_rtl_node]: enu z: 0.11
+[takeoff_rtl_node-3] [INFO] [1778289589.661689175] [takeoff_rtl_node]: enu z: 0.11
+[takeoff_rtl_node-3] [INFO] [1778289589.711198580] [takeoff_rtl_node]: enu z: 0.11
+[takeoff_rtl_node-3] [INFO] [1778289589.766904557] [takeoff_rtl_node]: enu z: 0.11
+[takeoff_rtl_node-3] [INFO] [1778289589.823312974] [takeoff_rtl_node]: enu z: 0.11
+[takeoff_rtl_node-3] [INFO] [1778289589.878458881] [takeoff_rtl_node]: enu z: 0.11
+[takeoff_rtl_node-3] [INFO] [1778289589.935270869] [takeoff_rtl_node]: enu z: 0.11
+[takeoff_rtl_node-3] [INFO] [1778289589.992443744] [takeoff_rtl_node]: enu z: 0.11
+[takeoff_rtl_node-3] [INFO] [1778289590.037653437] [takeoff_rtl_node]: enu z: 0.08
+[takeoff_rtl_node-3] [INFO] [1778289590.096204952] [takeoff_rtl_node]: enu z: 0.08
+[takeoff_rtl_node-3] [INFO] [1778289590.151134787] [takeoff_rtl_node]: enu z: 0.08
+[takeoff_rtl_node-3] [INFO] [1778289590.160637411] [takeoff_rtl_node]: enu z: 0.08
+[takeoff_rtl_node-3] [INFO] [1778289590.215763356] [takeoff_rtl_node]: enu z: 0.08
+[takeoff_rtl_node-3] [INFO] [1778289590.270943707] [takeoff_rtl_node]: enu z: 0.08
+[takeoff_rtl_node-3] [INFO] [1778289590.324928307] [takeoff_rtl_node]: enu z: 0.08
+[takeoff_rtl_node-3] [INFO] [1778289590.368267641] [takeoff_rtl_node]: enu z: 0.04
+[takeoff_rtl_node-3] [INFO] [1778289590.422466925] [takeoff_rtl_node]: enu z: 0.04
+[takeoff_rtl_node-3] [INFO] [1778289590.464362732] [takeoff_rtl_node]: enu z: 0.04
+[takeoff_rtl_node-3] [INFO] [1778289590.519353418] [takeoff_rtl_node]: enu z: 0.04
+[takeoff_rtl_node-3] [INFO] [1778289590.572837391] [takeoff_rtl_node]: enu z: 0.04
+[takeoff_rtl_node-3] [INFO] [1778289590.626686307] [takeoff_rtl_node]: enu z: 0.04
+[takeoff_rtl_node-3] [INFO] [1778289590.658947545] [takeoff_rtl_node]: enu z: 0.04
+[takeoff_rtl_node-3] [INFO] [1778289590.703494779] [takeoff_rtl_node]: enu z: 0.01
+[takeoff_rtl_node-3] [INFO] [1778289590.758678334] [takeoff_rtl_node]: enu z: 0.01
+[takeoff_rtl_node-3] [INFO] [1778289590.813170690] [takeoff_rtl_node]: enu z: 0.01
+[takeoff_rtl_node-3] [INFO] [1778289590.867864230] [takeoff_rtl_node]: enu z: 0.01
+[takeoff_rtl_node-3] [INFO] [1778289590.921774793] [takeoff_rtl_node]: enu z: 0.01
+[takeoff_rtl_node-3] [INFO] [1778289590.976167779] [takeoff_rtl_node]: enu z: 0.01
+[takeoff_rtl_node-3] [INFO] [1778289591.031485871] [takeoff_rtl_node]: enu z: 0.01
+[takeoff_rtl_node-3] [INFO] [1778289591.041263272] [takeoff_rtl_node]: enu z: -0.01
+[takeoff_rtl_node-3] [INFO] [1778289591.097241545] [takeoff_rtl_node]: enu z: -0.01
+[takeoff_rtl_node-3] [INFO] [1778289591.154425125] [takeoff_rtl_node]: enu z: -0.01
+[takeoff_rtl_node-3] [INFO] [1778289591.161151026] [takeoff_rtl_node]: enu z: -0.01
+[takeoff_rtl_node-3] [INFO] [1778289591.215517161] [takeoff_rtl_node]: enu z: -0.01
+[takeoff_rtl_node-3] [INFO] [1778289591.274572970] [takeoff_rtl_node]: enu z: -0.01
+[takeoff_rtl_node-3] [INFO] [1778289591.329280937] [takeoff_rtl_node]: enu z: -0.01
+[takeoff_rtl_node-3] [INFO] [1778289591.365146764] [takeoff_rtl_node]: enu z: 0.21
+[takeoff_rtl_node-3] [INFO] [1778289591.419436733] [takeoff_rtl_node]: enu z: 0.21
+[takeoff_rtl_node-3] [INFO] [1778289591.462160183] [takeoff_rtl_node]: enu z: 0.21
+[takeoff_rtl_node-3] [INFO] [1778289591.516358115] [takeoff_rtl_node]: enu z: 0.21
+[takeoff_rtl_node-3] [INFO] [1778289591.570894934] [takeoff_rtl_node]: enu z: 0.21
+[takeoff_rtl_node-3] [INFO] [1778289591.625242181] [takeoff_rtl_node]: enu z: 0.21
+[takeoff_rtl_node-3] [INFO] [1778289591.659814349] [takeoff_rtl_node]: enu z: 0.21
+[takeoff_rtl_node-3] [INFO] [1778289591.700756681] [takeoff_rtl_node]: enu z: 0.75
+[mavros_node-1] [WARN] [1778289591.716937986] [mavros.sys]: FCU: EKF3 IMU0 MAG0 ground mag anomaly, yaw re-aligned
+[mavros_node-1] [WARN] [1778289591.727842231] [mavros.sys]: FCU: EKF3 IMU1 MAG0 ground mag anomaly, yaw re-aligned
+[takeoff_rtl_node-3] [INFO] [1778289591.755353278] [takeoff_rtl_node]: enu z: 0.75
+[takeoff_rtl_node-3] [INFO] [1778289591.809835060] [takeoff_rtl_node]: enu z: 0.75
+[takeoff_rtl_node-3] [INFO] [1778289591.870851209] [takeoff_rtl_node]: enu z: 0.75
+[takeoff_rtl_node-3] [INFO] [1778289591.927975641] [takeoff_rtl_node]: enu z: 0.75
+[takeoff_rtl_node-3] [INFO] [1778289591.983956618] [takeoff_rtl_node]: enu z: 0.75
+[takeoff_rtl_node-3] [INFO] [1778289592.032639438] [takeoff_rtl_node]: enu z: 1.59
+[takeoff_rtl_node-3] [INFO] [1778289592.087882605] [takeoff_rtl_node]: enu z: 1.59
+[mavros_node-1] [ERROR] [1778289592.105226013] [mavros.sys]: FCU: EKF3 lane switch 1
+[mavros_node-1] [WARN] [1778289592.111439066] [mavros.sys]: FCU: EKF primary changed:1
+[takeoff_rtl_node-3] [INFO] [1778289592.146179512] [takeoff_rtl_node]: enu z: 1.59
+[takeoff_rtl_node-3] [INFO] [1778289592.159194874] [takeoff_rtl_node]: enu z: 1.59
+[takeoff_rtl_node-3] [INFO] [1778289592.213428788] [takeoff_rtl_node]: enu z: 1.59
+[takeoff_rtl_node-3] [INFO] [1778289592.267482741] [takeoff_rtl_node]: enu z: 1.59
+[takeoff_rtl_node-3] [INFO] [1778289592.324959172] [takeoff_rtl_node]: enu z: 1.59
+[mavros_node-1] [INFO] [1778289592.328006763] [mavros.sys]: FCU: EKF3 IMU0 MAG0 in-flight yaw alignment complete
+[takeoff_rtl_node-3] [INFO] [1778289592.369984404] [takeoff_rtl_node]: enu z: 2.40
+[mavros_node-1] [INFO] [1778289592.424274781] [mavros.sys]: FCU: EKF3 IMU1 MAG0 in-flight yaw alignment complete
+[takeoff_rtl_node-3] [INFO] [1778289592.425096109] [takeoff_rtl_node]: enu z: 2.40
+[takeoff_rtl_node-3] [INFO] [1778289592.459179781] [takeoff_rtl_node]: enu z: 2.40
+[takeoff_rtl_node-3] [INFO] [1778289592.513596417] [takeoff_rtl_node]: enu z: 2.40
+[takeoff_rtl_node-3] [INFO] [1778289592.567442648] [takeoff_rtl_node]: enu z: 2.40
+[takeoff_rtl_node-3] [INFO] [1778289592.621184103] [takeoff_rtl_node]: enu z: 2.40
+[takeoff_rtl_node-3] [INFO] [1778289592.658640587] [takeoff_rtl_node]: enu z: 2.40
+[takeoff_rtl_node-3] [INFO] [1778289592.694437156] [takeoff_rtl_node]: enu z: 4.05
+[takeoff_rtl_node-3] [INFO] [1778289592.748388813] [takeoff_rtl_node]: enu z: 4.05
+[takeoff_rtl_node-3] [INFO] [1778289592.802210452] [takeoff_rtl_node]: enu z: 4.05
+[takeoff_rtl_node-3] [INFO] [1778289592.856704606] [takeoff_rtl_node]: enu z: 4.05
+[takeoff_rtl_node-3] [INFO] [1778289592.910812077] [takeoff_rtl_node]: enu z: 4.05
+[takeoff_rtl_node-3] [INFO] [1778289592.964619179] [takeoff_rtl_node]: enu z: 4.05
+[takeoff_rtl_node-3] [INFO] [1778289593.018890649] [takeoff_rtl_node]: enu z: 4.05
+[takeoff_rtl_node-3] [INFO] [1778289593.027741093] [takeoff_rtl_node]: enu z: 5.70
+[takeoff_rtl_node-3] [INFO] [1778289593.085162469] [takeoff_rtl_node]: enu z: 5.70
+[takeoff_rtl_node-3] [INFO] [1778289593.143534339] [takeoff_rtl_node]: enu z: 5.70
+[takeoff_rtl_node-3] [INFO] [1778289593.159759514] [takeoff_rtl_node]: enu z: 5.70
+[takeoff_rtl_node-3] [INFO] [1778289593.213331804] [takeoff_rtl_node]: enu z: 5.70
+[takeoff_rtl_node-3] [INFO] [1778289593.268212567] [takeoff_rtl_node]: enu z: 5.70
+[takeoff_rtl_node-3] [INFO] [1778289593.326179921] [takeoff_rtl_node]: enu z: 5.70
+[takeoff_rtl_node-3] [INFO] [1778289593.356558506] [takeoff_rtl_node]: enu z: 7.10
+[takeoff_rtl_node-3] [INFO] [1778289593.413426201] [takeoff_rtl_node]: enu z: 7.10
+[takeoff_rtl_node-3] [INFO] [1778289593.458224361] [takeoff_rtl_node]: enu z: 7.10
+[takeoff_rtl_node-3] [INFO] [1778289593.512081538] [takeoff_rtl_node]: enu z: 7.10
+[takeoff_rtl_node-3] [INFO] [1778289593.565756179] [takeoff_rtl_node]: enu z: 7.10
+[takeoff_rtl_node-3] [INFO] [1778289593.621103717] [takeoff_rtl_node]: enu z: 7.10
+[takeoff_rtl_node-3] [INFO] [1778289593.666392633] [takeoff_rtl_node]: enu z: 7.10
+[takeoff_rtl_node-3] [INFO] [1778289593.701608428] [takeoff_rtl_node]: enu z: 8.50
+[takeoff_rtl_node-3] [INFO] [1778289593.759372969] [takeoff_rtl_node]: enu z: 8.50
+[takeoff_rtl_node-3] [INFO] [1778289593.813943993] [takeoff_rtl_node]: enu z: 8.50
+[takeoff_rtl_node-3] [INFO] [1778289593.867722652] [takeoff_rtl_node]: enu z: 8.50
+[takeoff_rtl_node-3] [INFO] [1778289593.921993752] [takeoff_rtl_node]: enu z: 8.50
+[takeoff_rtl_node-3] [INFO] [1778289593.976813052] [takeoff_rtl_node]: enu z: 8.50
+[takeoff_rtl_node-3] [INFO] [1778289594.029576996] [takeoff_rtl_node]: enu z: 16.47
+[mavros_node-1] [ERROR] [1778289594.057813817] [mavros.sys]: FCU: Vibration compensation ON
+[takeoff_rtl_node-3] [INFO] [1778289594.084543981] [takeoff_rtl_node]: enu z: 16.47
+[takeoff_rtl_node-3] [INFO] [1778289594.138829230] [takeoff_rtl_node]: enu z: 16.47
+[takeoff_rtl_node-3] [INFO] [1778289594.165468061] [takeoff_rtl_node]: enu z: 16.47
+[takeoff_rtl_node-3] [INFO] [1778289594.221631872] [takeoff_rtl_node]: enu z: 16.47
+[takeoff_rtl_node-3] [INFO] [1778289594.286041779] [takeoff_rtl_node]: enu z: 16.47
+[takeoff_rtl_node-3] [INFO] [1778289594.342363756] [takeoff_rtl_node]: enu z: 16.47
+[takeoff_rtl_node-3] [INFO] [1778289594.355600468] [takeoff_rtl_node]: enu z: 23.34
+[takeoff_rtl_node-3] [INFO] [1778289594.421275534] [takeoff_rtl_node]: enu z: 23.34
+[takeoff_rtl_node-3] [INFO] [1778289594.455718557] [takeoff_rtl_node]: enu z: 23.34
+[takeoff_rtl_node-3] [INFO] [1778289594.514058687] [takeoff_rtl_node]: enu z: 23.34
+[takeoff_rtl_node-3] [INFO] [1778289594.568202418] [takeoff_rtl_node]: enu z: 23.34
+[takeoff_rtl_node-3] [INFO] [1778289594.625514370] [takeoff_rtl_node]: enu z: 23.34
+[takeoff_rtl_node-3] [INFO] [1778289594.658919974] [takeoff_rtl_node]: enu z: 23.34
+[takeoff_rtl_node-3] [INFO] [1778289594.694590507] [takeoff_rtl_node]: enu z: 26.80
+[takeoff_rtl_node-3] [INFO] [1778289594.748995607] [takeoff_rtl_node]: enu z: 26.80
+[takeoff_rtl_node-3] [INFO] [1778289594.803963555] [takeoff_rtl_node]: enu z: 26.80
+[takeoff_rtl_node-3] [INFO] [1778289594.858112416] [takeoff_rtl_node]: enu z: 26.80
+[takeoff_rtl_node-3] [INFO] [1778289594.912064352] [takeoff_rtl_node]: enu z: 26.80
+[takeoff_rtl_node-3] [INFO] [1778289594.966441045] [takeoff_rtl_node]: enu z: 26.80
+[takeoff_rtl_node-3] [INFO] [1778289595.019411450] [takeoff_rtl_node]: enu z: 30.23
+[takeoff_rtl_node-3] [INFO] [1778289595.076036981] [takeoff_rtl_node]: enu z: 30.23
+[takeoff_rtl_node-3] [INFO] [1778289595.130106306] [takeoff_rtl_node]: enu z: 30.23
+[takeoff_rtl_node-3] [INFO] [1778289595.158874347] [takeoff_rtl_node]: enu z: 30.23
+[takeoff_rtl_node-3] [INFO] [1778289595.214206979] [takeoff_rtl_node]: enu z: 30.23
+[takeoff_rtl_node-3] [INFO] [1778289595.274565171] [takeoff_rtl_node]: enu z: 30.23
+[takeoff_rtl_node-3] [INFO] [1778289595.335167844] [takeoff_rtl_node]: enu z: 30.23
+[takeoff_rtl_node-3] [INFO] [1778289595.362421487] [takeoff_rtl_node]: enu z: 32.77
+[takeoff_rtl_node-3] [INFO] [1778289595.419161165] [takeoff_rtl_node]: enu z: 32.77
+[takeoff_rtl_node-3] [INFO] [1778289595.457283128] [takeoff_rtl_node]: enu z: 32.77
+[takeoff_rtl_node-3] [INFO] [1778289595.513922807] [takeoff_rtl_node]: enu z: 32.77
+[takeoff_rtl_node-3] [INFO] [1778289595.568719109] [takeoff_rtl_node]: enu z: 32.77
+[takeoff_rtl_node-3] [INFO] [1778289595.622975988] [takeoff_rtl_node]: enu z: 32.77
+[takeoff_rtl_node-3] [INFO] [1778289595.660187531] [takeoff_rtl_node]: enu z: 32.77
+[takeoff_rtl_node-3] [INFO] [1778289595.688815406] [takeoff_rtl_node]: enu z: 33.86
+[takeoff_rtl_node-3] [INFO] [1778289595.753021703] [takeoff_rtl_node]: enu z: 33.86
+[takeoff_rtl_node-3] [INFO] [1778289595.807450915] [takeoff_rtl_node]: enu z: 33.86
+[takeoff_rtl_node-3] [INFO] [1778289595.861569295] [takeoff_rtl_node]: enu z: 33.86
+[takeoff_rtl_node-3] [INFO] [1778289595.915645528] [takeoff_rtl_node]: enu z: 33.86
+[takeoff_rtl_node-3] [INFO] [1778289595.969435799] [takeoff_rtl_node]: enu z: 33.86
+[takeoff_rtl_node-3] [INFO] [1778289596.017361348] [takeoff_rtl_node]: enu z: 33.81
+[takeoff_rtl_node-3] [INFO] [1778289596.071648117] [takeoff_rtl_node]: enu z: 33.81
+[takeoff_rtl_node-3] [INFO] [1778289596.126879991] [takeoff_rtl_node]: enu z: 33.81
+[takeoff_rtl_node-3] [INFO] [1778289596.158631272] [takeoff_rtl_node]: enu z: 33.81
+[takeoff_rtl_node-3] [INFO] [1778289596.214715863] [takeoff_rtl_node]: enu z: 33.81
+[takeoff_rtl_node-3] [INFO] [1778289596.269482795] [takeoff_rtl_node]: enu z: 33.81
+[takeoff_rtl_node-3] [INFO] [1778289596.323545213] [takeoff_rtl_node]: enu z: 33.81
+[takeoff_rtl_node-3] [INFO] [1778289596.354418908] [takeoff_rtl_node]: enu z: 33.23
+[takeoff_rtl_node-3] [INFO] [1778289596.408302938] [takeoff_rtl_node]: enu z: 33.23
+[takeoff_rtl_node-3] [INFO] [1778289596.451655128] [takeoff_rtl_node]: enu z: 33.23
+[takeoff_rtl_node-3] [INFO] [1778289596.507290203] [takeoff_rtl_node]: enu z: 33.23
+[takeoff_rtl_node-3] [INFO] [1778289596.561194696] [takeoff_rtl_node]: enu z: 33.23
+[takeoff_rtl_node-3] [INFO] [1778289596.614721914] [takeoff_rtl_node]: enu z: 33.23
+[takeoff_rtl_node-3] [INFO] [1778289596.658535693] [takeoff_rtl_node]: enu z: 33.23
+[takeoff_rtl_node-3] [INFO] [1778289596.683757553] [takeoff_rtl_node]: enu z: 32.58
+[takeoff_rtl_node-3] [INFO] [1778289596.738294172] [takeoff_rtl_node]: enu z: 32.58
+[takeoff_rtl_node-3] [INFO] [1778289596.792903642] [takeoff_rtl_node]: enu z: 32.58
+[takeoff_rtl_node-3] [INFO] [1778289596.850318077] [takeoff_rtl_node]: enu z: 32.58
+[takeoff_rtl_node-3] [INFO] [1778289596.906691221] [takeoff_rtl_node]: enu z: 32.58
+[takeoff_rtl_node-3] [INFO] [1778289596.962463166] [takeoff_rtl_node]: enu z: 32.58
+[takeoff_rtl_node-3] [INFO] [1778289597.018302129] [takeoff_rtl_node]: enu z: 31.98
+[takeoff_rtl_node-3] [INFO] [1778289597.075935932] [takeoff_rtl_node]: enu z: 31.98
+[takeoff_rtl_node-3] [INFO] [1778289597.131996765] [takeoff_rtl_node]: enu z: 31.98
+[takeoff_rtl_node-3] [INFO] [1778289597.158166156] [takeoff_rtl_node]: enu z: 31.98
+[takeoff_rtl_node-3] [INFO] [1778289597.214250710] [takeoff_rtl_node]: enu z: 31.98
+[takeoff_rtl_node-3] [INFO] [1778289597.268596998] [takeoff_rtl_node]: enu z: 31.98
+[takeoff_rtl_node-3] [INFO] [1778289597.322639102] [takeoff_rtl_node]: enu z: 31.98
+[takeoff_rtl_node-3] [INFO] [1778289597.348115071] [takeoff_rtl_node]: enu z: 31.33
+[takeoff_rtl_node-3] [INFO] [1778289597.405777171] [takeoff_rtl_node]: enu z: 31.33
+[takeoff_rtl_node-3] [INFO] [1778289597.448161979] [takeoff_rtl_node]: enu z: 31.33
+[takeoff_rtl_node-3] [INFO] [1778289597.507299273] [takeoff_rtl_node]: enu z: 31.33
+[takeoff_rtl_node-3] [INFO] [1778289597.561640635] [takeoff_rtl_node]: enu z: 31.33
+[takeoff_rtl_node-3] [INFO] [1778289597.615813905] [takeoff_rtl_node]: enu z: 31.33
+[takeoff_rtl_node-3] [INFO] [1778289597.659213669] [takeoff_rtl_node]: enu z: 31.33
+[takeoff_rtl_node-3] [INFO] [1778289597.679774391] [takeoff_rtl_node]: enu z: 30.29
+[takeoff_rtl_node-3] [INFO] [1778289597.733682015] [takeoff_rtl_node]: enu z: 30.29
+[takeoff_rtl_node-3] [INFO] [1778289597.788005599] [takeoff_rtl_node]: enu z: 30.29
+[takeoff_rtl_node-3] [INFO] [1778289597.842153962] [takeoff_rtl_node]: enu z: 30.29
+[takeoff_rtl_node-3] [INFO] [1778289597.896152474] [takeoff_rtl_node]: enu z: 30.29
+[takeoff_rtl_node-3] [INFO] [1778289597.950163116] [takeoff_rtl_node]: enu z: 30.29
+[takeoff_rtl_node-3] [INFO] [1778289598.005180769] [takeoff_rtl_node]: enu z: 30.29
+[takeoff_rtl_node-3] [INFO] [1778289598.020171342] [takeoff_rtl_node]: enu z: 30.30
+[takeoff_rtl_node-3] [INFO] [1778289598.076187768] [takeoff_rtl_node]: enu z: 30.30
+[takeoff_rtl_node-3] [INFO] [1778289598.130349465] [takeoff_rtl_node]: enu z: 30.30
+[takeoff_rtl_node-3] [INFO] [1778289598.158314863] [takeoff_rtl_node]: enu z: 30.30
+[takeoff_rtl_node-3] [INFO] [1778289598.213044242] [takeoff_rtl_node]: enu z: 30.30
+[takeoff_rtl_node-3] [INFO] [1778289598.267549844] [takeoff_rtl_node]: enu z: 30.30
+[track_person-2] [INFO] [1778289598.296208404] [track_person]: data_subfolder: /home/aidankwok/Drone/data/takeoff_rtl_node_4_05-08_21:19
+[takeoff_rtl_node-3] [INFO] [1778289598.325116427] [takeoff_rtl_node]: enu z: 30.30
+[takeoff_rtl_node-3] [INFO] [1778289598.345099357] [takeoff_rtl_node]: enu z: 28.27
+[takeoff_rtl_node-3] [INFO] [1778289598.399017740] [takeoff_rtl_node]: enu z: 28.27
+[takeoff_rtl_node-3] [INFO] [1778289598.448112136] [takeoff_rtl_node]: enu z: 28.27
+[track_person-2] [INFO] [1778289598.476731863] [track_person]: made it to pipeline
+[takeoff_rtl_node-3] [INFO] [1778289598.501713225] [takeoff_rtl_node]: enu z: 28.27
+[takeoff_rtl_node-3] [INFO] [1778289598.555457461] [takeoff_rtl_node]: Finished takeoff
+[takeoff_rtl_node-3] [INFO] [1778289598.577019196] [takeoff_rtl_node]: Mode set to RTL
+[takeoff_rtl_node-3] [INFO] [1778289598.581114245] [takeoff_rtl_node]: RTL engaged
+[takeoff_rtl_node-3] [INFO] [1778289598.584486872] [takeoff_rtl_node]: enu z: 28.27
+[takeoff_rtl_node-3] [INFO] [1778289598.603056051] [takeoff_rtl_node]: enu z: 28.27
+[takeoff_rtl_node-3] [INFO] [1778289598.615232901] [takeoff_rtl_node]: enu z: 28.27
+[takeoff_rtl_node-3] [INFO] [1778289598.621529991] [takeoff_rtl_node]: enu z: 28.27
+[takeoff_rtl_node-3] [INFO] [1778289598.659391475] [takeoff_rtl_node]: enu z: 28.27
+[takeoff_rtl_node-3] [INFO] [1778289598.679898680] [takeoff_rtl_node]: enu z: 27.44
+[takeoff_rtl_node-3] [INFO] [1778289598.785798626] [takeoff_rtl_node]: enu z: 27.44
+[takeoff_rtl_node-3] [INFO] [1778289598.889286402] [takeoff_rtl_node]: enu z: 27.44
+[takeoff_rtl_node-3] [INFO] [1778289598.992853029] [takeoff_rtl_node]: enu z: 27.44
+[takeoff_rtl_node-3] [INFO] [1778289599.014279024] [takeoff_rtl_node]: enu z: 29.27
+[takeoff_rtl_node-3] [INFO] [1778289599.119745382] [takeoff_rtl_node]: enu z: 29.27
+[takeoff_rtl_node-3] [INFO] [1778289599.158751619] [takeoff_rtl_node]: enu z: 29.27
+[takeoff_rtl_node-3] [INFO] [1778289599.263053261] [takeoff_rtl_node]: enu z: 29.27
+[takeoff_rtl_node-3] [INFO] [1778289599.353942025] [takeoff_rtl_node]: enu z: 31.61
+[takeoff_rtl_node-3] [INFO] [1778289599.443386353] [takeoff_rtl_node]: enu z: 31.61
+[takeoff_rtl_node-3] [INFO] [1778289599.547306461] [takeoff_rtl_node]: enu z: 31.61
+[takeoff_rtl_node-3] [INFO] [1778289599.652031971] [takeoff_rtl_node]: enu z: 31.61
+[takeoff_rtl_node-3] [INFO] [1778289599.660205420] [takeoff_rtl_node]: enu z: 31.61
+[takeoff_rtl_node-3] [INFO] [1778289599.675078253] [takeoff_rtl_node]: enu z: 32.51
+[takeoff_rtl_node-3] [INFO] [1778289599.779023286] [takeoff_rtl_node]: enu z: 32.51
+[takeoff_rtl_node-3] [INFO] [1778289599.882681359] [takeoff_rtl_node]: enu z: 32.51
+[takeoff_rtl_node-3] [INFO] [1778289599.987786033] [takeoff_rtl_node]: enu z: 32.51
+[takeoff_rtl_node-3] [INFO] [1778289600.003351973] [takeoff_rtl_node]: enu z: 34.55
+[takeoff_rtl_node-3] [INFO] [1778289600.107188286] [takeoff_rtl_node]: enu z: 34.55
+[takeoff_rtl_node-3] [INFO] [1778289600.158462132] [takeoff_rtl_node]: enu z: 34.55
+[takeoff_rtl_node-3] [INFO] [1778289600.262517833] [takeoff_rtl_node]: enu z: 34.55
+[takeoff_rtl_node-3] [INFO] [1778289600.350907428] [takeoff_rtl_node]: enu z: 35.82
+[takeoff_rtl_node-3] [INFO] [1778289600.440989865] [takeoff_rtl_node]: enu z: 35.82
+[mavros_node-1] [INFO] [1778289600.485647345] [mavros.mission]: WP: mission received
+[takeoff_rtl_node-3] [INFO] [1778289600.544645865] [takeoff_rtl_node]: enu z: 35.82
+[takeoff_rtl_node-3] [INFO] [1778289600.648258457] [takeoff_rtl_node]: enu z: 35.82
+[takeoff_rtl_node-3] [INFO] [1778289600.658590244] [takeoff_rtl_node]: enu z: 35.82
+[takeoff_rtl_node-3] [INFO] [1778289600.672598916] [takeoff_rtl_node]: enu z: 36.50
+[takeoff_rtl_node-3] [INFO] [1778289600.776538655] [takeoff_rtl_node]: enu z: 36.50
+[takeoff_rtl_node-3] [INFO] [1778289600.880191858] [takeoff_rtl_node]: enu z: 36.50
+[takeoff_rtl_node-3] [INFO] [1778289600.984741964] [takeoff_rtl_node]: enu z: 36.50
+[takeoff_rtl_node-3] [INFO] [1778289601.000170515] [takeoff_rtl_node]: enu z: 39.24
+[takeoff_rtl_node-3] [INFO] [1778289601.104513142] [takeoff_rtl_node]: enu z: 39.24
+[takeoff_rtl_node-3] [INFO] [1778289601.158763025] [takeoff_rtl_node]: enu z: 39.24
+[takeoff_rtl_node-3] [INFO] [1778289601.263211521] [takeoff_rtl_node]: enu z: 39.24
+[takeoff_rtl_node-3] [INFO] [1778289601.348906579] [takeoff_rtl_node]: enu z: 39.80
+[takeoff_rtl_node-3] [INFO] [1778289601.439034498] [takeoff_rtl_node]: enu z: 39.80
+[takeoff_rtl_node-3] [INFO] [1778289601.543004201] [takeoff_rtl_node]: enu z: 39.80
+[takeoff_rtl_node-3] [INFO] [1778289601.647114662] [takeoff_rtl_node]: enu z: 39.80
+[takeoff_rtl_node-3] [INFO] [1778289601.658670256] [takeoff_rtl_node]: enu z: 39.80
+[takeoff_rtl_node-3] [INFO] [1778289601.670806940] [takeoff_rtl_node]: enu z: 41.32
+[takeoff_rtl_node-3] [INFO] [1778289601.777235775] [takeoff_rtl_node]: enu z: 41.32
+[takeoff_rtl_node-3] [INFO] [1778289601.880784666] [takeoff_rtl_node]: enu z: 41.32
+[takeoff_rtl_node-3] [INFO] [1778289601.922963180] [takeoff_rtl_node]: enu z: 41.32
+[takeoff_rtl_node-3] [INFO] [1778289601.995037175] [takeoff_rtl_node]: enu z: 42.38
+[takeoff_rtl_node-3] [INFO] [1778289602.055741093] [takeoff_rtl_node]: enu z: 42.38
+[takeoff_rtl_node-3] [INFO] [1778289602.158384139] [takeoff_rtl_node]: enu z: 42.38
+[takeoff_rtl_node-3] [INFO] [1778289602.188264990] [takeoff_rtl_node]: enu z: 42.38
+[takeoff_rtl_node-3] [INFO] [1778289602.294765252] [takeoff_rtl_node]: enu z: 42.38
+[takeoff_rtl_node-3] [INFO] [1778289602.309997342] [takeoff_rtl_node]: enu z: 42.38
+[takeoff_rtl_node-3] [INFO] [1778289602.346763058] [takeoff_rtl_node]: enu z: 42.25
+[takeoff_rtl_node-3] [INFO] [1778289602.432359024] [takeoff_rtl_node]: enu z: 42.25
+[takeoff_rtl_node-3] [INFO] [1778289602.440954082] [takeoff_rtl_node]: enu z: 42.25
+[takeoff_rtl_node-3] [INFO] [1778289602.545102952] [takeoff_rtl_node]: enu z: 42.25
+[takeoff_rtl_node-3] [INFO] [1778289602.556118179] [takeoff_rtl_node]: enu z: 42.25
+[takeoff_rtl_node-3] [INFO] [1778289602.659780422] [takeoff_rtl_node]: enu z: 42.25
+[takeoff_rtl_node-3] [INFO] [1778289602.668375554] [takeoff_rtl_node]: enu z: 44.31
+[takeoff_rtl_node-3] [INFO] [1778289602.689119388] [takeoff_rtl_node]: enu z: 44.31
+[takeoff_rtl_node-3] [INFO] [1778289602.796561311] [takeoff_rtl_node]: enu z: 44.31
+[takeoff_rtl_node-3] [INFO] [1778289602.824683099] [takeoff_rtl_node]: enu z: 44.31
+[takeoff_rtl_node-3] [INFO] [1778289602.929661593] [takeoff_rtl_node]: enu z: 44.31
+[takeoff_rtl_node-3] [INFO] [1778289602.955697301] [takeoff_rtl_node]: enu z: 44.31
+[takeoff_rtl_node-3] [INFO] [1778289602.993995340] [takeoff_rtl_node]: enu z: 44.62
+[takeoff_rtl_node-3] [INFO] [1778289603.092833485] [takeoff_rtl_node]: enu z: 44.62
+[takeoff_rtl_node-3] [INFO] [1778289603.158377540] [takeoff_rtl_node]: enu z: 44.62
+[takeoff_rtl_node-3] [INFO] [1778289603.219052274] [takeoff_rtl_node]: enu z: 44.62
+[takeoff_rtl_node-3] [INFO] [1778289603.323643957] [takeoff_rtl_node]: enu z: 44.62
+[takeoff_rtl_node-3] [INFO] [1778289603.347975621] [takeoff_rtl_node]: enu z: 44.90
+[takeoff_rtl_node-3] [INFO] [1778289603.354988614] [takeoff_rtl_node]: enu z: 44.90
+[takeoff_rtl_node-3] [INFO] [1778289603.434751915] [takeoff_rtl_node]: enu z: 44.90
+[takeoff_rtl_node-3] [INFO] [1778289603.472277792] [takeoff_rtl_node]: enu z: 44.90
+[takeoff_rtl_node-3] [INFO] [1778289603.576856124] [takeoff_rtl_node]: enu z: 44.90
+[takeoff_rtl_node-3] [INFO] [1778289603.599853110] [takeoff_rtl_node]: enu z: 44.90
+[takeoff_rtl_node-3] [INFO] [1778289603.659464518] [takeoff_rtl_node]: enu z: 44.90
+[takeoff_rtl_node-3] [INFO] [1778289603.667963780] [takeoff_rtl_node]: enu z: 46.86
+[takeoff_rtl_node-3] [INFO] [1778289603.732825710] [takeoff_rtl_node]: enu z: 46.86
+[takeoff_rtl_node-3] [INFO] [1778289603.840635521] [takeoff_rtl_node]: enu z: 46.86
+[takeoff_rtl_node-3] [INFO] [1778289603.861449910] [takeoff_rtl_node]: enu z: 46.86
+[takeoff_rtl_node-3] [INFO] [1778289603.966106704] [takeoff_rtl_node]: enu z: 46.86
+[takeoff_rtl_node-3] [INFO] [1778289603.993075647] [takeoff_rtl_node]: enu z: 47.20
+[takeoff_rtl_node-3] [INFO] [1778289604.007208541] [takeoff_rtl_node]: enu z: 47.20
+[takeoff_rtl_node-3] [INFO] [1778289604.111541412] [takeoff_rtl_node]: enu z: 47.20
+[takeoff_rtl_node-3] [INFO] [1778289604.158627231] [takeoff_rtl_node]: enu z: 47.20
+[takeoff_rtl_node-3] [INFO] [1778289604.261942775] [takeoff_rtl_node]: enu z: 47.20
+[takeoff_rtl_node-3] [INFO] [1778289604.342008686] [takeoff_rtl_node]: enu z: 47.50
+[takeoff_rtl_node-3] [INFO] [1778289604.376948895] [takeoff_rtl_node]: enu z: 47.50
+[takeoff_rtl_node-3] [INFO] [1778289604.432669586] [takeoff_rtl_node]: enu z: 47.50
+[takeoff_rtl_node-3] [INFO] [1778289604.507645806] [takeoff_rtl_node]: enu z: 47.50
+[takeoff_rtl_node-3] [INFO] [1778289604.612636599] [takeoff_rtl_node]: enu z: 47.50
+[takeoff_rtl_node-3] [INFO] [1778289604.635791141] [takeoff_rtl_node]: enu z: 47.50
+[takeoff_rtl_node-3] [INFO] [1778289604.658334834] [takeoff_rtl_node]: enu z: 47.50
+[takeoff_rtl_node-3] [INFO] [1778289604.666792911] [takeoff_rtl_node]: enu z: 48.02
+[takeoff_rtl_node-3] [INFO] [1778289604.771598094] [takeoff_rtl_node]: enu z: 48.02
+[takeoff_rtl_node-3] [INFO] [1778289604.787469700] [takeoff_rtl_node]: enu z: 48.02
+[takeoff_rtl_node-3] [INFO] [1778289604.891839311] [takeoff_rtl_node]: enu z: 48.02
+[takeoff_rtl_node-3] [INFO] [1778289604.986579723] [takeoff_rtl_node]: enu z: 48.04
+[takeoff_rtl_node-3] [INFO] [1778289605.090430080] [takeoff_rtl_node]: enu z: 48.04
+[mavros_node-1] [ERROR] [1778289605.125363660] [mavros.sys]: FCU: EKF3 lane switch 0
+[mavros_node-1] [WARN] [1778289605.130812126] [mavros.sys]: FCU: EKF primary changed:0
+[takeoff_rtl_node-3] [INFO] [1778289605.158717676] [takeoff_rtl_node]: enu z: 48.04
+[takeoff_rtl_node-3] [INFO] [1778289605.263572878] [takeoff_rtl_node]: enu z: 48.04
+[takeoff_rtl_node-3] [INFO] [1778289605.286748235] [takeoff_rtl_node]: enu z: 48.04
+[mavros_node-1] [ERROR] [1778289605.305019677] [mavros.sys]: FCU: GPS Glitch or Compass error
+[takeoff_rtl_node-3] [INFO] [1778289605.348699796] [takeoff_rtl_node]: enu z: 49.82
+[takeoff_rtl_node-3] [INFO] [1778289605.422116045] [takeoff_rtl_node]: enu z: 49.82
+[takeoff_rtl_node-3] [INFO] [1778289605.431346488] [takeoff_rtl_node]: enu z: 49.82
+[mavros_node-1] [INFO] [1778289605.484882212] [mavros.rallypoint]: RP: mission received
+[takeoff_rtl_node-3] [INFO] [1778289605.535270400] [takeoff_rtl_node]: enu z: 49.82
+[takeoff_rtl_node-3] [INFO] [1778289605.553381732] [takeoff_rtl_node]: enu z: 49.82
+[takeoff_rtl_node-3] [INFO] [1778289605.658207101] [takeoff_rtl_node]: enu z: 49.82
+[takeoff_rtl_node-3] [INFO] [1778289605.663391921] [takeoff_rtl_node]: enu z: 49.82
+[takeoff_rtl_node-3] [INFO] [1778289605.667667450] [takeoff_rtl_node]: enu z: 49.54
+[takeoff_rtl_node-3] [INFO] [1778289605.702300291] [takeoff_rtl_node]: enu z: 49.54
+[takeoff_rtl_node-3] [INFO] [1778289605.806145630] [takeoff_rtl_node]: enu z: 49.54
+[takeoff_rtl_node-3] [INFO] [1778289605.910284041] [takeoff_rtl_node]: enu z: 49.54
+[takeoff_rtl_node-3] [INFO] [1778289605.984550970] [takeoff_rtl_node]: enu z: 49.25
+[takeoff_rtl_node-3] [INFO] [1778289606.069139632] [takeoff_rtl_node]: enu z: 49.25
+[takeoff_rtl_node-3] [INFO] [1778289606.158650449] [takeoff_rtl_node]: enu z: 49.25
+[takeoff_rtl_node-3] [INFO] [1778289606.194862985] [takeoff_rtl_node]: enu z: 49.25
+[takeoff_rtl_node-3] [INFO] [1778289606.299206747] [takeoff_rtl_node]: enu z: 49.25
+[takeoff_rtl_node-3] [INFO] [1778289606.328038014] [takeoff_rtl_node]: enu z: 49.25
+[takeoff_rtl_node-3] [INFO] [1778289606.343410085] [takeoff_rtl_node]: enu z: 48.92
+[takeoff_rtl_node-3] [INFO] [1778289606.427656713] [takeoff_rtl_node]: enu z: 48.92
+[takeoff_rtl_node-3] [INFO] [1778289606.462154555] [takeoff_rtl_node]: enu z: 48.92
+[takeoff_rtl_node-3] [INFO] [1778289606.566145838] [takeoff_rtl_node]: enu z: 48.92
+[takeoff_rtl_node-3] [INFO] [1778289606.610869247] [takeoff_rtl_node]: enu z: 48.92
+[takeoff_rtl_node-3] [INFO] [1778289606.658652045] [takeoff_rtl_node]: enu z: 48.92
+[takeoff_rtl_node-3] [INFO] [1778289606.663318275] [takeoff_rtl_node]: enu z: 48.95
+[takeoff_rtl_node-3] [INFO] [1778289606.767382354] [takeoff_rtl_node]: enu z: 48.95
+[takeoff_rtl_node-3] [INFO] [1778289606.854289021] [takeoff_rtl_node]: enu z: 48.95
+[takeoff_rtl_node-3] [INFO] [1778289606.958674246] [takeoff_rtl_node]: enu z: 48.95
+[takeoff_rtl_node-3] [INFO] [1778289606.982778134] [takeoff_rtl_node]: enu z: 48.30
+[takeoff_rtl_node-3] [INFO] [1778289606.990380828] [takeoff_rtl_node]: enu z: 48.30
+[takeoff_rtl_node-3] [INFO] [1778289607.094066744] [takeoff_rtl_node]: enu z: 48.30
+[takeoff_rtl_node-3] [INFO] [1778289607.118677907] [takeoff_rtl_node]: enu z: 48.30
+[takeoff_rtl_node-3] [INFO] [1778289607.158693753] [takeoff_rtl_node]: enu z: 48.30
+[takeoff_rtl_node-3] [INFO] [1778289607.246948375] [takeoff_rtl_node]: enu z: 48.30
+[takeoff_rtl_node-3] [INFO] [1778289607.335745642] [takeoff_rtl_node]: enu z: 48.60
+[takeoff_rtl_node-3] [INFO] [1778289607.385026246] [takeoff_rtl_node]: enu z: 48.60
+[takeoff_rtl_node-3] [INFO] [1778289607.425719588] [takeoff_rtl_node]: enu z: 48.60
+[takeoff_rtl_node-3] [INFO] [1778289607.529541892] [takeoff_rtl_node]: enu z: 48.60
+[takeoff_rtl_node-3] [INFO] [1778289607.634933168] [takeoff_rtl_node]: enu z: 48.60
+[takeoff_rtl_node-3] [INFO] [1778289607.648378677] [takeoff_rtl_node]: enu z: 48.60
+[takeoff_rtl_node-3] [INFO] [1778289607.656657071] [takeoff_rtl_node]: enu z: 48.66
+[takeoff_rtl_node-3] [INFO] [1778289607.661762391] [takeoff_rtl_node]: enu z: 48.66
+[takeoff_rtl_node-3] [INFO] [1778289607.765512696] [takeoff_rtl_node]: enu z: 48.66
+[takeoff_rtl_node-3] [INFO] [1778289607.869169557] [takeoff_rtl_node]: enu z: 48.66
+[takeoff_rtl_node-3] [INFO] [1778289607.889842799] [takeoff_rtl_node]: enu z: 48.66
+[takeoff_rtl_node-3] [INFO] [1778289607.977022169] [takeoff_rtl_node]: enu z: 48.30
+[takeoff_rtl_node-3] [INFO] [1778289608.015326748] [takeoff_rtl_node]: enu z: 48.30
+[takeoff_rtl_node-3] [INFO] [1778289608.120505564] [takeoff_rtl_node]: enu z: 48.30
+[takeoff_rtl_node-3] [INFO] [1778289608.145716575] [takeoff_rtl_node]: enu z: 48.30
+[takeoff_rtl_node-3] [INFO] [1778289608.160135412] [takeoff_rtl_node]: enu z: 48.30
+[takeoff_rtl_node-3] [INFO] [1778289608.266036464] [takeoff_rtl_node]: enu z: 48.30
+[track_person-2] [INFO] [1778289608.294764658] [track_person]: id: 1
+[takeoff_rtl_node-3] [INFO] [1778289608.333566604] [takeoff_rtl_node]: enu z: 48.77
+[takeoff_rtl_node-3] [INFO] [1778289608.423492847] [takeoff_rtl_node]: enu z: 48.77
+[takeoff_rtl_node-3] [INFO] [1778289608.532253604] [takeoff_rtl_node]: enu z: 48.77
+[takeoff_rtl_node-3] [INFO] [1778289608.636415222] [takeoff_rtl_node]: enu z: 48.77
+[takeoff_rtl_node-3] [INFO] [1778289608.658396438] [takeoff_rtl_node]: enu z: 48.36
+[takeoff_rtl_node-3] [INFO] [1778289608.664189440] [takeoff_rtl_node]: enu z: 48.36
+[takeoff_rtl_node-3] [INFO] [1778289608.768023430] [takeoff_rtl_node]: enu z: 48.36
+[takeoff_rtl_node-3] [INFO] [1778289608.872618231] [takeoff_rtl_node]: enu z: 48.36
+[takeoff_rtl_node-3] [INFO] [1778289608.974870750] [takeoff_rtl_node]: enu z: 48.52
+[takeoff_rtl_node-3] [INFO] [1778289609.078725223] [takeoff_rtl_node]: enu z: 48.52
+[takeoff_rtl_node-3] [INFO] [1778289609.158789972] [takeoff_rtl_node]: enu z: 48.52
+[takeoff_rtl_node-3] [INFO] [1778289609.262965054] [takeoff_rtl_node]: enu z: 48.52
+[takeoff_rtl_node-3] [INFO] [1778289609.330760712] [takeoff_rtl_node]: enu z: 48.31
+[takeoff_rtl_node-3] [INFO] [1778289609.420897121] [takeoff_rtl_node]: enu z: 48.31
+[takeoff_rtl_node-3] [INFO] [1778289609.524672725] [takeoff_rtl_node]: enu z: 48.31
+[takeoff_rtl_node-3] [INFO] [1778289609.628821455] [takeoff_rtl_node]: enu z: 48.31
+[takeoff_rtl_node-3] [INFO] [1778289609.652105498] [takeoff_rtl_node]: enu z: 48.00
+[takeoff_rtl_node-3] [INFO] [1778289609.659037585] [takeoff_rtl_node]: enu z: 48.00
+[takeoff_rtl_node-3] [INFO] [1778289609.763051761] [takeoff_rtl_node]: enu z: 48.00
+[takeoff_rtl_node-3] [INFO] [1778289609.867062492] [takeoff_rtl_node]: enu z: 48.00
+[takeoff_rtl_node-3] [INFO] [1778289609.970151192] [takeoff_rtl_node]: enu z: 47.78
+[takeoff_rtl_node-3] [INFO] [1778289610.074205184] [takeoff_rtl_node]: enu z: 47.78
+[takeoff_rtl_node-3] [INFO] [1778289610.158866702] [takeoff_rtl_node]: enu z: 47.78
+[takeoff_rtl_node-3] [INFO] [1778289610.262996156] [takeoff_rtl_node]: enu z: 47.78
+[takeoff_rtl_node-3] [INFO] [1778289610.328219645] [takeoff_rtl_node]: enu z: 46.92
+[takeoff_rtl_node-3] [INFO] [1778289610.354035246] [takeoff_rtl_node]: enu z: 46.92
+[takeoff_rtl_node-3] [INFO] [1778289610.373294665] [takeoff_rtl_node]: enu z: 46.92
+[takeoff_rtl_node-3] [INFO] [1778289610.391170241] [takeoff_rtl_node]: enu z: 46.92
+[takeoff_rtl_node-3] [INFO] [1778289610.408458117] [takeoff_rtl_node]: enu z: 46.92
+[takeoff_rtl_node-3] [INFO] [1778289610.430785035] [takeoff_rtl_node]: enu z: 46.92
+[takeoff_rtl_node-3] [INFO] [1778289610.441986522] [takeoff_rtl_node]: enu z: 46.92
+[takeoff_rtl_node-3] [INFO] [1778289610.491939160] [takeoff_rtl_node]: enu z: 46.92
+[mavros_node-1] [INFO] [1778289610.509551941] [mavros.geofence]: GF: mission received
+[takeoff_rtl_node-3] [INFO] [1778289610.600025072] [takeoff_rtl_node]: enu z: 46.92
+[takeoff_rtl_node-3] [INFO] [1778289610.618252479] [takeoff_rtl_node]: enu z: 46.92
+[takeoff_rtl_node-3] [INFO] [1778289610.650808205] [takeoff_rtl_node]: enu z: 46.95
+[takeoff_rtl_node-3] [INFO] [1778289610.662800520] [takeoff_rtl_node]: enu z: 46.95
+[takeoff_rtl_node-3] [INFO] [1778289610.744485001] [takeoff_rtl_node]: enu z: 46.95
+[takeoff_rtl_node-3] [INFO] [1778289610.851172940] [takeoff_rtl_node]: enu z: 46.95
+[takeoff_rtl_node-3] [INFO] [1778289610.884149164] [takeoff_rtl_node]: enu z: 46.95
+[mavros_node-1] [ERROR] [1778289610.910609150] [mavros.sys]: FCU: Glitch cleared
+[takeoff_rtl_node-3] [INFO] [1778289610.967996131] [takeoff_rtl_node]: enu z: 45.82
+[takeoff_rtl_node-3] [INFO] [1778289611.009993763] [takeoff_rtl_node]: enu z: 45.82
+[takeoff_rtl_node-3] [INFO] [1778289611.114322717] [takeoff_rtl_node]: enu z: 45.82
+[takeoff_rtl_node-3] [INFO] [1778289611.159061721] [takeoff_rtl_node]: enu z: 45.82
+[takeoff_rtl_node-3] [INFO] [1778289611.265820846] [takeoff_rtl_node]: enu z: 45.82
+[takeoff_rtl_node-3] [INFO] [1778289611.278022901] [takeoff_rtl_node]: enu z: 45.82
+[takeoff_rtl_node-3] [INFO] [1778289611.326427568] [takeoff_rtl_node]: enu z: 46.34
+[takeoff_rtl_node-3] [INFO] [1778289611.402222271] [takeoff_rtl_node]: enu z: 46.34
+[takeoff_rtl_node-3] [INFO] [1778289611.417650991] [takeoff_rtl_node]: enu z: 46.34
+[takeoff_rtl_node-3] [INFO] [1778289611.526184642] [takeoff_rtl_node]: enu z: 46.34
+[takeoff_rtl_node-3] [INFO] [1778289611.631872126] [takeoff_rtl_node]: enu z: 46.35
+[takeoff_rtl_node-3] [INFO] [1778289611.656947787] [takeoff_rtl_node]: enu z: 46.35
+[takeoff_rtl_node-3] [INFO] [1778289611.664056688] [takeoff_rtl_node]: enu z: 46.35
+[takeoff_rtl_node-3] [INFO] [1778289611.768223069] [takeoff_rtl_node]: enu z: 46.35
+[takeoff_rtl_node-3] [INFO] [1778289611.788212706] [takeoff_rtl_node]: enu z: 46.35
+[takeoff_rtl_node-3] [INFO] [1778289611.892586179] [takeoff_rtl_node]: enu z: 46.35
+[takeoff_rtl_node-3] [INFO] [1778289611.928243627] [takeoff_rtl_node]: enu z: 46.35
+[takeoff_rtl_node-3] [INFO] [1778289611.963366079] [takeoff_rtl_node]: enu z: 46.00
+[takeoff_rtl_node-3] [INFO] [1778289612.053418474] [takeoff_rtl_node]: enu z: 46.00
+[takeoff_rtl_node-3] [INFO] [1778289612.158303426] [takeoff_rtl_node]: enu z: 46.00
+[takeoff_rtl_node-3] [INFO] [1778289612.164459666] [takeoff_rtl_node]: enu z: 46.00
+[takeoff_rtl_node-3] [INFO] [1778289612.183819289] [takeoff_rtl_node]: enu z: 46.00
+[takeoff_rtl_node-3] [INFO] [1778289612.288279503] [takeoff_rtl_node]: enu z: 46.00
+[takeoff_rtl_node-3] [INFO] [1778289612.310339979] [takeoff_rtl_node]: enu z: 46.00
+[takeoff_rtl_node-3] [INFO] [1778289612.330417394] [takeoff_rtl_node]: enu z: 45.86
+[takeoff_rtl_node-3] [INFO] [1778289612.414475066] [takeoff_rtl_node]: enu z: 45.86
+[takeoff_rtl_node-3] [INFO] [1778289612.439148397] [takeoff_rtl_node]: enu z: 45.86
+[takeoff_rtl_node-3] [INFO] [1778289612.547945084] [takeoff_rtl_node]: enu z: 45.86
+[takeoff_rtl_node-3] [INFO] [1778289612.572464824] [takeoff_rtl_node]: enu z: 45.86
+[takeoff_rtl_node-3] [INFO] [1778289612.629694548] [takeoff_rtl_node]: enu z: 45.47
+[takeoff_rtl_node-3] [INFO] [1778289612.658587113] [takeoff_rtl_node]: enu z: 45.47
+[takeoff_rtl_node-3] [INFO] [1778289612.704874349] [takeoff_rtl_node]: enu z: 45.47
+[takeoff_rtl_node-3] [INFO] [1778289612.809689875] [takeoff_rtl_node]: enu z: 45.47
+[takeoff_rtl_node-3] [INFO] [1778289612.831142985] [takeoff_rtl_node]: enu z: 45.47
+[takeoff_rtl_node-3] [INFO] [1778289612.935797883] [takeoff_rtl_node]: enu z: 45.47
+[takeoff_rtl_node-3] [INFO] [1778289612.961005100] [takeoff_rtl_node]: enu z: 45.07
+[takeoff_rtl_node-3] [INFO] [1778289613.067363988] [takeoff_rtl_node]: enu z: 45.07
+[takeoff_rtl_node-3] [INFO] [1778289613.090792790] [takeoff_rtl_node]: enu z: 45.07
+[takeoff_rtl_node-3] [INFO] [1778289613.159268280] [takeoff_rtl_node]: enu z: 45.07
+[takeoff_rtl_node-3] [INFO] [1778289613.223643407] [takeoff_rtl_node]: enu z: 45.07
+[takeoff_rtl_node-3] [INFO] [1778289613.323975221] [takeoff_rtl_node]: enu z: 44.73
+[takeoff_rtl_node-3] [INFO] [1778289613.355389049] [takeoff_rtl_node]: enu z: 44.73
+[takeoff_rtl_node-3] [INFO] [1778289613.413058771] [takeoff_rtl_node]: enu z: 44.73
+[takeoff_rtl_node-3] [INFO] [1778289613.477768692] [takeoff_rtl_node]: enu z: 44.73
+[takeoff_rtl_node-3] [INFO] [1778289613.582499776] [takeoff_rtl_node]: enu z: 44.73
+[takeoff_rtl_node-3] [INFO] [1778289613.618665519] [takeoff_rtl_node]: enu z: 44.73
+[takeoff_rtl_node-3] [INFO] [1778289613.628597125] [takeoff_rtl_node]: enu z: 44.27
+[takeoff_rtl_node-3] [INFO] [1778289613.658766349] [takeoff_rtl_node]: enu z: 44.27
+[takeoff_rtl_node-3] [INFO] [1778289613.762636234] [takeoff_rtl_node]: enu z: 44.27
+[takeoff_rtl_node-3] [INFO] [1778289613.867240578] [takeoff_rtl_node]: enu z: 44.27
+[takeoff_rtl_node-3] [INFO] [1778289613.878937137] [takeoff_rtl_node]: enu z: 44.27
+[takeoff_rtl_node-3] [INFO] [1778289613.958933298] [takeoff_rtl_node]: enu z: 43.82
+[takeoff_rtl_node-3] [INFO] [1778289613.998548056] [takeoff_rtl_node]: enu z: 43.82
+[takeoff_rtl_node-3] [INFO] [1778289614.105333759] [takeoff_rtl_node]: enu z: 43.82
+[takeoff_rtl_node-3] [INFO] [1778289614.127365236] [takeoff_rtl_node]: enu z: 43.82
+[takeoff_rtl_node-3] [INFO] [1778289614.158147549] [takeoff_rtl_node]: enu z: 43.82
+[takeoff_rtl_node-3] [INFO] [1778289614.256321785] [takeoff_rtl_node]: enu z: 43.82
+[takeoff_rtl_node-3] [INFO] [1778289614.319284773] [takeoff_rtl_node]: enu z: 43.42
+[takeoff_rtl_node-3] [INFO] [1778289614.389953899] [takeoff_rtl_node]: enu z: 43.42
+[takeoff_rtl_node-3] [INFO] [1778289614.410120036] [takeoff_rtl_node]: enu z: 43.42
+[takeoff_rtl_node-3] [INFO] [1778289614.516411426] [takeoff_rtl_node]: enu z: 43.42
+[takeoff_rtl_node-3] [INFO] [1778289614.526314977] [takeoff_rtl_node]: enu z: 43.42
+[takeoff_rtl_node-3] [INFO] [1778289614.621895655] [takeoff_rtl_node]: enu z: 42.94
+[takeoff_rtl_node-3] [INFO] [1778289614.650991867] [takeoff_rtl_node]: enu z: 42.94
+[takeoff_rtl_node-3] [INFO] [1778289614.659359613] [takeoff_rtl_node]: enu z: 42.94
+[takeoff_rtl_node-3] [INFO] [1778289614.763441869] [takeoff_rtl_node]: enu z: 42.94
+[takeoff_rtl_node-3] [INFO] [1778289614.783920744] [takeoff_rtl_node]: enu z: 42.94
+[takeoff_rtl_node-3] [INFO] [1778289614.891433961] [takeoff_rtl_node]: enu z: 42.94
+[takeoff_rtl_node-3] [INFO] [1778289614.909204668] [takeoff_rtl_node]: enu z: 42.94
+[takeoff_rtl_node-3] [INFO] [1778289614.953916378] [takeoff_rtl_node]: enu z: 42.39
+[takeoff_rtl_node-3] [INFO] [1778289615.048874930] [takeoff_rtl_node]: enu z: 42.39
+[takeoff_rtl_node-3] [INFO] [1778289615.152669375] [takeoff_rtl_node]: enu z: 42.39
+[takeoff_rtl_node-3] [INFO] [1778289615.160006849] [takeoff_rtl_node]: enu z: 42.39
+[takeoff_rtl_node-3] [INFO] [1778289615.174568279] [takeoff_rtl_node]: enu z: 42.39
+[takeoff_rtl_node-3] [INFO] [1778289615.291000387] [takeoff_rtl_node]: enu z: 42.39
+[takeoff_rtl_node-3] [INFO] [1778289615.299759297] [takeoff_rtl_node]: enu z: 42.39
+[takeoff_rtl_node-3] [INFO] [1778289615.321961385] [takeoff_rtl_node]: enu z: 41.85
+[takeoff_rtl_node-3] [INFO] [1778289615.408667025] [takeoff_rtl_node]: enu z: 41.85
+[takeoff_rtl_node-3] [INFO] [1778289615.424946741] [takeoff_rtl_node]: enu z: 41.85
+[takeoff_rtl_node-3] [INFO] [1778289615.528844370] [takeoff_rtl_node]: enu z: 41.85
+[takeoff_rtl_node-3] [INFO] [1778289615.559294019] [takeoff_rtl_node]: enu z: 41.85
+[takeoff_rtl_node-3] [INFO] [1778289615.619602079] [takeoff_rtl_node]: enu z: 41.15
+[takeoff_rtl_node-3] [INFO] [1778289615.658468769] [takeoff_rtl_node]: enu z: 41.15
+[takeoff_rtl_node-3] [INFO] [1778289615.694040386] [takeoff_rtl_node]: enu z: 41.15
+[mavros_node-1] [ERROR] [1778289615.779098352] [mavros.sys]: FCU: EKF3 lane switch 1
+[mavros_node-1] [WARN] [1778289615.784475597] [mavros.sys]: FCU: EKF primary changed:1
+[takeoff_rtl_node-3] [INFO] [1778289615.799411654] [takeoff_rtl_node]: enu z: 41.15
+[takeoff_rtl_node-3] [INFO] [1778289615.821094097] [takeoff_rtl_node]: enu z: 41.15
+[takeoff_rtl_node-3] [INFO] [1778289615.925008448] [takeoff_rtl_node]: enu z: 41.15
+[takeoff_rtl_node-3] [INFO] [1778289615.948360380] [takeoff_rtl_node]: enu z: 41.15
+[takeoff_rtl_node-3] [INFO] [1778289615.960382233] [takeoff_rtl_node]: enu z: 39.75
+[takeoff_rtl_node-3] [INFO] [1778289616.066444165] [takeoff_rtl_node]: enu z: 39.75
+[takeoff_rtl_node-3] [INFO] [1778289616.075378370] [takeoff_rtl_node]: enu z: 39.75
+[takeoff_rtl_node-3] [INFO] [1778289616.158718643] [takeoff_rtl_node]: enu z: 39.75
+[takeoff_rtl_node-3] [INFO] [1778289616.206982369] [takeoff_rtl_node]: enu z: 39.75
+[takeoff_rtl_node-3] [INFO] [1778289616.316056376] [takeoff_rtl_node]: enu z: 39.75
+[takeoff_rtl_node-3] [INFO] [1778289616.325057636] [takeoff_rtl_node]: enu z: 39.54
+[takeoff_rtl_node-3] [INFO] [1778289616.342118977] [takeoff_rtl_node]: enu z: 39.54
+[takeoff_rtl_node-3] [INFO] [1778289616.404400415] [takeoff_rtl_node]: enu z: 39.54
+[takeoff_rtl_node-3] [INFO] [1778289616.466974758] [takeoff_rtl_node]: enu z: 39.54
+[takeoff_rtl_node-3] [INFO] [1778289616.573002005] [takeoff_rtl_node]: enu z: 39.54
+[takeoff_rtl_node-3] [INFO] [1778289616.612164601] [takeoff_rtl_node]: enu z: 39.54
+[takeoff_rtl_node-3] [INFO] [1778289616.625590409] [takeoff_rtl_node]: enu z: 39.28
+[takeoff_rtl_node-3] [INFO] [1778289616.658926040] [takeoff_rtl_node]: enu z: 39.28
+[takeoff_rtl_node-3] [INFO] [1778289616.733304368] [takeoff_rtl_node]: enu z: 39.28
+[takeoff_rtl_node-3] [INFO] [1778289616.838855191] [takeoff_rtl_node]: enu z: 39.28
+[takeoff_rtl_node-3] [INFO] [1778289616.942844710] [takeoff_rtl_node]: enu z: 39.28
+[takeoff_rtl_node-3] [INFO] [1778289616.949207986] [takeoff_rtl_node]: enu z: 39.12
+[takeoff_rtl_node-3] [INFO] [1778289616.988060677] [takeoff_rtl_node]: enu z: 39.12
+[takeoff_rtl_node-3] [INFO] [1778289617.093028987] [takeoff_rtl_node]: enu z: 39.12
+[takeoff_rtl_node-3] [INFO] [1778289617.113288883] [takeoff_rtl_node]: enu z: 39.12
+[takeoff_rtl_node-3] [INFO] [1778289617.159083254] [takeoff_rtl_node]: enu z: 39.12
+[takeoff_rtl_node-3] [INFO] [1778289617.248166753] [takeoff_rtl_node]: enu z: 39.12
+[takeoff_rtl_node-3] [INFO] [1778289617.314691092] [takeoff_rtl_node]: enu z: 38.96
+[takeoff_rtl_node-3] [INFO] [1778289617.386049364] [takeoff_rtl_node]: enu z: 38.96
+[takeoff_rtl_node-3] [INFO] [1778289617.403362556] [takeoff_rtl_node]: enu z: 38.96
+[takeoff_rtl_node-3] [INFO] [1778289617.507883369] [takeoff_rtl_node]: enu z: 38.96
+[takeoff_rtl_node-3] [INFO] [1778289617.612458922] [takeoff_rtl_node]: enu z: 38.62
+[takeoff_rtl_node-3] [INFO] [1778289617.617422059] [takeoff_rtl_node]: enu z: 38.62
+[takeoff_rtl_node-3] [INFO] [1778289617.645150910] [takeoff_rtl_node]: enu z: 38.62
+[takeoff_rtl_node-3] [INFO] [1778289617.659234565] [takeoff_rtl_node]: enu z: 38.62
+[takeoff_rtl_node-3] [INFO] [1778289617.769716565] [takeoff_rtl_node]: enu z: 38.62
+[takeoff_rtl_node-3] [INFO] [1778289617.776801966] [takeoff_rtl_node]: enu z: 38.62
+[takeoff_rtl_node-3] [INFO] [1778289617.884116762] [takeoff_rtl_node]: enu z: 38.62
+[takeoff_rtl_node-3] [INFO] [1778289617.944071085] [takeoff_rtl_node]: enu z: 38.07
+[takeoff_rtl_node-3] [INFO] [1778289618.027944671] [takeoff_rtl_node]: enu z: 38.07
+[takeoff_rtl_node-3] [INFO] [1778289618.131981933] [takeoff_rtl_node]: enu z: 38.07
+[takeoff_rtl_node-3] [INFO] [1778289618.151617555] [takeoff_rtl_node]: enu z: 38.07
+[takeoff_rtl_node-3] [INFO] [1778289618.163259614] [takeoff_rtl_node]: enu z: 38.07
+[takeoff_rtl_node-3] [INFO] [1778289618.267388561] [takeoff_rtl_node]: enu z: 38.07
+[takeoff_rtl_node-3] [INFO] [1778289618.285389415] [takeoff_rtl_node]: enu z: 38.07
+[takeoff_rtl_node-3] [INFO] [1778289618.311078279] [takeoff_rtl_node]: enu z: 37.20
+[takeoff_rtl_node-3] [INFO] [1778289618.399930409] [takeoff_rtl_node]: enu z: 37.20
+[takeoff_rtl_node-3] [INFO] [1778289618.420478952] [takeoff_rtl_node]: enu z: 37.20
+[takeoff_rtl_node-3] [INFO] [1778289618.527483751] [takeoff_rtl_node]: enu z: 37.20
+[takeoff_rtl_node-3] [INFO] [1778289618.553085171] [takeoff_rtl_node]: enu z: 37.20
+[takeoff_rtl_node-3] [INFO] [1778289618.608948019] [takeoff_rtl_node]: enu z: 36.85
+[takeoff_rtl_node-3] [INFO] [1778289618.658474239] [takeoff_rtl_node]: enu z: 36.85
+[takeoff_rtl_node-3] [INFO] [1778289618.762876332] [takeoff_rtl_node]: enu z: 36.85
+[takeoff_rtl_node-3] [INFO] [1778289618.808636000] [takeoff_rtl_node]: enu z: 36.85
+[takeoff_rtl_node-3] [INFO] [1778289618.912864742] [takeoff_rtl_node]: enu z: 36.85
+[takeoff_rtl_node-3] [INFO] [1778289618.934147003] [takeoff_rtl_node]: enu z: 36.85
+[takeoff_rtl_node-3] [INFO] [1778289618.945839617] [takeoff_rtl_node]: enu z: 36.35
+[takeoff_rtl_node-3] [INFO] [1778289619.049796880] [takeoff_rtl_node]: enu z: 36.35
+[takeoff_rtl_node-3] [INFO] [1778289619.062096565] [takeoff_rtl_node]: enu z: 36.35
+[takeoff_rtl_node-3] [INFO] [1778289619.159088463] [takeoff_rtl_node]: enu z: 36.35
+[takeoff_rtl_node-3] [INFO] [1778289619.200448399] [takeoff_rtl_node]: enu z: 36.35
+[takeoff_rtl_node-3] [INFO] [1778289619.308464045] [takeoff_rtl_node]: enu z: 35.79
+[takeoff_rtl_node-3] [INFO] [1778289619.337738814] [takeoff_rtl_node]: enu z: 35.79
+[takeoff_rtl_node-3] [INFO] [1778289619.398632410] [takeoff_rtl_node]: enu z: 35.79
+[takeoff_rtl_node-3] [INFO] [1778289619.504790234] [takeoff_rtl_node]: enu z: 35.79
+[takeoff_rtl_node-3] [INFO] [1778289619.605502554] [takeoff_rtl_node]: enu z: 35.49
+[takeoff_rtl_node-3] [INFO] [1778289619.658513309] [takeoff_rtl_node]: enu z: 35.49
+[takeoff_rtl_node-3] [INFO] [1778289619.717232937] [takeoff_rtl_node]: enu z: 35.49
+[takeoff_rtl_node-3] [INFO] [1778289619.822149528] [takeoff_rtl_node]: enu z: 35.49
+[takeoff_rtl_node-3] [INFO] [1778289619.845701683] [takeoff_rtl_node]: enu z: 35.49
+[takeoff_rtl_node-3] [INFO] [1778289619.937916628] [takeoff_rtl_node]: enu z: 35.11
+[takeoff_rtl_node-3] [INFO] [1778289619.978824696] [takeoff_rtl_node]: enu z: 35.11
+[takeoff_rtl_node-3] [INFO] [1778289620.086655826] [takeoff_rtl_node]: enu z: 35.11
+[track_person-2] [INFO] [1778289620.107697144] [track_person]: id: 2
+[takeoff_rtl_node-3] [INFO] [1778289620.159019540] [takeoff_rtl_node]: enu z: 35.11
+[takeoff_rtl_node-3] [INFO] [1778289620.265322068] [takeoff_rtl_node]: enu z: 35.11
+[takeoff_rtl_node-3] [INFO] [1778289620.308154514] [takeoff_rtl_node]: enu z: 34.71
+[takeoff_rtl_node-3] [INFO] [1778289620.395686692] [takeoff_rtl_node]: enu z: 34.71
+[takeoff_rtl_node-3] [INFO] [1778289620.499495384] [takeoff_rtl_node]: enu z: 34.71
+[takeoff_rtl_node-3] [INFO] [1778289620.600838331] [takeoff_rtl_node]: enu z: 34.22
+[takeoff_rtl_node-3] [INFO] [1778289620.658327578] [takeoff_rtl_node]: enu z: 34.22
+[takeoff_rtl_node-3] [INFO] [1778289620.761863493] [takeoff_rtl_node]: enu z: 34.22
+[takeoff_rtl_node-3] [INFO] [1778289620.866366606] [takeoff_rtl_node]: enu z: 34.22
+[takeoff_rtl_node-3] [INFO] [1778289620.934747659] [takeoff_rtl_node]: enu z: 33.51
+[takeoff_rtl_node-3] [INFO] [1778289621.040704819] [takeoff_rtl_node]: enu z: 33.51
+[takeoff_rtl_node-3] [INFO] [1778289621.053311336] [takeoff_rtl_node]: enu z: 33.51
+[takeoff_rtl_node-3] [INFO] [1778289621.065058210] [takeoff_rtl_node]: enu z: 33.51
+[takeoff_rtl_node-3] [INFO] [1778289621.078586907] [takeoff_rtl_node]: enu z: 33.51
+[takeoff_rtl_node-3] [INFO] [1778289621.094725106] [takeoff_rtl_node]: enu z: 33.51
+[takeoff_rtl_node-3] [INFO] [1778289621.112288316] [takeoff_rtl_node]: enu z: 33.51
+[takeoff_rtl_node-3] [INFO] [1778289621.159395311] [takeoff_rtl_node]: enu z: 33.51
+[takeoff_rtl_node-3] [INFO] [1778289621.266000543] [takeoff_rtl_node]: enu z: 33.51
+[takeoff_rtl_node-3] [INFO] [1778289621.285595277] [takeoff_rtl_node]: enu z: 33.51
+[takeoff_rtl_node-3] [INFO] [1778289621.313298204] [takeoff_rtl_node]: enu z: 32.77
+[takeoff_rtl_node-3] [INFO] [1778289621.393021559] [takeoff_rtl_node]: enu z: 32.77
+[track_person-2] [INFO] [1778289621.405483873] [track_person]: id: 3
+[takeoff_rtl_node-3] [INFO] [1778289621.502318441] [takeoff_rtl_node]: enu z: 32.77
+[takeoff_rtl_node-3] [INFO] [1778289621.599483729] [takeoff_rtl_node]: enu z: 32.06
+[takeoff_rtl_node-3] [INFO] [1778289621.658399506] [takeoff_rtl_node]: enu z: 32.06
+[takeoff_rtl_node-3] [INFO] [1778289621.762276161] [takeoff_rtl_node]: enu z: 32.06
+[takeoff_rtl_node-3] [INFO] [1778289621.865913799] [takeoff_rtl_node]: enu z: 32.06
+[mavros_node-1] [ERROR] [1778289621.889767508] [mavros.sys]: FCU: GPS Glitch or Compass error
+[takeoff_rtl_node-3] [INFO] [1778289621.933726374] [takeoff_rtl_node]: enu z: 33.20
+[takeoff_rtl_node-3] [INFO] [1778289622.039264445] [takeoff_rtl_node]: enu z: 33.20
+[takeoff_rtl_node-3] [INFO] [1778289622.143110806] [takeoff_rtl_node]: enu z: 33.20
+[takeoff_rtl_node-3] [INFO] [1778289622.158417103] [takeoff_rtl_node]: enu z: 33.20
+[takeoff_rtl_node-3] [INFO] [1778289622.262487795] [takeoff_rtl_node]: enu z: 33.20
+[takeoff_rtl_node-3] [INFO] [1778289622.301514932] [takeoff_rtl_node]: enu z: 36.22
+[takeoff_rtl_node-3] [INFO] [1778289622.391620856] [takeoff_rtl_node]: enu z: 36.22
+[takeoff_rtl_node-3] [INFO] [1778289622.495566586] [takeoff_rtl_node]: enu z: 36.22
+[takeoff_rtl_node-3] [INFO] [1778289622.596370632] [takeoff_rtl_node]: enu z: 37.25
+[takeoff_rtl_node-3] [INFO] [1778289622.658340576] [takeoff_rtl_node]: enu z: 37.25
+[takeoff_rtl_node-3] [INFO] [1778289622.762765785] [takeoff_rtl_node]: enu z: 37.25
+[takeoff_rtl_node-3] [INFO] [1778289622.866449164] [takeoff_rtl_node]: enu z: 37.25
+[takeoff_rtl_node-3] [INFO] [1778289622.928062148] [takeoff_rtl_node]: enu z: 37.20
+[track_person-2] [INFO] [1778289622.937134167] [track_person]: id: 4
+[takeoff_rtl_node-3] [INFO] [1778289623.032491653] [takeoff_rtl_node]: enu z: 37.20
+[takeoff_rtl_node-3] [INFO] [1778289623.136949363] [takeoff_rtl_node]: enu z: 37.20
+[takeoff_rtl_node-3] [INFO] [1778289623.159169193] [takeoff_rtl_node]: enu z: 37.20
+[takeoff_rtl_node-3] [INFO] [1778289623.263703847] [takeoff_rtl_node]: enu z: 37.20
+[takeoff_rtl_node-3] [INFO] [1778289623.300554090] [takeoff_rtl_node]: enu z: 36.86
+[takeoff_rtl_node-3] [INFO] [1778289623.389160839] [takeoff_rtl_node]: enu z: 36.86
+[takeoff_rtl_node-3] [INFO] [1778289623.492829257] [takeoff_rtl_node]: enu z: 36.86
+[takeoff_rtl_node-3] [INFO] [1778289623.592033183] [takeoff_rtl_node]: enu z: 36.55
+[takeoff_rtl_node-3] [INFO] [1778289623.658564323] [takeoff_rtl_node]: enu z: 36.55
+[takeoff_rtl_node-3] [INFO] [1778289623.699766744] [takeoff_rtl_node]: enu z: 36.55
+[takeoff_rtl_node-3] [INFO] [1778289623.715115449] [takeoff_rtl_node]: enu z: 36.55
+[takeoff_rtl_node-3] [INFO] [1778289623.740303224] [takeoff_rtl_node]: enu z: 36.55
+[takeoff_rtl_node-3] [INFO] [1778289623.766305273] [takeoff_rtl_node]: enu z: 36.55
+[takeoff_rtl_node-3] [INFO] [1778289623.788215160] [takeoff_rtl_node]: enu z: 36.55
+[takeoff_rtl_node-3] [INFO] [1778289623.808353929] [takeoff_rtl_node]: enu z: 36.55
+[takeoff_rtl_node-3] [INFO] [1778289623.894250509] [takeoff_rtl_node]: enu z: 36.55
+[takeoff_rtl_node-3] [INFO] [1778289623.929410484] [takeoff_rtl_node]: enu z: 36.12
+[takeoff_rtl_node-3] [INFO] [1778289624.014900548] [takeoff_rtl_node]: enu z: 36.12
+[takeoff_rtl_node-3] [INFO] [1778289624.122302964] [takeoff_rtl_node]: enu z: 36.12
+[takeoff_rtl_node-3] [INFO] [1778289624.144957033] [takeoff_rtl_node]: enu z: 36.12
+[takeoff_rtl_node-3] [INFO] [1778289624.160226627] [takeoff_rtl_node]: enu z: 36.12
+[takeoff_rtl_node-3] [INFO] [1778289624.265282260] [takeoff_rtl_node]: enu z: 36.12
+[takeoff_rtl_node-3] [INFO] [1778289624.297662956] [takeoff_rtl_node]: enu z: 35.77
+[takeoff_rtl_node-3] [INFO] [1778289624.388107658] [takeoff_rtl_node]: enu z: 35.77
+[takeoff_rtl_node-3] [INFO] [1778289624.398303116] [takeoff_rtl_node]: enu z: 35.77
+[takeoff_rtl_node-3] [INFO] [1778289624.502179960] [takeoff_rtl_node]: enu z: 35.77
+[takeoff_rtl_node-3] [INFO] [1778289624.524255995] [takeoff_rtl_node]: enu z: 35.77
+[takeoff_rtl_node-3] [INFO] [1778289624.589217312] [takeoff_rtl_node]: enu z: 35.05
+[takeoff_rtl_node-3] [INFO] [1778289624.651880457] [takeoff_rtl_node]: enu z: 35.05
+[takeoff_rtl_node-3] [INFO] [1778289624.661681566] [takeoff_rtl_node]: enu z: 35.05
+[takeoff_rtl_node-3] [INFO] [1778289624.769227758] [takeoff_rtl_node]: enu z: 35.05
+[takeoff_rtl_node-3] [INFO] [1778289624.788989974] [takeoff_rtl_node]: enu z: 35.05
+[takeoff_rtl_node-3] [INFO] [1778289624.893009243] [takeoff_rtl_node]: enu z: 35.05
+[takeoff_rtl_node-3] [INFO] [1778289624.923631468] [takeoff_rtl_node]: enu z: 34.22
+[takeoff_rtl_node-3] [INFO] [1778289624.932365212] [takeoff_rtl_node]: enu z: 34.22
+[takeoff_rtl_node-3] [INFO] [1778289625.041418119] [takeoff_rtl_node]: enu z: 34.22
+[takeoff_rtl_node-3] [INFO] [1778289625.144997466] [takeoff_rtl_node]: enu z: 34.22
+[takeoff_rtl_node-3] [INFO] [1778289625.159198863] [takeoff_rtl_node]: enu z: 34.22
+[takeoff_rtl_node-3] [INFO] [1778289625.178493989] [takeoff_rtl_node]: enu z: 34.22
+[takeoff_rtl_node-3] [INFO] [1778289625.283982491] [takeoff_rtl_node]: enu z: 34.22
+[takeoff_rtl_node-3] [INFO] [1778289625.297861557] [takeoff_rtl_node]: enu z: 33.24
+[takeoff_rtl_node-3] [INFO] [1778289625.312857783] [takeoff_rtl_node]: enu z: 33.24
+[takeoff_rtl_node-3] [INFO] [1778289625.384851521] [takeoff_rtl_node]: enu z: 33.24
+[takeoff_rtl_node-3] [INFO] [1778289625.440602560] [takeoff_rtl_node]: enu z: 33.24
+[takeoff_rtl_node-3] [INFO] [1778289625.547294463] [takeoff_rtl_node]: enu z: 33.24
+[takeoff_rtl_node-3] [INFO] [1778289625.568225802] [takeoff_rtl_node]: enu z: 33.24
+[takeoff_rtl_node-3] [INFO] [1778289625.590220004] [takeoff_rtl_node]: enu z: 31.29
+[takeoff_rtl_node-3] [INFO] [1778289625.658937910] [takeoff_rtl_node]: enu z: 31.29
+[takeoff_rtl_node-3] [INFO] [1778289625.695272935] [takeoff_rtl_node]: enu z: 31.29
+[takeoff_rtl_node-3] [INFO] [1778289625.799890517] [takeoff_rtl_node]: enu z: 31.29
+[takeoff_rtl_node-3] [INFO] [1778289625.903886788] [takeoff_rtl_node]: enu z: 31.29
+[takeoff_rtl_node-3] [INFO] [1778289625.918326239] [takeoff_rtl_node]: enu z: 30.79
+[takeoff_rtl_node-3] [INFO] [1778289626.022282269] [takeoff_rtl_node]: enu z: 30.79
+[takeoff_rtl_node-3] [INFO] [1778289626.087967657] [takeoff_rtl_node]: enu z: 30.79
+[takeoff_rtl_node-3] [INFO] [1778289626.159501307] [takeoff_rtl_node]: enu z: 30.79
+[takeoff_rtl_node-3] [INFO] [1778289626.216979632] [takeoff_rtl_node]: enu z: 30.79
+[takeoff_rtl_node-3] [INFO] [1778289626.297191379] [takeoff_rtl_node]: enu z: 30.13
+[takeoff_rtl_node-3] [INFO] [1778289626.343727510] [takeoff_rtl_node]: enu z: 30.13
+[takeoff_rtl_node-3] [INFO] [1778289626.383579737] [takeoff_rtl_node]: enu z: 30.13
+[takeoff_rtl_node-3] [INFO] [1778289626.478935004] [takeoff_rtl_node]: enu z: 30.13
+[takeoff_rtl_node-3] [INFO] [1778289626.581763116] [takeoff_rtl_node]: enu z: 30.85
+[takeoff_rtl_node-3] [INFO] [1778289626.629924257] [takeoff_rtl_node]: enu z: 30.85
+[takeoff_rtl_node-3] [INFO] [1778289626.659973430] [takeoff_rtl_node]: enu z: 30.85
+[takeoff_rtl_node-3] [INFO] [1778289626.764211830] [takeoff_rtl_node]: enu z: 30.85
+[takeoff_rtl_node-3] [INFO] [1778289626.870725328] [takeoff_rtl_node]: enu z: 30.85
+[takeoff_rtl_node-3] [INFO] [1778289626.876971365] [takeoff_rtl_node]: enu z: 30.85
+[takeoff_rtl_node-3] [INFO] [1778289626.915231231] [takeoff_rtl_node]: enu z: 31.47
+[takeoff_rtl_node-3] [INFO] [1778289627.009447968] [takeoff_rtl_node]: enu z: 31.47
+[takeoff_rtl_node-3] [INFO] [1778289627.113525574] [takeoff_rtl_node]: enu z: 31.47
+[takeoff_rtl_node-3] [INFO] [1778289627.134595116] [takeoff_rtl_node]: enu z: 31.47
+[takeoff_rtl_node-3] [INFO] [1778289627.160318927] [takeoff_rtl_node]: enu z: 31.47
+[takeoff_rtl_node-3] [INFO] [1778289627.262486970] [takeoff_rtl_node]: enu z: 31.47
+[takeoff_rtl_node-3] [INFO] [1778289627.296149030] [takeoff_rtl_node]: enu z: 31.73
+[takeoff_rtl_node-3] [INFO] [1778289627.380159069] [takeoff_rtl_node]: enu z: 31.73
+[takeoff_rtl_node-3] [INFO] [1778289627.390166158] [takeoff_rtl_node]: enu z: 31.73
+[takeoff_rtl_node-3] [INFO] [1778289627.493698619] [takeoff_rtl_node]: enu z: 31.73
+[takeoff_rtl_node-3] [INFO] [1778289627.537768062] [takeoff_rtl_node]: enu z: 31.73
+[takeoff_rtl_node-3] [INFO] [1778289627.580126941] [takeoff_rtl_node]: enu z: 31.84
+[takeoff_rtl_node-3] [INFO] [1778289627.665303529] [takeoff_rtl_node]: enu z: 31.84
+[takeoff_rtl_node-3] [INFO] [1778289627.675873615] [takeoff_rtl_node]: enu z: 31.84
+[takeoff_rtl_node-3] [INFO] [1778289627.781840358] [takeoff_rtl_node]: enu z: 31.84
+[takeoff_rtl_node-3] [INFO] [1778289627.793653714] [takeoff_rtl_node]: enu z: 31.84
+[takeoff_rtl_node-3] [INFO] [1778289627.902233626] [takeoff_rtl_node]: enu z: 31.84
+[takeoff_rtl_node-3] [INFO] [1778289627.913020933] [takeoff_rtl_node]: enu z: 31.73
+[takeoff_rtl_node-3] [INFO] [1778289627.925774098] [takeoff_rtl_node]: enu z: 31.73
+[takeoff_rtl_node-3] [INFO] [1778289628.032241875] [takeoff_rtl_node]: enu z: 31.73
+[takeoff_rtl_node-3] [INFO] [1778289628.044458081] [takeoff_rtl_node]: enu z: 31.73
+[takeoff_rtl_node-3] [INFO] [1778289628.148911890] [takeoff_rtl_node]: enu z: 31.73
+[takeoff_rtl_node-3] [INFO] [1778289628.159581642] [takeoff_rtl_node]: enu z: 31.73
+[takeoff_rtl_node-3] [INFO] [1778289628.179246673] [takeoff_rtl_node]: enu z: 31.73
+[takeoff_rtl_node-3] [INFO] [1778289628.286140209] [takeoff_rtl_node]: enu z: 31.73
+[takeoff_rtl_node-3] [INFO] [1778289628.294559288] [takeoff_rtl_node]: enu z: 31.47
+[takeoff_rtl_node-3] [INFO] [1778289628.309130369] [takeoff_rtl_node]: enu z: 31.47
+[takeoff_rtl_node-3] [INFO] [1778289628.377224578] [takeoff_rtl_node]: enu z: 31.47
+[takeoff_rtl_node-3] [INFO] [1778289628.428704533] [takeoff_rtl_node]: enu z: 31.47
+[takeoff_rtl_node-3] [INFO] [1778289628.533074435] [takeoff_rtl_node]: enu z: 31.47
+[takeoff_rtl_node-3] [INFO] [1778289628.569849421] [takeoff_rtl_node]: enu z: 31.47
+[takeoff_rtl_node-3] [INFO] [1778289628.579890362] [takeoff_rtl_node]: enu z: 31.05
+[takeoff_rtl_node-3] [INFO] [1778289628.658327824] [takeoff_rtl_node]: enu z: 31.05
+[takeoff_rtl_node-3] [INFO] [1778289628.695326161] [takeoff_rtl_node]: enu z: 31.05
+[takeoff_rtl_node-3] [INFO] [1778289628.803168561] [takeoff_rtl_node]: enu z: 31.05
+[takeoff_rtl_node-3] [INFO] [1778289628.832763627] [takeoff_rtl_node]: enu z: 31.05
+[takeoff_rtl_node-3] [INFO] [1778289628.908117719] [takeoff_rtl_node]: enu z: 30.33
+[takeoff_rtl_node-3] [INFO] [1778289628.950150581] [takeoff_rtl_node]: enu z: 30.33
+[takeoff_rtl_node-3] [INFO] [1778289629.062840694] [takeoff_rtl_node]: enu z: 30.33
+[takeoff_rtl_node-3] [INFO] [1778289629.076231559] [takeoff_rtl_node]: enu z: 30.33
+[takeoff_rtl_node-3] [INFO] [1778289629.158747943] [takeoff_rtl_node]: enu z: 30.33
+[takeoff_rtl_node-3] [INFO] [1778289629.217950316] [takeoff_rtl_node]: enu z: 30.33
+[takeoff_rtl_node-3] [INFO] [1778289629.286571523] [takeoff_rtl_node]: enu z: 29.89
+[takeoff_rtl_node-3] [INFO] [1778289629.347304498] [takeoff_rtl_node]: enu z: 29.89
+[takeoff_rtl_node-3] [INFO] [1778289629.376164513] [takeoff_rtl_node]: enu z: 29.89
+[takeoff_rtl_node-3] [INFO] [1778289629.479134184] [takeoff_rtl_node]: enu z: 29.89
+[takeoff_rtl_node-3] [INFO] [1778289629.572631058] [takeoff_rtl_node]: enu z: 28.90
+[takeoff_rtl_node-3] [INFO] [1778289629.610343873] [takeoff_rtl_node]: enu z: 28.90
+[takeoff_rtl_node-3] [INFO] [1778289629.659557212] [takeoff_rtl_node]: enu z: 28.90
+[takeoff_rtl_node-3] [INFO] [1778289629.734091643] [takeoff_rtl_node]: enu z: 28.90
+[takeoff_rtl_node-3] [INFO] [1778289629.839022950] [takeoff_rtl_node]: enu z: 28.90
+[takeoff_rtl_node-3] [INFO] [1778289629.863814415] [takeoff_rtl_node]: enu z: 28.90
+[takeoff_rtl_node-3] [INFO] [1778289629.907032271] [takeoff_rtl_node]: enu z: 28.65
+[takeoff_rtl_node-3] [INFO] [1778289629.992241899] [takeoff_rtl_node]: enu z: 28.65
+[takeoff_rtl_node-3] [INFO] [1778289630.097008597] [takeoff_rtl_node]: enu z: 28.65
+[takeoff_rtl_node-3] [INFO] [1778289630.117615439] [takeoff_rtl_node]: enu z: 28.65
+[takeoff_rtl_node-3] [INFO] [1778289630.159015584] [takeoff_rtl_node]: enu z: 28.65
+[takeoff_rtl_node-3] [INFO] [1778289630.251027376] [takeoff_rtl_node]: enu z: 28.65
+[takeoff_rtl_node-3] [INFO] [1778289630.284913010] [takeoff_rtl_node]: enu z: 28.51
+[takeoff_rtl_node-3] [INFO] [1778289630.372902047] [takeoff_rtl_node]: enu z: 28.51
+[takeoff_rtl_node-3] [INFO] [1778289630.383765576] [takeoff_rtl_node]: enu z: 28.51
+[takeoff_rtl_node-3] [INFO] [1778289630.497996144] [takeoff_rtl_node]: enu z: 28.51
+[takeoff_rtl_node-3] [INFO] [1778289630.518377080] [takeoff_rtl_node]: enu z: 28.51
+[takeoff_rtl_node-3] [INFO] [1778289630.571581119] [takeoff_rtl_node]: enu z: 28.30
+[takeoff_rtl_node-3] [INFO] [1778289630.652326736] [takeoff_rtl_node]: enu z: 28.30
+[takeoff_rtl_node-3] [INFO] [1778289630.660193653] [takeoff_rtl_node]: enu z: 28.30
+[takeoff_rtl_node-3] [INFO] [1778289630.765184739] [takeoff_rtl_node]: enu z: 28.30
+[takeoff_rtl_node-3] [INFO] [1778289630.776337488] [takeoff_rtl_node]: enu z: 28.30
+[takeoff_rtl_node-3] [INFO] [1778289630.880974483] [takeoff_rtl_node]: enu z: 28.30
+[takeoff_rtl_node-3] [INFO] [1778289630.899961575] [takeoff_rtl_node]: enu z: 28.30
+[takeoff_rtl_node-3] [INFO] [1778289630.915406040] [takeoff_rtl_node]: enu z: 28.59
+[takeoff_rtl_node-3] [INFO] [1778289631.025521540] [takeoff_rtl_node]: enu z: 28.59
+[takeoff_rtl_node-3] [INFO] [1778289631.132432135] [takeoff_rtl_node]: enu z: 28.59
+[takeoff_rtl_node-3] [INFO] [1778289631.155352833] [takeoff_rtl_node]: enu z: 28.59
+[takeoff_rtl_node-3] [INFO] [1778289631.164745704] [takeoff_rtl_node]: enu z: 28.59
+[takeoff_rtl_node-3] [INFO] [1778289631.268821908] [takeoff_rtl_node]: enu z: 28.59
+[takeoff_rtl_node-3] [INFO] [1778289631.293657373] [takeoff_rtl_node]: enu z: 28.31
+[takeoff_rtl_node-3] [INFO] [1778289631.304433754] [takeoff_rtl_node]: enu z: 28.31
+[takeoff_rtl_node-3] [INFO] [1778289631.370821272] [takeoff_rtl_node]: enu z: 28.31
+[takeoff_rtl_node-3] [INFO] [1778289631.423257093] [takeoff_rtl_node]: enu z: 28.31
+[takeoff_rtl_node-3] [INFO] [1778289631.533864055] [takeoff_rtl_node]: enu z: 28.31
+[takeoff_rtl_node-3] [INFO] [1778289631.562521590] [takeoff_rtl_node]: enu z: 28.31
+[takeoff_rtl_node-3] [INFO] [1778289631.584076427] [takeoff_rtl_node]: enu z: 28.15
+[takeoff_rtl_node-3] [INFO] [1778289631.660336979] [takeoff_rtl_node]: enu z: 28.15
+[takeoff_rtl_node-3] [INFO] [1778289631.695200237] [takeoff_rtl_node]: enu z: 28.15
+[takeoff_rtl_node-3] [INFO] [1778289631.802382997] [takeoff_rtl_node]: enu z: 28.15
+[takeoff_rtl_node-3] [INFO] [1778289631.816656653] [takeoff_rtl_node]: enu z: 28.15
+[takeoff_rtl_node-3] [INFO] [1778289631.901720561] [takeoff_rtl_node]: enu z: 28.25
+[takeoff_rtl_node-3] [INFO] [1778289631.933698540] [takeoff_rtl_node]: enu z: 28.25
+[mavros_node-1] [ERROR] [1778289631.962693222] [mavros.sys]: FCU: Glitch cleared
+[takeoff_rtl_node-3] [INFO] [1778289632.038337408] [takeoff_rtl_node]: enu z: 28.25
+[takeoff_rtl_node-3] [INFO] [1778289632.066976573] [takeoff_rtl_node]: enu z: 28.25
+[takeoff_rtl_node-3] [INFO] [1778289632.158633721] [takeoff_rtl_node]: enu z: 28.25
+[takeoff_rtl_node-3] [INFO] [1778289632.197794547] [takeoff_rtl_node]: enu z: 28.25
+[takeoff_rtl_node-3] [INFO] [1778289632.278597055] [takeoff_rtl_node]: enu z: 27.89
+[takeoff_rtl_node-3] [INFO] [1778289632.334778615] [takeoff_rtl_node]: enu z: 27.89
+[takeoff_rtl_node-3] [INFO] [1778289632.368740582] [takeoff_rtl_node]: enu z: 27.89
+[takeoff_rtl_node-3] [INFO] [1778289632.474116502] [takeoff_rtl_node]: enu z: 27.89
+[takeoff_rtl_node-3] [INFO] [1778289632.563606792] [takeoff_rtl_node]: enu z: 27.87
+[takeoff_rtl_node-3] [INFO] [1778289632.589818972] [takeoff_rtl_node]: enu z: 27.87
+[takeoff_rtl_node-3] [INFO] [1778289632.659299824] [takeoff_rtl_node]: enu z: 27.87
+[takeoff_rtl_node-3] [INFO] [1778289632.718844401] [takeoff_rtl_node]: enu z: 27.87
+[takeoff_rtl_node-3] [INFO] [1778289632.830823689] [takeoff_rtl_node]: enu z: 27.87
+[takeoff_rtl_node-3] [INFO] [1778289632.843970112] [takeoff_rtl_node]: enu z: 27.87
+[takeoff_rtl_node-3] [INFO] [1778289632.901333646] [takeoff_rtl_node]: enu z: 27.85
+[takeoff_rtl_node-3] [INFO] [1778289632.964299425] [takeoff_rtl_node]: enu z: 27.85
+[takeoff_rtl_node-3] [INFO] [1778289633.068519074] [takeoff_rtl_node]: enu z: 27.85
+[takeoff_rtl_node-3] [INFO] [1778289633.111228602] [takeoff_rtl_node]: enu z: 27.85
+[takeoff_rtl_node-3] [INFO] [1778289633.159282155] [takeoff_rtl_node]: enu z: 27.85
+[takeoff_rtl_node-3] [INFO] [1778289633.266215029] [takeoff_rtl_node]: enu z: 27.85
+[takeoff_rtl_node-3] [INFO] [1778289633.275811455] [takeoff_rtl_node]: enu z: 27.69
+[takeoff_rtl_node-3] [INFO] [1778289633.361565138] [takeoff_rtl_node]: enu z: 27.69
+[takeoff_rtl_node-3] [INFO] [1778289633.370868324] [takeoff_rtl_node]: enu z: 27.69
+[takeoff_rtl_node-3] [INFO] [1778289633.479249098] [takeoff_rtl_node]: enu z: 27.69
+[takeoff_rtl_node-3] [INFO] [1778289633.495568391] [takeoff_rtl_node]: enu z: 27.69
+[takeoff_rtl_node-3] [INFO] [1778289633.560078218] [takeoff_rtl_node]: enu z: 27.67
+[takeoff_rtl_node-3] [INFO] [1778289633.623605513] [takeoff_rtl_node]: enu z: 27.67
+[takeoff_rtl_node-3] [INFO] [1778289633.659492433] [takeoff_rtl_node]: enu z: 27.67
+[takeoff_rtl_node-3] [INFO] [1778289633.749299352] [takeoff_rtl_node]: enu z: 27.67
+[takeoff_rtl_node-3] [INFO] [1778289633.855250047] [takeoff_rtl_node]: enu z: 27.67
+[takeoff_rtl_node-3] [INFO] [1778289633.890512341] [takeoff_rtl_node]: enu z: 27.67
+[takeoff_rtl_node-3] [INFO] [1778289633.901409536] [takeoff_rtl_node]: enu z: 27.63
+[takeoff_rtl_node-3] [INFO] [1778289634.005759389] [takeoff_rtl_node]: enu z: 27.63
+[takeoff_rtl_node-3] [INFO] [1778289634.039419859] [takeoff_rtl_node]: enu z: 27.63
+[takeoff_rtl_node-3] [INFO] [1778289634.144935817] [takeoff_rtl_node]: enu z: 27.63
+[takeoff_rtl_node-3] [INFO] [1778289634.157599614] [takeoff_rtl_node]: enu z: 27.63
+[takeoff_rtl_node-3] [INFO] [1778289634.166928041] [takeoff_rtl_node]: enu z: 27.63
+[takeoff_rtl_node-3] [INFO] [1778289634.273942675] [takeoff_rtl_node]: enu z: 27.66
+[takeoff_rtl_node-3] [INFO] [1778289634.286866211] [takeoff_rtl_node]: enu z: 27.66
+[takeoff_rtl_node-3] [INFO] [1778289634.364282296] [takeoff_rtl_node]: enu z: 27.66
+[takeoff_rtl_node-3] [INFO] [1778289634.415782940] [takeoff_rtl_node]: enu z: 27.66
+[takeoff_rtl_node-3] [INFO] [1778289634.526194518] [takeoff_rtl_node]: enu z: 27.66
+[takeoff_rtl_node-3] [INFO] [1778289634.557505391] [takeoff_rtl_node]: enu z: 27.56
+[takeoff_rtl_node-3] [INFO] [1778289634.661236711] [takeoff_rtl_node]: enu z: 27.56
+[takeoff_rtl_node-3] [INFO] [1778289634.670659915] [takeoff_rtl_node]: enu z: 27.56
+[takeoff_rtl_node-3] [INFO] [1778289634.777216367] [takeoff_rtl_node]: enu z: 27.56
+[takeoff_rtl_node-3] [INFO] [1778289634.801314116] [takeoff_rtl_node]: enu z: 27.56
+[takeoff_rtl_node-3] [INFO] [1778289634.895132735] [takeoff_rtl_node]: enu z: 27.18
+[takeoff_rtl_node-3] [INFO] [1778289634.934232229] [takeoff_rtl_node]: enu z: 27.18
+[takeoff_rtl_node-3] [INFO] [1778289635.040072537] [takeoff_rtl_node]: enu z: 27.18
+[takeoff_rtl_node-3] [INFO] [1778289635.143836322] [takeoff_rtl_node]: enu z: 27.18
+[takeoff_rtl_node-3] [INFO] [1778289635.159003696] [takeoff_rtl_node]: enu z: 27.18
+[takeoff_rtl_node-3] [INFO] [1778289635.196195535] [takeoff_rtl_node]: enu z: 27.18
+[takeoff_rtl_node-3] [INFO] [1778289635.261197027] [takeoff_rtl_node]: enu z: 26.80
+[takeoff_rtl_node-3] [INFO] [1778289635.361321666] [takeoff_rtl_node]: enu z: 26.80
+[takeoff_rtl_node-3] [INFO] [1778289635.450398203] [takeoff_rtl_node]: enu z: 26.80
+[takeoff_rtl_node-3] [INFO] [1778289635.553353751] [takeoff_rtl_node]: enu z: 26.34
+[takeoff_rtl_node-3] [INFO] [1778289635.583486335] [takeoff_rtl_node]: enu z: 26.34
+[takeoff_rtl_node-3] [INFO] [1778289635.658825877] [takeoff_rtl_node]: enu z: 26.34
+[takeoff_rtl_node-3] [INFO] [1778289635.711730143] [takeoff_rtl_node]: enu z: 26.34
+[takeoff_rtl_node-3] [INFO] [1778289635.816125776] [takeoff_rtl_node]: enu z: 26.34
+[takeoff_rtl_node-3] [INFO] [1778289635.891990834] [takeoff_rtl_node]: enu z: 25.92
+[takeoff_rtl_node-3] [INFO] [1778289635.973784765] [takeoff_rtl_node]: enu z: 25.92
+[takeoff_rtl_node-3] [INFO] [1778289636.078380823] [takeoff_rtl_node]: enu z: 25.92
+[takeoff_rtl_node-3] [INFO] [1778289636.102215611] [takeoff_rtl_node]: enu z: 25.92
+[takeoff_rtl_node-3] [INFO] [1778289636.159320167] [takeoff_rtl_node]: enu z: 25.92
+[takeoff_rtl_node-3] [INFO] [1778289636.229284446] [takeoff_rtl_node]: enu z: 25.92
+[takeoff_rtl_node-3] [INFO] [1778289636.264941887] [takeoff_rtl_node]: enu z: 25.49
+[takeoff_rtl_node-3] [INFO] [1778289636.361719658] [takeoff_rtl_node]: enu z: 25.49
+[takeoff_rtl_node-3] [INFO] [1778289636.368164657] [takeoff_rtl_node]: enu z: 25.49
+[takeoff_rtl_node-3] [INFO] [1778289636.474341688] [takeoff_rtl_node]: enu z: 25.49
+[takeoff_rtl_node-3] [INFO] [1778289636.485815973] [takeoff_rtl_node]: enu z: 25.49
+[takeoff_rtl_node-3] [INFO] [1778289636.551032557] [takeoff_rtl_node]: enu z: 25.04
+[takeoff_rtl_node-3] [INFO] [1778289636.632258640] [takeoff_rtl_node]: enu z: 25.04
+[takeoff_rtl_node-3] [INFO] [1778289636.660033275] [takeoff_rtl_node]: enu z: 25.04
+[takeoff_rtl_node-3] [INFO] [1778289636.750423602] [takeoff_rtl_node]: enu z: 25.04
+[takeoff_rtl_node-3] [INFO] [1778289636.855579620] [takeoff_rtl_node]: enu z: 25.04
+[takeoff_rtl_node-3] [INFO] [1778289636.884880635] [takeoff_rtl_node]: enu z: 25.04
+[takeoff_rtl_node-3] [INFO] [1778289636.895188334] [takeoff_rtl_node]: enu z: 24.46
+[takeoff_rtl_node-3] [INFO] [1778289637.001592975] [takeoff_rtl_node]: enu z: 24.46
+[takeoff_rtl_node-3] [INFO] [1778289637.019435316] [takeoff_rtl_node]: enu z: 24.46
+[takeoff_rtl_node-3] [INFO] [1778289637.127011266] [takeoff_rtl_node]: enu z: 24.46
+[takeoff_rtl_node-3] [INFO] [1778289637.141834828] [takeoff_rtl_node]: enu z: 24.46
+[takeoff_rtl_node-3] [INFO] [1778289637.159225653] [takeoff_rtl_node]: enu z: 24.46
+[takeoff_rtl_node-3] [INFO] [1778289637.256016869] [takeoff_rtl_node]: enu z: 23.98
+[takeoff_rtl_node-3] [INFO] [1778289637.278645645] [takeoff_rtl_node]: enu z: 23.98
+[takeoff_rtl_node-3] [INFO] [1778289637.359722138] [takeoff_rtl_node]: enu z: 23.98
+[takeoff_rtl_node-3] [INFO] [1778289637.399346149] [takeoff_rtl_node]: enu z: 23.98
+[takeoff_rtl_node-3] [INFO] [1778289637.503189139] [takeoff_rtl_node]: enu z: 23.98
+[takeoff_rtl_node-3] [INFO] [1778289637.530227723] [takeoff_rtl_node]: enu z: 23.98
+[takeoff_rtl_node-3] [INFO] [1778289637.549041262] [takeoff_rtl_node]: enu z: 23.59
+[takeoff_rtl_node-3] [INFO] [1778289637.662643288] [takeoff_rtl_node]: enu z: 23.59
+[takeoff_rtl_node-3] [INFO] [1778289637.668469624] [takeoff_rtl_node]: enu z: 23.59
+[takeoff_rtl_node-3] [INFO] [1778289637.675277178] [takeoff_rtl_node]: enu z: 23.59
+[takeoff_rtl_node-3] [INFO] [1778289637.780270513] [takeoff_rtl_node]: enu z: 23.59
+[takeoff_rtl_node-3] [INFO] [1778289637.792871847] [takeoff_rtl_node]: enu z: 23.59
+[takeoff_rtl_node-3] [INFO] [1778289637.888571088] [takeoff_rtl_node]: enu z: 23.15
+[takeoff_rtl_node-3] [INFO] [1778289637.994655491] [takeoff_rtl_node]: enu z: 23.15
+[takeoff_rtl_node-3] [INFO] [1778289638.054453367] [takeoff_rtl_node]: enu z: 23.15
+[takeoff_rtl_node-3] [INFO] [1778289638.158621968] [takeoff_rtl_node]: enu z: 23.15
+[takeoff_rtl_node-3] [INFO] [1778289638.184709150] [takeoff_rtl_node]: enu z: 23.15
+[takeoff_rtl_node-3] [INFO] [1778289638.254880059] [takeoff_rtl_node]: enu z: 22.68
+[takeoff_rtl_node-3] [INFO] [1778289638.308306435] [takeoff_rtl_node]: enu z: 22.68
+[takeoff_rtl_node-3] [INFO] [1778289638.355266015] [takeoff_rtl_node]: enu z: 22.68
+[takeoff_rtl_node-3] [INFO] [1778289638.434772036] [takeoff_rtl_node]: enu z: 22.68
+[takeoff_rtl_node-3] [INFO] [1778289638.539385282] [takeoff_rtl_node]: enu z: 22.68
+[takeoff_rtl_node-3] [INFO] [1778289638.548641580] [takeoff_rtl_node]: enu z: 22.21
+[takeoff_rtl_node-3] [INFO] [1778289638.573812564] [takeoff_rtl_node]: enu z: 22.21
+[takeoff_rtl_node-3] [INFO] [1778289638.658994108] [takeoff_rtl_node]: enu z: 22.21
+[takeoff_rtl_node-3] [INFO] [1778289638.702871984] [takeoff_rtl_node]: enu z: 22.21
+[mavros_node-1] [ERROR] [1778289638.715152227] [mavros.sys]: FCU: EKF3 lane switch 0
+[mavros_node-1] [WARN] [1778289638.720454363] [mavros.sys]: FCU: EKF primary changed:0
+[takeoff_rtl_node-3] [INFO] [1778289638.811197727] [takeoff_rtl_node]: enu z: 22.21
+[takeoff_rtl_node-3] [INFO] [1778289638.834614388] [takeoff_rtl_node]: enu z: 22.21
+[takeoff_rtl_node-3] [INFO] [1778289638.886236181] [takeoff_rtl_node]: enu z: 26.53
+[takeoff_rtl_node-3] [INFO] [1778289638.960482585] [takeoff_rtl_node]: enu z: 26.53
+[takeoff_rtl_node-3] [INFO] [1778289639.065617718] [takeoff_rtl_node]: enu z: 26.53
+[takeoff_rtl_node-3] [INFO] [1778289639.091182514] [takeoff_rtl_node]: enu z: 26.53
+[takeoff_rtl_node-3] [INFO] [1778289639.158794809] [takeoff_rtl_node]: enu z: 26.53
+[takeoff_rtl_node-3] [INFO] [1778289639.216033756] [takeoff_rtl_node]: enu z: 26.53
+[takeoff_rtl_node-3] [INFO] [1778289639.251592217] [takeoff_rtl_node]: enu z: 26.42
+[takeoff_rtl_node-3] [INFO] [1778289639.343093244] [takeoff_rtl_node]: enu z: 26.42
+[takeoff_rtl_node-3] [INFO] [1778289639.356773461] [takeoff_rtl_node]: enu z: 26.42
+[takeoff_rtl_node-3] [INFO] [1778289639.461246487] [takeoff_rtl_node]: enu z: 26.42
+[takeoff_rtl_node-3] [INFO] [1778289639.477170303] [takeoff_rtl_node]: enu z: 26.42
+[takeoff_rtl_node-3] [INFO] [1778289639.540287845] [takeoff_rtl_node]: enu z: 26.08
+[takeoff_rtl_node-3] [INFO] [1778289639.608391452] [takeoff_rtl_node]: enu z: 26.08
+[takeoff_rtl_node-3] [INFO] [1778289639.658858160] [takeoff_rtl_node]: enu z: 26.08
+[takeoff_rtl_node-3] [INFO] [1778289639.744758849] [takeoff_rtl_node]: enu z: 26.08
+[takeoff_rtl_node-3] [INFO] [1778289639.848779082] [takeoff_rtl_node]: enu z: 26.08
+[takeoff_rtl_node-3] [INFO] [1778289639.881159765] [takeoff_rtl_node]: enu z: 26.08
+[takeoff_rtl_node-3] [INFO] [1778289639.889394291] [takeoff_rtl_node]: enu z: 25.51
+[takeoff_rtl_node-3] [INFO] [1778289639.995314290] [takeoff_rtl_node]: enu z: 25.51
+[takeoff_rtl_node-3] [INFO] [1778289640.100298333] [takeoff_rtl_node]: enu z: 25.51
+[takeoff_rtl_node-3] [INFO] [1778289640.122737611] [takeoff_rtl_node]: enu z: 25.51
+[takeoff_rtl_node-3] [INFO] [1778289640.159108920] [takeoff_rtl_node]: enu z: 25.51
+[takeoff_rtl_node-3] [INFO] [1778289640.253460913] [takeoff_rtl_node]: enu z: 25.02
+[takeoff_rtl_node-3] [INFO] [1778289640.262122363] [takeoff_rtl_node]: enu z: 25.02
+[takeoff_rtl_node-3] [INFO] [1778289640.350622112] [takeoff_rtl_node]: enu z: 25.02
+[takeoff_rtl_node-3] [INFO] [1778289640.382846334] [takeoff_rtl_node]: enu z: 25.02
+[takeoff_rtl_node-3] [INFO] [1778289640.486711512] [takeoff_rtl_node]: enu z: 25.02
+[takeoff_rtl_node-3] [INFO] [1778289640.537199518] [takeoff_rtl_node]: enu z: 24.58
+[takeoff_rtl_node-3] [INFO] [1778289640.642708169] [takeoff_rtl_node]: enu z: 24.58
+[takeoff_rtl_node-3] [INFO] [1778289640.652187040] [takeoff_rtl_node]: enu z: 24.58
+[takeoff_rtl_node-3] [INFO] [1778289640.659699534] [takeoff_rtl_node]: enu z: 24.58
+[takeoff_rtl_node-3] [INFO] [1778289640.763390991] [takeoff_rtl_node]: enu z: 24.58
+[takeoff_rtl_node-3] [INFO] [1778289640.867857333] [takeoff_rtl_node]: enu z: 24.58
+[takeoff_rtl_node-3] [INFO] [1778289640.882787506] [takeoff_rtl_node]: enu z: 24.10
+[takeoff_rtl_node-3] [INFO] [1778289640.898284065] [takeoff_rtl_node]: enu z: 24.10
+[takeoff_rtl_node-3] [INFO] [1778289641.002215188] [takeoff_rtl_node]: enu z: 24.10
+[takeoff_rtl_node-3] [INFO] [1778289641.028347223] [takeoff_rtl_node]: enu z: 24.10
+[takeoff_rtl_node-3] [INFO] [1778289641.136208084] [takeoff_rtl_node]: enu z: 24.10
+[takeoff_rtl_node-3] [INFO] [1778289641.157075538] [takeoff_rtl_node]: enu z: 24.10
+[takeoff_rtl_node-3] [INFO] [1778289641.167905994] [takeoff_rtl_node]: enu z: 24.10
+[takeoff_rtl_node-3] [INFO] [1778289641.247230001] [takeoff_rtl_node]: enu z: 23.66
+[takeoff_rtl_node-3] [INFO] [1778289641.307464821] [takeoff_rtl_node]: enu z: 23.66
+[takeoff_rtl_node-3] [INFO] [1778289641.348927304] [takeoff_rtl_node]: enu z: 23.66
+[takeoff_rtl_node-3] [INFO] [1778289641.432214899] [takeoff_rtl_node]: enu z: 23.66
+[takeoff_rtl_node-3] [INFO] [1778289641.532663617] [takeoff_rtl_node]: enu z: 23.24
+[takeoff_rtl_node-3] [INFO] [1778289641.636946128] [takeoff_rtl_node]: enu z: 23.24
+[takeoff_rtl_node-3] [INFO] [1778289641.659571609] [takeoff_rtl_node]: enu z: 23.24
+[takeoff_rtl_node-3] [INFO] [1778289641.682290182] [takeoff_rtl_node]: enu z: 23.24
+[takeoff_rtl_node-3] [INFO] [1778289641.787248264] [takeoff_rtl_node]: enu z: 23.24
+[takeoff_rtl_node-3] [INFO] [1778289641.809439062] [takeoff_rtl_node]: enu z: 23.24
+[takeoff_rtl_node-3] [INFO] [1778289641.881378796] [takeoff_rtl_node]: enu z: 22.81
+[takeoff_rtl_node-3] [INFO] [1778289641.940245642] [takeoff_rtl_node]: enu z: 22.81
+[takeoff_rtl_node-3] [INFO] [1778289642.050287473] [takeoff_rtl_node]: enu z: 22.81
+[takeoff_rtl_node-3] [INFO] [1778289642.080183708] [takeoff_rtl_node]: enu z: 22.81
+[takeoff_rtl_node-3] [INFO] [1778289642.159573678] [takeoff_rtl_node]: enu z: 22.81
+[takeoff_rtl_node-3] [INFO] [1778289642.200688591] [takeoff_rtl_node]: enu z: 22.81
+[takeoff_rtl_node-3] [INFO] [1778289642.246415198] [takeoff_rtl_node]: enu z: 22.27
+[takeoff_rtl_node-3] [INFO] [1778289642.345612110] [takeoff_rtl_node]: enu z: 22.27
+[takeoff_rtl_node-3] [INFO] [1778289642.354088210] [takeoff_rtl_node]: enu z: 22.27
+[takeoff_rtl_node-3] [INFO] [1778289642.459187939] [takeoff_rtl_node]: enu z: 22.27
+[takeoff_rtl_node-3] [INFO] [1778289642.473815263] [takeoff_rtl_node]: enu z: 22.27
+[takeoff_rtl_node-3] [INFO] [1778289642.531659931] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289642.636355422] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289642.658698960] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289642.716069983] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289642.820715697] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289642.845250722] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289642.949166385] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289642.985390881] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289643.092600285] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289643.117548475] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289643.159154496] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289643.247618618] [takeoff_rtl_node]: enu z: 21.71
+[mavros_node-1] [INFO] [1778289643.256359068] [mavros_router]: link[1000] detected remote address 19.205
+[takeoff_rtl_node-3] [INFO] [1778289643.353520067] [takeoff_rtl_node]: enu z: 21.71
+[mavros_node-1] [INFO] [1778289643.416934092] [mavros_router]: link[1000] detected remote address 147.254
+[takeoff_rtl_node-3] [INFO] [1778289643.457215473] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289643.501398645] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289643.612763452] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289643.628079734] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289643.659163315] [takeoff_rtl_node]: enu z: 21.71
+[mavros_node-1] [INFO] [1778289643.714946403] [mavros_router]: link[1000] detected remote address 1.216
+[takeoff_rtl_node-3] [INFO] [1778289643.757217439] [takeoff_rtl_node]: enu z: 21.71
+[mavros_node-1] [INFO] [1778289643.847484070] [mavros_router]: link[1000] detected remote address 41.232
+[takeoff_rtl_node-3] [INFO] [1778289643.861012733] [takeoff_rtl_node]: enu z: 21.71
+[mavros_node-1] [INFO] [1778289643.864929710] [mavros_router]: link[1000] detected remote address 1.131
+[takeoff_rtl_node-3] [INFO] [1778289643.890709822] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289643.996874899] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.020275098] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.127752206] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.159557616] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.263749539] [takeoff_rtl_node]: enu z: 21.71
+[mavros_node-1] [INFO] [1778289644.270383853] [mavros_router]: link[1000] detected remote address 127.117
+[takeoff_rtl_node-3] [INFO] [1778289644.286223040] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.396274929] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.418578042] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.522633910] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.543627642] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.647588270] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.659207925] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.677393914] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.781812761] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.802036405] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.909029034] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289644.958864693] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289645.063293282] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289645.076693409] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289645.158333961] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289645.262291220] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289645.328514379] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289645.433533169] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289645.450636608] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289645.555128789] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289645.586620332] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289645.658876308] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289645.716990810] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289645.821161049] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289645.843139905] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289645.946904201] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289646.050599962] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289646.102808276] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289646.159683267] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289646.229797423] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289646.333637072] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289646.358880151] [takeoff_rtl_node]: enu z: 21.71
+[mavros_node-1] [INFO] [1778289646.458883192] [mavros_router]: link[1000] detected remote address 127.193
+[takeoff_rtl_node-3] [INFO] [1778289646.465363877] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289646.487868323] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289646.592111378] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289646.617415382] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289646.658857590] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289646.764270434] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289646.772513461] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289646.878910781] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289646.883843364] [takeoff_rtl_node]: enu z: 21.71
+[mavros_node-1] [INFO] [1778289646.913760064] [mavros_router]: link[1000] detected remote address 248.248
+[takeoff_rtl_node-3] [INFO] [1778289646.988240492] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.015953482] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.120569054] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.146752109] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.159139483] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.265644952] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.277602310] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.385069532] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.400966849] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.508085222] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.528661475] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.639201439] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.660030673] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.669324194] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.776404734] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.879967219] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289647.925617663] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.030298643] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.053428993] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.157224719] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.163436850] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.185057746] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.290917201] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.309542281] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.413690597] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.447718330] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.552154367] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.655836687] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.660674530] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.708071650] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.812846537] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.835201484] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289648.940792274] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.044294113] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.095923228] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.159004223] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.217357985] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.321480044] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.369426124] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.475160044] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.491245490] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.598872326] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.619216525] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.658891578] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.762725583] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.867661508] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.875637148] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289649.979466078] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.001584990] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.106189696] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.127677944] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.159328414] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.258564075] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.365803988] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.392176506] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.497831335] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.524506721] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.636208849] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.658338113] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.664109951] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.768855026] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.781191475] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.885131406] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289650.918108646] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.022285798] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.039951328] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.144423220] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.158942065] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.171610456] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.278027523] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.313223047] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.417401163] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.437482068] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.541216798] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.644915065] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.658332212] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.692322039] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.797236892] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.819936449] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.926499330] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289651.949816291] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289652.054021778] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289652.085013011] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289652.159723757] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289652.216504530] [takeoff_rtl_node]: enu z: 21.71
+[takeoff_rtl_node-3] [INFO] [1778289652.324404738] [takeoff_rtl_node]: enu z: 21.71
+[mavros_node-1] [WARN] [1778289652.345294917] [mavros]: CON: Lost connection, HEARTBEAT timed out.
+[takeoff_rtl_node-3] [INFO] [1778289652.353270594] [takeoff_rtl_node]: Vehicle disarmed, RTL complete
+[INFO] [takeoff_rtl_node-3]: process has finished cleanly [pid 1810]
+[mavros_node-1] [INFO] [1778289655.452959129] [mavros_router]: link[1000] detected remote address 252.250
+[track_person-2] [INFO] [1778289658.587482025] [track_person]: id: 7
+[mavros_node-1] [INFO] [1778289660.881129808] [mavros_router]: link[1000] detected remote address 32.248
+[track_person-2] [INFO] [1778289662.623682207] [track_person]: id: 8
+[track_person-2] [INFO] [1778289668.483315567] [track_person]: id: 9
+[track_person-2] [INFO] [1778289679.409057228] [track_person]: id: 10
+[track_person-2] [INFO] [1778289681.371921185] [track_person]: id: 10
+[track_person-2] [INFO] [1778289685.519200836] [track_person]: id: 11
+[track_person-2] [INFO] [1778289686.742796075] [track_person]: id: 10
+[track_person-2] [INFO] [1778289687.787246694] [track_person]: id: 10
+[track_person-2] [INFO] [1778289688.974207858] [track_person]: id: 10
+[track_person-2] [INFO] [1778289689.991602606] [track_person]: id: 13
+[track_person-2] [INFO] [1778289690.913746990] [track_person]: id: 10
+[track_person-2] [INFO] [1778289691.952462408] [track_person]: id: 10
+[track_person-2] [INFO] [1778289692.915243601] [track_person]: id: 13
+[track_person-2] [INFO] [1778289693.972729147] [track_person]: id: 10
+[track_person-2] [INFO] [1778289694.975489229] [track_person]: id: 13
+[track_person-2] [INFO] [1778289696.823704306] [track_person]: id: 10
+[track_person-2] [INFO] [1778289698.164674758] [track_person]: id: 13
+[track_person-2] [INFO] [1778289699.074699969] [track_person]: id: 10
+[track_person-2] [INFO] [1778289700.899586577] [track_person]: id: 10
+[track_person-2] [INFO] [1778289702.013125557] [track_person]: id: 10
+[track_person-2] [INFO] [1778289703.206944847] [track_person]: id: 10
+[track_person-2] [INFO] [1778289704.118296692] [track_person]: id: 10
+[track_person-2] [INFO] [1778289705.387140703] [track_person]: id: 10
+[track_person-2] [INFO] [1778289706.454271821] [track_person]: id: 10
+[track_person-2] [INFO] [1778289707.883807461] [track_person]: id: 13
+[track_person-2] [INFO] [1778289708.621372223] [track_person]: id: 10
+[track_person-2] [INFO] [1778289709.591970674] [track_person]: id: 10
+[track_person-2] [INFO] [1778289710.511719407] [track_person]: id: 10
+[track_person-2] [INFO] [1778289711.586563821] [track_person]: id: 10
+[track_person-2] [INFO] [1778289713.672186352] [track_person]: id: 10
+[track_person-2] [INFO] [1778289715.100906714] [track_person]: id: 10
+[track_person-2] [INFO] [1778289716.567238616] [track_person]: id: 13
+[track_person-2] [INFO] [1778289721.934708368] [track_person]: id: 13
+[track_person-2] [INFO] [1778289722.966501036] [track_person]: id: 10
+[track_person-2] [INFO] [1778289724.333003320] [track_person]: id: 13
+[track_person-2] [INFO] [1778289726.204231630] [track_person]: id: 10
+[track_person-2] [INFO] [1778289727.000564219] [track_person]: id: 10
+[track_person-2] [INFO] [1778289727.995229303] [track_person]: id: 10
+[track_person-2] [INFO] [1778289729.113587990] [track_person]: id: 10
+[track_person-2] [INFO] [1778289730.412088176] [track_person]: id: 13
+[track_person-2] [INFO] [1778289731.261522490] [track_person]: id: 10
+[track_person-2] [INFO] [1778289732.136643975] [track_person]: id: 10
+[track_person-2] [INFO] [1778289733.146495120] [track_person]: id: 10
+[track_person-2] [INFO] [1778289733.909222553] [track_person]: id: 10
+[track_person-2] [INFO] [1778289734.815043293] [track_person]: id: 10
+[track_person-2] [INFO] [1778289735.802411759] [track_person]: id: 10
+[track_person-2] [INFO] [1778289736.833144409] [track_person]: id: 10
+[track_person-2] [INFO] [1778289737.918429533] [track_person]: id: 10
+[track_person-2] [INFO] [1778289738.687684326] [track_person]: id: 10
+[track_person-2] [INFO] [1778289739.479191066] [track_person]: id: 10
+[track_person-2] [INFO] [1778289740.497774812] [track_person]: id: 10
+[track_person-2] [INFO] [1778289741.335636614] [track_person]: id: 10
+[track_person-2] [INFO] [1778289742.147804908] [track_person]: id: 10

@@ -41,6 +41,9 @@ class Track(Node):
 		msg.y = -frame_x/1000
 		#frame y is 0 at center and is height, mavros z is altitude. If you go down, frame y increases but mavros z decreases 
 		msg.z = -frame_y/1000
+		self.get_logger().info(f'Frame forward: {msg.x}')
+		self.get_logger().info(f'Frame left: {msg.y}')
+		self.get_logger().info(f'Frame up: {msg.z}')
 		self.publish_point(msg)
 		return msg
 
@@ -265,7 +268,7 @@ def main(args=None):
 							bb_x1, bb_y1 = x - w//2, y - h//2
 							bb_x2, bb_y2 = x + w//2, y + h//2
 							cv2.rectangle(cropped_padded, (bb_x1, bb_y1), (bb_x2, bb_y2), (0, 0, 255), 1)
-							cropped_padded_path = os.path.join(data_subset, "cropped.png")
+							cropped_padded_path = os.path.join(data_subfolder, "cropped.png")
 							cv2.imwrite(cropped_padded_path, cropped_padded)
 							# Step 1: Remove padding offset (same top-left offset for all corners)
 							np_x1 = bb_x1 - pad_left

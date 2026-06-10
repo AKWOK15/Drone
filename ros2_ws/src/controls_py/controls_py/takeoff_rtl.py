@@ -10,16 +10,16 @@ import time
 
 qos = QoSProfile(depth=10, reliability=ReliabilityPolicy.BEST_EFFORT)
 from controls_py.base_class import BaseDroneNode
-class HoverNode(BaseDroneNode):
+class TakeoffRTLNode(BaseDroneNode):
 	def __init__(self):
-		super().__init__('hover_node')
+		super().__init__('takeoff_rtl_node')
 		self.declare_parameter('takeoff_height', 0.5)
 
 def main(args=None):
 	rclpy.init(args=args)
 	drone = None
 	try:
-		drone = HoverNode()
+		drone = TakeoffRTLNode()
 		 
 		# Wait for FCU connection
 		drone.get_logger().info('Waiting for FCU connection...')
@@ -66,13 +66,13 @@ def main(args=None):
 		if not drone.takeoff(takeoff_height):
 			return
 
-		while rclpy.ok():
+		# while rclpy.ok():
 #			goal_pose = PoseStamped()
 #			goal_pose.pose.position.x = drone.home.pose.position.x + 10
 #			goal_pose.pose.position.y = drone.home.pose.position.y	
 #			goal_pose.pose.position.z = drone.home.pose.position.z
 #			drone.enu_move(goal_pose)		
-			drone.rtl_or_land()
+		drone.rtl_or_land()
 
 	except KeyboardInterrupt:
 		drone.get_logger().info('Flight interrupted by user')

@@ -2,29 +2,29 @@ rosbag2_bagfile_information:
   version: 5
   storage_identifier: sqlite3
   duration:
-    nanoseconds: 40287444233
+    nanoseconds: 72871570741
   starting_time:
-    nanoseconds_since_epoch: 1778112216349946175
-  message_count: 69
+    nanoseconds_since_epoch: 1778342539663354697
+  message_count: 580
   topics_with_message_count:
     - topic_metadata:
         name: /fps
         type: std_msgs/msg/Int8
         serialization_format: cdr
         offered_qos_profiles: "- history: 3\n  depth: 0\n  reliability: 1\n  durability: 2\n  deadline:\n    sec: 9223372036\n    nsec: 854775807\n  lifespan:\n    sec: 9223372036\n    nsec: 854775807\n  liveliness: 1\n  liveliness_lease_duration:\n    sec: 9223372036\n    nsec: 854775807\n  avoid_ros_namespace_conventions: false"
-      message_count: 31
-    - topic_metadata:
-        name: /mavros/setpoint_raw/local
-        type: mavros_msgs/msg/PositionTarget
-        serialization_format: cdr
-        offered_qos_profiles: "- history: 3\n  depth: 0\n  reliability: 1\n  durability: 2\n  deadline:\n    sec: 9223372036\n    nsec: 854775807\n  lifespan:\n    sec: 9223372036\n    nsec: 854775807\n  liveliness: 1\n  liveliness_lease_duration:\n    sec: 9223372036\n    nsec: 854775807\n  avoid_ros_namespace_conventions: false"
-      message_count: 0
+      message_count: 245
     - topic_metadata:
         name: /mavros/state
         type: mavros_msgs/msg/State
         serialization_format: cdr
         offered_qos_profiles: "- history: 3\n  depth: 0\n  reliability: 1\n  durability: 1\n  deadline:\n    sec: 9223372036\n    nsec: 854775807\n  lifespan:\n    sec: 9223372036\n    nsec: 854775807\n  liveliness: 1\n  liveliness_lease_duration:\n    sec: 9223372036\n    nsec: 854775807\n  avoid_ros_namespace_conventions: false"
-      message_count: 38
+      message_count: 73
+    - topic_metadata:
+        name: /mavros/setpoint_raw/local
+        type: mavros_msgs/msg/PositionTarget
+        serialization_format: cdr
+        offered_qos_profiles: "- history: 3\n  depth: 0\n  reliability: 1\n  durability: 2\n  deadline:\n    sec: 9223372036\n    nsec: 854775807\n  lifespan:\n    sec: 9223372036\n    nsec: 854775807\n  liveliness: 1\n  liveliness_lease_duration:\n    sec: 9223372036\n    nsec: 854775807\n  avoid_ros_namespace_conventions: false"
+      message_count: 50
     - topic_metadata:
         name: /person_position
         type: geometry_msgs/msg/Point
@@ -36,7 +36,7 @@ rosbag2_bagfile_information:
         type: geometry_msgs/msg/PoseStamped
         serialization_format: cdr
         offered_qos_profiles: "- history: 3\n  depth: 0\n  reliability: 2\n  durability: 2\n  deadline:\n    sec: 9223372036\n    nsec: 854775807\n  lifespan:\n    sec: 9223372036\n    nsec: 854775807\n  liveliness: 1\n  liveliness_lease_duration:\n    sec: 9223372036\n    nsec: 854775807\n  avoid_ros_namespace_conventions: false"
-      message_count: 0
+      message_count: 212
   compression_format: ""
   compression_mode: ""
   relative_file_paths:
@@ -44,7 +44,7 @@ rosbag2_bagfile_information:
   files:
     - path: ros2_bag_0.db3
       starting_time:
-        nanoseconds_since_epoch: 1778112216349946175
+        nanoseconds_since_epoch: 1778342539663354697
       duration:
-        nanoseconds: 40287444233
-      message_count: 69
+        nanoseconds: 72871570741
+      message_count: 580

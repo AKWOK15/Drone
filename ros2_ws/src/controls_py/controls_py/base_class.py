@@ -69,7 +69,7 @@ class BaseDroneNode(Node):
 				f'No person_position for {elapsed:.1f}s — camera lost target. Triggering RTL.'
 			)
 			self.rtl_triggered = True
-			self._execute_rtl_or_land()
+			self.rtl_or_land()
 
 	# -------------------------------------------------------------------------
 	# Callbacks
@@ -224,7 +224,7 @@ class BaseDroneNode(Node):
 		future = self.takeoff_client.call_async(req)
 		rclpy.spin_until_future_complete(self, future)
 		
-		duration = 5
+		duration = 10
 		if future.result() is not None:
 			self.get_logger().info(f'takeoff result: {future.result()}')
 			if future.result().success:
@@ -255,6 +255,9 @@ class BaseDroneNode(Node):
 			self.get_logger().info('Vehicle disarmed, RTL complete')
 		elif self.set_mode('LAND'):
 			self.get_logger().warn('RTL failed. LAND engaged.')
+			while self.state.armed:
+				self.get_logger().info(f'enu z: {self.enu_cur_position.pose.position.z:.2f}')
+				rclpy.spin_once(self, timeout_sec=0.1)
 		else:
 			self.get_logger().error('Both RTL and LAND failed. Flying home manually.')
 			self.ned_move(self.home)

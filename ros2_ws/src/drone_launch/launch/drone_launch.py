@@ -39,7 +39,7 @@ def launch_setup(context):
 	takeoff_rtl_node = Node(
 		package='controls_py',
 		executable='takeoff_rtl_node',
-		parameters=[{'takeoff_height': 1.5}]
+		parameters=[{'takeoff_height': 1.2}]
 	)
 
 	intercept_node = Node(
