@@ -1,16 +1,34 @@
 # Intercept Drone
 ### Background
-According to CNN, there were 78 school shootings in the US in 2025.  Yet, students have no way of neutralizing the shooter. Instead, all they can do is lock doors and wait for the police, giving the shooter 5-10 minutes to inflict fatalities. We want to change that.
+According to CNN, there were 78 school shootings in the US in 2025.  Yet, students have no way of neutralizing the shooter. Instead, all they can do is lock doors and wait for the police, giving the shooter 5-10 minutes to inflict fatalities. I want to change that.
 
 ### Goal
 Fully autonomous quadcopter that detects shooters and neutralizes them. 
+
 
 ### V1
 ![Drone](media/drone.jpg)
 First flight didn't go so well....
 ![Drone Crash](https://github.com/user-attachments/assets/d10f185f-e179-4da1-928b-fbda6e41bb4e)
 
-### Learnings
-1. Balancing functionality with footprint as opposed to just functionality. By using a Pixhawk 6c mini and a Raspberry Pi 4B, we would have had enough compute and built in sensors (excluding stereo camera) to achieve our goal, but our footprint and weight ballooned.  The bigger our drone is, the easier  it will be for the shooter to shoot it out of the air.
-2. Learning how to debug hardware, software and electrical. When I first connected the LiPo battery to the ESC, all the motors sounded but only two vibrated. The two that vibrated ended up being the only ones that I could throttle. First, I checked if the ESC received enough power from the LiPo, which it did. After that, I used a multimeter to detect any shorts on the ESC, there weren’t any. Next, I knew that the motors weren’t damaged because we’d only lightly throttled them. So I isolated the issue to the ESC and tried to recalibrate it with QGC. That didn’t work. Plus, when I tried to throttle the two working motors, sometimes it would work, other times it wouldn’t. So my hypothesis is that there was a communication issue on the ESC. Either PMW signals get dropped between the ESC and Pixhawk or the ESC was damaged and couldn’t internally spread the PMW signals to the motors. More debugging required! 
-3. Even if hardware data sheets say that it'll meet your specs, they can't be trusted. Ex: our second ESC had a 5V/3A BEC that we wanted to use to power our Pi, but the BEC didn't work. But if I had read online reviews prior to purchasing it, I would have realized that other people encountered the same issue.
+### V2
+https://github.com/user-attachments/assets/73565cb0-7355-4eb5-b081-c038481e7385
+
+
+
+### Current Hardware Stack
+1. Matek H743 Slim V4 Flight Controller
+2. Raspberry Pi 4B 8GB
+3. Flash Hobby Arthur 2207.5 2500Kv Motor
+4. DYS Aria F45A 4-in-1 ESC BLHeli_32
+5. Oak-D Pro Wide Camera
+6. Holybro Micro M10 GPS
+
+
+### Setup
+1. I'm going to dockerize everything soon, sooooo until then, this isn't super reproducible 
+
+### Run
+1. In one window: ```./run_mavrouter.sh``` starts the mavrouter server so that commands from QGroundControl get routed through Raspberry Pi to Flight Controller and telemtry from Flight Controller goes to QGroundControl
+2. In another terminal window: ```./run ``` runs all the ros nodes and logging
+3. ```./run ``` will prompt you to choose which node to run: takeoff_rtl_node (only takes off and lands) or intercept_node (detect gun and fly into person holding it)
