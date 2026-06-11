@@ -158,7 +158,7 @@ def main(args=None):
 
 		person_detection_network = pipeline.create(dai.node.YoloSpatialDetectionNetwork)
 		person_detection_network.setConfidenceThreshold(0.2)
-		person_detection_network.setBlobPath('/home/aidankwok/Drone/person_model/yolov8n_openvino_2022.1_6shave.blob')
+		person_detection_network.setBlobPath('/root/Drone/person_model/yolov8n_openvino_2022.1_6shave.blob')
 		person_detection_network.setDepthLowerThreshold(100)
 		person_detection_network.setNumClasses(1)
 		person_detection_network.setCoordinateSize(4)

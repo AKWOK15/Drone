@@ -44,7 +44,7 @@ def main(args=None):
         
         
         # Get blob (or set blob_path manually if you have one)
-        blob_path = '/home/aidankwok/Drone/gun_model/weights-2_openvino_2022.1_6shave.blob'
+        blob_path = '/root/Drone/gun_model/weights-2_openvino_2022.1_6shave.blob'
 
         # Create the pipeline
         pipeline = dai.Pipeline()
