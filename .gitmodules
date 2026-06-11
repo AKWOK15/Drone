@@ -1,15 +1,3 @@
-[submodule "VINS-Fusion"]
-	path = VINS-Fusion
-	url = https://github.com/chobitsfan/VINS-Fusion.git
-	branch = apm_wiki
-[submodule "oak_d_vins_cpp"]
-	path = oak_d_vins_cpp
-	url = https://github.com/chobitsfan/oak_d_vins_cpp.git
-	branch = apm_wiki
-[submodule "mavlink-udp-proxy"]
-	path = mavlink-udp-proxy
-	url = https://github.com/chobitsfan/mavlink-udp-proxy.git
-	branch = apm_wiki
 [submodule "depthai-core"]
 	path = depthai-core
 	url = https://github.com/luxonis/depthai-core.git
