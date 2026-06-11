@@ -19,21 +19,24 @@ RUN apt-get update && apt-get install -y \
     ros-humble-launch-ros \
     libusb-1.0-0-dev \
     udev \
-    meson \
     ninja-build \
     libsystemd-dev \
     libgtest-dev \
+    gcc \
+    g++ \
+    systemd \
+    minicom \
     && rm -rf /var/lib/apt/lists/*
 
 # Install GeographicLib datasets (required by MAVROS)
 RUN /opt/ros/humble/lib/mavros/install_geographiclib_datasets.sh
-
 RUN pip3 install \
-    "depthai==2.29.0.0" \
-    numpy \
-    inference-sdk && \
-    pip3 install ultralytics && \
-    pip3 install "opencv-python==4.5.4.60" --force-reinstall
+    "meson==1.1.1"
+
+
+
+
+
 
 COPY ros2_ws/ /root/Drone/ros2_ws/
 COPY run.sh /usr/local/bin/
@@ -51,13 +54,18 @@ RUN cd /root/Drone/ros2_ws/src/mavlink-router && \
     ninja -C build && \
     ninja -C build install
 
-RUN /bin/bash -c "source /opt/ros/humble/setup.bash && colcon build --symlink-install"
+RUN pip3 install \
+    "depthai==2.29.0.0" \
+    "numpy==2.1.3" \
+    "opencv-python==4.10.0.84" \
+    "ultralytics==8.4.66" \
+    "inference-sdk==1.3.0" 
 
-RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc && \
-    echo "source /root/Drone/ros2_ws/install/setup.bash" >> ~/.bashrc
+
+RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
 
 WORKDIR /root/Drone
-
+ENV SHELL /bin/bash
 # When creating image, need to give it some default comand
 CMD ["/bin/bash"]
 
