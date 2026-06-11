@@ -17,3 +17,6 @@
 [submodule "ros2_ws/src/pid"]
 	path = ros2_ws/src/pid
 	url = https://github.com/JMU-ROBOTICS-VIVA/jmu_ros2_util
+[submodule "ros2_ws/src/mavlink-router"]
+	path = ros2_ws/src/mavlink-router
+	url = https://github.com/mavlink-router/mavlink-router

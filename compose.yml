@@ -1,0 +1,22 @@
+services:
+  ros2:
+    build:
+      # Tell Dockerfile which files are avaiable to copy and add,. meaning current directory
+      context: .
+    # Name of the image
+    image: ros2-humble-dev:latest
+    container_name: ros2-workspace
+    network_mode: host
+    stdin_open: true
+    tty: true
+    working_dir: /root/Drone
+    devices:
+      # Flight Controller
+      - /dev/ttyAMA0:/dev/ttyAMA0
+    volumes:
+      - workspace:/root/Drone
+      - ./ros2_ws/src:/root/Drone/ros2_ws/src
+      - /tmp/.X11-unix:/tmp/.X11-unix 
+    command: /bin/bash 
+volumes:
+  workspace:
