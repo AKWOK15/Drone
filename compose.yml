@@ -6,6 +6,7 @@ services:
     # Name of the image
     image: ros2-humble-dev:latest
     container_name: ros2-workspace
+    pull_policy: never
     network_mode: host
     stdin_open: true
     tty: true
@@ -16,7 +17,8 @@ services:
     volumes:
       - workspace:/root/Drone
       - ./ros2_ws/src:/root/Drone/ros2_ws/src
-      - /tmp/.X11-unix:/tmp/.X11-unix 
+      - ./data:/root/Drone/data
+      - /tmp/.X11-unix:/tmp/.X11-unix
     command: /bin/bash 
 volumes:
   workspace:
