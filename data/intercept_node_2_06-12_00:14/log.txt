@@ -1,0 +1,37 @@
+[INFO] [launch]: All log files can be found below /root/.ros/log/2026-06-12-00-14-17-613317-aidankwok-315
+[INFO] [launch]: Default logging verbosity is set to INFO
+[launch_setup] control_node: intercept_node
+[launch_setup] data_subfolder: /root/Drone/data/intercept_node_2_06-12_00:14
+[launch_setup] >>> Appending intercept_node
+[INFO] [mavros_node-1]: process started with pid [332]
+[INFO] [track_person-2]: process started with pid [334]
+[INFO] [intercept_node-3]: process started with pid [336]
+[mavros_node-1] [INFO] [1781223257.884018853] [mavros_node]: Starting mavros_node container
+[mavros_node-1] [INFO] [1781223257.887609828] [mavros_node]: FCU URL: udp://127.0.0.1:14550@
+[mavros_node-1] [INFO] [1781223257.887725974] [mavros_node]: GCS URL: 
+[mavros_node-1] [INFO] [1781223257.887769566] [mavros_node]: UAS Prefix: /uas1
+[mavros_node-1] [INFO] [1781223257.887802122] [mavros_node]: Starting mavros router node
+[mavros_node-1] [INFO] [1781223257.934303845] [mavros_router]: Built-in SIMD instructions: ARM NEON
+[mavros_node-1] [INFO] [1781223257.936843388] [mavros_router]: Built-in MAVLink package version: 2026.3.3
+[mavros_node-1] [INFO] [1781223257.940708488] [mavros_router]: Known MAVLink dialects: common ardupilotmega ASLUAV AVSSUAS all csAirLink cubepilot development icarous loweheiser marsh matrixpilot paparazzi standard stemstudios storm32 uAvionix ualberta
+[mavros_node-1] [INFO] [1781223257.946590786] [mavros_router]: MAVROS Router started
+[mavros_node-1] [INFO] [1781223257.950523164] [mavros_node]: Starting mavros uas node
+[mavros_node-1] [INFO] [1781223258.132552755] [mavros_router]: Requested to add endpoint: type: 0, url: udp://127.0.0.1:14550@
+[mavros_node-1] [INFO] [1781223258.136910831] [mavros_router]: Endpoint link[1000] created
+[mavros_node-1] [INFO] [1781223258.138908214] [mavros_router]: link[1000] opened successfully
+[mavros_node-1] [INFO] [1781223258.139124341] [mavros_router]: Requested to add endpoint: type: 2, url: /uas1
+[mavros_node-1] [INFO] [1781223258.139247469] [mavros_router]: Endpoint link[1001] created
+[mavros_node-1] [INFO] [1781223258.164951652] [mavros]: UAS Executor started, threads: 4
+[mavros_node-1] [INFO] [1781223258.194002350] [mavros_router]: link[1001] opened successfully
+[mavros_node-1] [INFO] [1781223258.296256832] [mavros]: Plugin actuator_control created
+[mavros_node-1] [INFO] [1781223258.297945292] [mavros]: Plugin actuator_control initialized
+[mavros_node-1] [INFO] [1781223258.396799112] [mavros]: Plugin adsb created
+[mavros_node-1] [INFO] [1781223258.406226311] [mavros]: Plugin adsb initialized
+[mavros_node-1] [INFO] [1781223258.487631771] [mavros]: Plugin altitude created
+[mavros_node-1] [INFO] [1781223258.493843065] [mavros]: Plugin altitude initialized
+[mavros_node-1] [INFO] [1781223258.543459935] [mavros]: Plugin cam_imu_sync created
+[mavros_node-1] [INFO] [1781223258.549741099] [mavros]: Plugin cam_imu_sync initialized
+[mavros_node-1] [INFO] [1781223258.603236588] [mavros]: Plugin camera created
+[mavros_node-1] [INFO] [1781223258.611341192] [mavros]: Plugin camera initialized
+[mavros_node-1] [INFO] [1781223258.693323238] [mavros]: Plugin cellular_status created
+[mavros_node-1] [INFO] [1781223258.699100296] [mavros]: Plugin cellular_status initialized
