@@ -26,6 +26,10 @@ RUN apt-get update && apt-get install -y \
     g++ \
     systemd \
     minicom \
+    vim \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install GeographicLib datasets (required by MAVROS)
@@ -39,8 +43,8 @@ RUN pip3 install \
 
 
 COPY ros2_ws/ /root/Drone/ros2_ws/
-COPY run.sh /usr/local/bin/
-COPY run_mavrouter.sh /usr/local/bin/
+COPY run.sh /root/Drone/
+COPY run_mavrouter.sh /root/Drone/
 
 # Model weights for OAK-D pipelines (paths referenced by perception_py)
 COPY gun_model/ /root/Drone/gun_model/
@@ -54,12 +58,11 @@ RUN cd /root/Drone/ros2_ws/src/mavlink-router && \
     ninja -C build && \
     ninja -C build install
 
-RUN pip3 install \
-    "depthai==2.29.0.0" \
-    "numpy==2.1.3" \
-    "opencv-python==4.10.0.84" \
-    "ultralytics==8.4.66" \
-    "inference-sdk==1.3.0" 
+RUN pip3 install "depthai==2.29.0.0" 
+RUN pip3 install "numpy==2.1.3"
+RUN pip3 install "opencv-python==4.10.0.84" 
+RUN pip3 install "ultralytics==8.4.66"
+RUN pip3 install "inference-sdk==1.3.0" 
 
 
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
