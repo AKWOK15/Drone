@@ -1,9 +1,7 @@
 services:
   ros2:
     build:
-      # Tell Dockerfile which files are avaiable to copy and add,. meaning current directory
       context: .
-    # Name of the image
     image: ros2-humble-dev:latest
     container_name: ros2-workspace
     pull_policy: never
@@ -18,17 +16,7 @@ services:
       - /dev/video10:/dev/video10
       # H.264 encoder
       - /dev/video11:/dev/video11
-
-
     device_cgroup_rules:
-      # read, mknod, writing
-      # Any major number 189 and * means any minor number
-      # c group controls resourcess access: CPU, memory, allows only certain
-      # devices to read, mknod, and write
-      # Need mknod cause oak camera initally appears as just processor with no
-      # firmware but depthai flashes firmware to it over runtime which causes
-      # device to re-enumerate 
-      # FC doesn't need to be re-enumerated so it only needs simple bind
       - 'c 189:* rmw'
     volumes:
       - workspace:/root/Drone
@@ -37,7 +25,7 @@ services:
       - ./run_mavrouter.sh:/root/Drone/run_mavrouter.sh
       - ./data:/root/Drone/data
       - /tmp/.X11-unix:/tmp/.X11-unix
-      # Oak D
+      # Oak D, gets new device num each time its plugged in
       - /dev/bus/usb:/dev/bus/usb
     command: /bin/bash 
 volumes:
