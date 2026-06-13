@@ -18,8 +18,8 @@ services:
       - /dev/video10:/dev/video10
       # H.264 encoder
       - /dev/video11:/dev/video11
-      # Oak D
-      - /dev/bus/usb:/dev/bus/usb
+
+
     device_cgroup_rules:
       # read, mknod, writing
       # Any major number 189 and * means any minor number
@@ -37,6 +37,8 @@ services:
       - ./run_mavrouter.sh:/root/Drone/run_mavrouter.sh
       - ./data:/root/Drone/data
       - /tmp/.X11-unix:/tmp/.X11-unix
+      # Oak D
+      - /dev/bus/usb:/dev/bus/usb
     command: /bin/bash 
 volumes:
   workspace:
