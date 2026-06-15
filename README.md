@@ -5,7 +5,6 @@ Build a drone that can autonomously follow another drone.
 
 
 ### V1
-![Drone](media/drone.jpg)
 First flight didn't go so well....
 
 https://github.com/user-attachments/assets/c05fe6c4-b6f4-47bb-8222-8aa895b77531
