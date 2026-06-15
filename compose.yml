@@ -20,6 +20,7 @@ services:
       - 'c 189:* rmw'
     volumes:
       - workspace:/root/Drone
+      - ./config/mavlink-router/main.conf:/root/Drone/config/mavlink-router/main.conf 
       - ./ros2_ws/src:/root/Drone/ros2_ws/src
       - ./run.sh:/root/Drone/run.sh
       - ./run_mavrouter.sh:/root/Drone/run_mavrouter.sh
