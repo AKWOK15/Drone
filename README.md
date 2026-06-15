@@ -1,20 +1,19 @@
 # Intercept Drone
-### Background
-According to CNN, there were 78 school shootings in the US in 2025.  Yet, students have no way of neutralizing the shooter. Instead, all they can do is lock doors and wait for the police, giving the shooter 5-10 minutes to inflict fatalities. I want to change that.
 
 ### Goal
-Fully autonomous quadcopter that detects shooters and neutralizes them. 
+Build a drone that can autonomously follow another drone.
 
 
 ### V1
 ![Drone](media/drone.jpg)
 First flight didn't go so well....
-![Drone Crash](https://github.com/user-attachments/assets/d10f185f-e179-4da1-928b-fbda6e41bb4e)
+
+https://github.com/user-attachments/assets/c05fe6c4-b6f4-47bb-8222-8aa895b77531
 
 ### V2
-https://github.com/user-attachments/assets/73565cb0-7355-4eb5-b081-c038481e7385
+https://github.com/user-attachments/assets/fb5b84ec-bcd4-4d41-8906-009272763356
 
-
+### V3 Coming Soon
 
 ### Current Hardware Stack
 1. Matek H743 Slim V4 Flight Controller
@@ -26,9 +25,14 @@ https://github.com/user-attachments/assets/73565cb0-7355-4eb5-b081-c038481e7385
 
 
 ### Setup
-1. I'm going to dockerize everything soon, sooooo until then, this isn't super reproducible 
+1. Install Docker
+2. Install QGroundControl
+3. Edit ```./config/mavlink-router/example.conf``` with the IP of your laptop running QGroundControl and the proper serial port for your flight controller and rename to main.conf
+4. Ensure ```compose.yml``` has the correct serial port for the flight controller
 
 ### Run
-1. In one window: ```./run_mavrouter.sh``` starts the mavrouter server so that commands from QGroundControl get routed through Raspberry Pi to Flight Controller and telemtry from Flight Controller goes to QGroundControl
-2. In another terminal window: ```./run ``` runs all the ros nodes and logging
-3. ```./run ``` will prompt you to choose which node to run: takeoff_rtl_node (only takes off and lands) or intercept_node (detect gun and fly into person holding it)
+1. ```docker compose up -d```
+2. Create two separate terminal tabs and in both run ```docker compose exec ros2 /bin/bash```
+3. In one tab, run ```./run_mavrouter.sh```. QGroundControl should detect your flight controller
+4. To initiate autonomous behavior, in the other tab, run ```./run ```
+5. ```./run ``` will prompt you to choose which node to run: takeoff_rtl_node (only takes off and lands) or intercept_node
