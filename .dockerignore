@@ -1,11 +1,5 @@
 .git
 
-# Unrelated submodules not used by the Dockerfile
-VINS-Fusion
-oak_d_vins_cpp
-mavlink-udp-proxy
-depthai-core
-
 # Recordings/data - bind-mounted at runtime instead
 data
 
@@ -14,11 +8,10 @@ ros2_ws/build
 ros2_ws/install
 ros2_ws/log
 
+
 # mavlink-router build/git artifacts
 ros2_ws/src/mavlink-router/build
 ros2_ws/src/mavlink-router/.git
-
-ros2_ws/src/pid/.git
 
 **/__pycache__
 **/*.pyc
