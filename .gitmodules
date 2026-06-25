@@ -2,3 +2,6 @@
 	path = depthai-core
 	url = https://github.com/luxonis/depthai-core.git
 	branch = v2.25.0
+[submodule "ros2_ws/src/mavlink-router"]
+	path = ros2_ws/src/mavlink-router
+	url = https://github.com/mavlink-router/mavlink-router.git
