@@ -9,15 +9,17 @@ services:
     stdin_open: true
     tty: true
     working_dir: /root/Drone
-    devices:
-      # Flight Controller
-      - /dev/ttyAMA0:/dev/ttyAMA0
-      # H.264 decoder
-      - /dev/video10:/dev/video10
-      # H.264 encoder
-      - /dev/video11:/dev/video11
+    #devices:
+      ## Flight Controller
+      #- /dev/ttyAMA0:/dev/ttyAMA0
+      ## H.264 decoder
+      #- /dev/video10:/dev/video10
+      ## H.264 encoder
+      #- /dev/video11:/dev/video11
     device_cgroup_rules:
       - 'c 189:* rmw'
+    environment:
+      - DISPLAY=${DISPLAY}
     volumes:
       - workspace:/root/Drone
       - ./config/mavlink-router/main.conf:/root/Drone/config/mavlink-router/main.conf 
