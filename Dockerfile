@@ -1,36 +1,28 @@
-FROM ros:humble as base
-SHELL ["/bin/bash", "-c"]
-ARG DEBIAN_FRONTEND=noninteractive
-ARG USER_UID=1000
-ARG USER_GID=1000
-ARG USER_NAME=aidan
+FROM osrf/ros:humble-desktop
 
-RUN useradd -o -m -u ${USER_UID} -G sudo,dialout,video,plugdev ${USER_NAME}
-
-RUN echo "${USER_NAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USER_NAME} \
-    && chmod 0440 /etc/sudoers.d/${USER_NAME}
-
-RUN apt update && apt install -y \
-    curl \
+# Install necessary programs
+RUN apt-get update \
+    && apt-get install -y \
+    nano \
+    vim \
     git \
+    curl \
     wget \
+    lsb-release \
+    gnupg \
+    sudo \
     build-essential \
     pkg-config \
     python3-pip \
     python3-dev \
-    python3-colcon-common-extensions \
-    python3-setuptools \
-    python3-vcstool \
     python3-matplotlib \
     python3-lxml \
     python3-pygame \
-    python3-wxgtk4.0 \ 
+    python3-wxgtk4.0 \
     ros-humble-mavros \
     ros-humble-mavros-msgs \
     ros-humble-mavros-extras \
     ros-humble-geographic-msgs \
-    ros-humble-launch \
-    ros-humble-launch-ros \
     libusb-1.0-0-dev \
     udev \
     ninja-build \
@@ -40,95 +32,188 @@ RUN apt update && apt install -y \
     g++ \
     systemd \
     minicom \
-    vim \
     ffmpeg \
     libsm6 \
     libxext6 \
-    default-jre \
-    lsb-release \
-    gnupg \
     socat \
+    screen \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install "meson==1.1.1"
-RUN pip3 install "depthai==2.29.0.0"
-RUN pip3 install  "numpy==2.1.3"
-RUN pip3 install "opencv-python==4.10.0.84"
-RUN pip3 install "ultralytics==8.4.66"
-RUN pip3 install  "inference-sdk==1.3.0"
-RUN pip3 install -U MAVProxy
-RUN pip3 install future
-ENV GZ_VERSION=harmonic
+RUN pip3 install "meson==1.1.1" \
+    && pip3 install "depthai==2.29.0.0" \
+    && pip3 install "numpy==2.1.3" \
+    && pip3 install "opencv-python==4.10.0.84" \
+    && pip3 install "ultralytics==8.4.66" \
+    && pip3 install "inference-sdk==1.3.0"
 
-COPY ros2_ws/ /root/Drone/ros2_ws/
-COPY run.sh /root/Drone/
-COPY run_mavrouter.sh /root/Drone/
-COPY gun_model/ /root/Drone/gun_model/
-COPY person_model/ /root/Drone/person_model/
-COPY config/ /root/Drone/config/
+# Create a non-root user
+ARG USERNAME=Drone
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
 
-WORKDIR /root/Drone/ros2_ws
+RUN groupadd --gid $USER_GID $USERNAME \
+  && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
+  && mkdir /home/$USERNAME/.config && chown $USER_UID:$USER_GID /home/$USERNAME/.config
 
-RUN vcs import --recursive --input https://raw.githubusercontent.com/ArduPilot/ardupilot/master/Tools/ros2/ros2.repos src
+# Set up sudo
+RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+  && chmod 0440 /etc/sudoers.d/$USERNAME
 
-RUN apt update && \
-    rosdep update && \
-    . /opt/ros/humble/setup.bash && \
-    rosdep install --from-paths src --ignore-src -r -y
+# Install gz-harmonic
+RUN curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null \
+    && apt-get update \
+    && apt-get install -y gz-harmonic
 
-RUN git clone --recurse-submodules --branch v4.7.0 https://github.com/ardupilot/Micro-XRCE-DDS-Gen.git && \
-    cd Micro-XRCE-DDS-Gen && \
-    ./gradlew assemble --no-daemon
 
-ENV PATH="/root/Drone/ros2_ws/Micro-XRCE-DDS-Gen/scripts:${PATH}"
 
-RUN pip3 install pexpect
-RUN . /opt/ros/humble/setup.bash && \
-    colcon build --packages-up-to ardupilot_dds_tests --event-handlers=console_cohesion+
+####################################################################################################
+# Set up ROS 2 workspace
+USER $USERNAME
+WORKDIR /home/$USERNAME
+#COPY ardupilot /home/${USERNAME}/ardupilot
+#COPY Micro-XRCE-DDS-Gen /home/${USERNAME}/Micro-XRCE-DDS-Gen
 
-RUN chown -R ${USER_NAME}:${USER_NAME} /root/Drone/ros2_ws/src/ardupilot && \
-    chmod o+x /root
-USER ${USER_NAME}
-ENV USER=root
-RUN cd /root/Drone/ros2_ws/src/ardupilot && ./Tools/environment_install/install-prereqs-ubuntu.sh -y
-USER root
+# I didn't have gitk and gcc-arm downloads
+RUN sudo apt install default-jre \
+    && sudo apt-get install gitk git-gui \
+    && sudo apt-get install gcc-arm-none-eabi -y
 
-RUN git config --global --add safe.directory '*' && \
-    colcon build --packages-up-to ardupilot_sitl
-RUN . /opt/ros/humble/setup.bash
+RUN cd ~/ \
+    && git clone --recurse-submodules https://github.com/ardupilot/Micro-XRCE-DDS-Gen.git
 
-RUN vcs import --input https://raw.githubusercontent.com/ArduPilot/ardupilot_gz/main/ros2_gz.repos --recursive src
+RUN cd ~/Micro-XRCE-DDS-Gen \
+    && ./gradlew assemble
 
-RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg && \
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+RUN cd ~/ \
+    && git clone https://github.com/ArduPilot/ardupilot.git \
+    && cd ardupilot \
+    && git submodule update --init --recursive \
+    && git submodule init \
+    && git submodule update \
+    && git status 
 
-RUN apt update
+RUN cd ~/ardupilot \
+    # clean objects produced by build
+    && ./waf distclean \
+    && ./waf distclean \
+    && ./waf configure --board MatekH743
 
-RUN wget https://raw.githubusercontent.com/osrf/osrf-rosdep/master/gz/00-gazebo.list \
-        -O /etc/ros/rosdep/sources.list.d/00-gazebo.list && \
-   rosdep update
+# Extra WS
 
-RUN . /opt/ros/humble/setup.bash && \
-    apt update && \
-    rosdep update && \
-    rosdep install --from-paths src --ignore-src -r -y && \
-    colcon build --packages-up-to ardupilot_gz_bringup
+RUN mkdir -p ~/ws/src \
+    && cd ~/ws
 
-RUN /opt/ros/humble/lib/mavros/install_geographiclib_datasets.sh
+COPY extra.repos /home/${USERNAME}/ws/extra.repos
 
-RUN cd src && \
+RUN cd ~/ws/ \
+    && vcs import --recursive --input  https://raw.githubusercontent.com/Jagadeesh-pradhani/ROS2_ardupilot_Iris_docker/main/extra.repos src    \
+    && sudo apt update \
+    && rosdep update \
+    && /bin/bash -c "source /opt/ros/humble/setup.bash"   \
+    && rosdep install -y --from-paths src --ignore-src
+
+#BUild ws
+RUN cd ~/ws \
+    && colcon build || true
+RUN /bin/bash -c "source ~/ws/install/setup.bash"
+
+
+#### ROS2 WS
+
+RUN mkdir -p ~/ros2_ws/src \
+    && cd ~/ros2_ws
+
+COPY ros2.repos /home/${USERNAME}/ros2_ws/ros2.repos
+COPY ros2_gz.repos /home/${USERNAME}/ros2_ws/ros2_gz.repos
+
+
+
+RUN cd ~/ros2_ws/ \
+    && vcs import --recursive --input  https://raw.githubusercontent.com/Jagadeesh-pradhani/ROS2_ardupilot_Iris_docker/main/ros2.repos src    \
+    && sudo apt update \
+    && rosdep update \
+    && /bin/bash -c "source /opt/ros/humble/setup.bash"   \
+    && rosdep install -y --from-paths src --ignore-src
+    
+
+#BUild
+RUN cd ~/ros2_ws \
+    && colcon build --packages-up-to ardupilot_dds_tests || true
+RUN /bin/bash -c "source ~/ros2_ws/install/setup.bash"
+
+RUN sudo rm /home/${USERNAME}/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh
+COPY install-prereqs-ubuntu.sh /home/${USERNAME}/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh
+
+
+RUN cd ~/ardupilot \
+    && sudo apt-get install -y python3-pip \
+    && sudo pip3 install future \
+    && Tools/environment_install/install-prereqs-ubuntu.sh -y || true \
+    && sudo apt-get install -y python3-pexpect \
+    && ./waf clean \
+    && ./waf configure --board sitl \
+    && ./waf copter -v 
+
+RUN cd ~/ardupilot/Tools/autotest \
+    && sudo pip3 install MAVProxy \
+    && sudo pip3 install MAVProxy[joystick]
+    
+
+
+#ROS2 with SITL
+RUN /bin/bash -c "source /opt/ros/humble/setup.bash"
+
+#Build
+RUN cd ~/ros2_ws/ \
+    && colcon build --packages-up-to ardupilot_sitl || true
+RUN /bin/bash -c "source ~/ros2_ws/install/setup.bash"
+
+#ROS2 with SITL in GAZEBO
+RUN cd ~/ros2_ws \
+    && vcs import --input https://raw.githubusercontent.com/Jagadeesh-pradhani/ROS2_ardupilot_Iris_docker/main/ros2_gz.repos --recursive src || true  \
+    && /bin/bash -c "source /opt/ros/humble/setup.bash" \
+    && sudo apt update \
+    && rosdep update \
+    && rosdep install -y --from-paths src --ignore-src -r || true
+
+
+#Build
+RUN cd ~/ros2_ws \
+    && colcon build --packages-up-to ardupilot_gz_bringup || true
+RUN /bin/bash -c "source ~/ros2_ws/install/setup.bash"
+
+
+RUN cd ~/ros2_ws/src/ \
+    && git clone https://github.com/ArduPilot/ardupilot_ros.git \
+    && cd ~/ros2_ws/ \
+    && rosdep install --from-paths src --ignore-src -r -y --skip-keys gazebo-ros-pkgs \
+    && colcon build --packages-up-to ardupilot_ros --parallel-workers 12 || true
+
+# Copy local src folder to ros_ws 
+COPY ros2_ws/src/ /home/${USERNAME}/ros2_ws/src/
+COPY run.sh /home/${USERNAME}/
+COPY run_mavrouter.sh /home/${USERNAME}/
+COPY config/ /home/${USERNAME}/config/
+
+RUN sudo /opt/ros/humble/lib/mavros/install_geographiclib_datasets.sh
+
+RUN cd ros2_ws/src && \
     git clone https://github.com/mavlink-router/mavlink-router.git
-
-RUN cd src/mavlink-router && \
+RUN cd ros2_ws/src/mavlink-router && \
     git submodule update --init --recursive && \
     meson setup build --wipe && \
     ninja -C build && \
-    ninja -C build install
+    sudo ninja -C build install
+####################################################################################################
 
-RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc && \
-    echo "source /root/Drone/ros2_ws/install/setup.bash" >> /root/.bashrc && \
-    echo "export GZ_VERSION=harmonic" >> /root/.bashrc && \
-    echo 'export PATH="$PATH:$HOME/.local/bin"' >> /root/.bashrc
-WORKDIR /root/Drone
-ENV SHELL=/bin/bash
-CMD ["/bin/bash"]
+
+
+# Copy the entrypoint and bashrc scripts so we have our container's environment set up correctly
+COPY entrypoint.sh /entrypoint.sh
+COPY bashrc /home/${USERNAME}/.bashrc
+
+
+# Set up entrypoint and default command
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
+CMD ["bash"]

@@ -5,11 +5,13 @@ services:
     image: ros2-humble-dev:latest
     container_name: ros2-workspace
     pull_policy: never
+    privileged: true
     network_mode: host
     stdin_open: true
     tty: true
-    working_dir: /root/Drone
-    #devices:
+    working_dir: /home/Drone
+    devices:
+      - /dev/dri:/dev/dri
       ## Flight Controller
       #- /dev/ttyAMA0:/dev/ttyAMA0
       ## H.264 decoder
@@ -20,16 +22,22 @@ services:
       - 'c 189:* rmw'
     environment:
       - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
-      - workspace:/root/Drone
-      - ./config/mavlink-router/main.conf:/root/Drone/config/mavlink-router/main.conf 
-      - ./ros2_ws/src:/root/Drone/ros2_ws/src
-      - ./run.sh:/root/Drone/run.sh
-      - ./run_mavrouter.sh:/root/Drone/run_mavrouter.sh
-      - ./data:/root/Drone/data
+      - workspace:/home/Drone
+      - ./config/mavlink-router/main.conf:/home/Drone/config/mavlink-router/main.conf 
+      - ./ros2_ws/src/controls_py:/home/Drone/ros2_ws/src/controls_py
+      - ./ros2_ws/src/drone_launch:/home/Drone/ros2_ws/src/drone_launch
+      - ./ros2_ws/src/perception_py:/home/Drone/ros2_ws/src/perception_py
+      - ./run.sh:/home/Drone/run.sh
+      - ./run_mavrouter.sh:/home/Drone/run_mavrouter.sh
+      - ./data:/home/Drone/data
       - /tmp/.X11-unix:/tmp/.X11-unix
       # Oak D, gets new device num each time its plugged in
       - /dev/bus/usb:/dev/bus/usb
-    command: /bin/bash 
+    # entrypoint: ["/bin/bash", "/entrypoint.sh"]
+    command: /bin/bash
 volumes:
   workspace:
