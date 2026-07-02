@@ -64,30 +64,23 @@ RUN groupadd --gid $USER_GID $USERNAME \
 RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
   && chmod 0440 /etc/sudoers.d/$USERNAME
 ENV GZ_VERSION=harmonic
-ENV PATH="/home/${USERNAME}/Micro-XRCE-DDS-Gen/scripts:${PATH}"
+
 # Install gz-harmonic
 RUN curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null \
     && apt-get update \
     && apt-get install -y gz-harmonic
 
-
-
-####################################################################################################
-# Set up ROS 2 workspace
 USER $USERNAME
 WORKDIR /home/$USERNAME
-#COPY ardupilot /home/${USERNAME}/ardupilot
-#COPY Micro-XRCE-DDS-Gen /home/${USERNAME}/Micro-XRCE-DDS-Gen
 
-# I didn't have gitk and gcc-arm downloads
 RUN sudo apt install default-jre \
     && sudo apt-get install gitk git-gui \
     && sudo apt-get install gcc-arm-none-eabi -y
 
 RUN cd ~/ \
     && git clone --recurse-submodules https://github.com/ardupilot/Micro-XRCE-DDS-Gen.git
-
+ENV PATH="/home/${USERNAME}/Micro-XRCE-DDS-Gen/scripts:${PATH}"
 RUN cd ~/Micro-XRCE-DDS-Gen \
     && ./gradlew assemble
 
@@ -105,8 +98,6 @@ RUN cd ~/ardupilot \
     && ./waf distclean \
     && ./waf configure --board MatekH743
 
-# Extra WS
-
 RUN mkdir -p ~/ws/src
 
 COPY extra.repos /home/${USERNAME}/ws/extra.repos
@@ -118,21 +109,12 @@ RUN source /opt/ros/humble/setup.bash \
     && rosdep update \
     && rosdep install -y --from-paths src --ignore-src
 
-#Build ws
 RUN source /opt/ros/humble/setup.bash \
     && cd ~/ws \
     && colcon build
 
-
-#### ROS2 WS
-
 RUN mkdir -p ~/ros2_ws/src \
     && cd ~/ros2_ws
-
-COPY ros2.repos /home/${USERNAME}/ros2_ws/ros2.repos
-COPY ros2_gz.repos /home/${USERNAME}/ros2_ws/ros2_gz.repos
-
-
 
 RUN source /opt/ros/humble/setup.bash \
     && cd ~/ros2_ws/ \
@@ -141,15 +123,11 @@ RUN source /opt/ros/humble/setup.bash \
     && rosdep update \
     && rosdep install -y --from-paths src --ignore-src
 
-#Build
 RUN sudo pip3 install pexpect
 RUN  source /opt/ros/humble/setup.bash \
     && source ~/ws/install/setup.bash \
     && cd ~/ros2_ws \
     && colcon build --packages-up-to ardupilot_dds_tests --event-handlers console_direct+
-
-# RUN sudo rm /home/${USERNAME}/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh
-# COPY install-prereqs-ubuntu.sh /home/${USERNAME}/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh
 
 ARG USER=$USERNAME
 RUN cd ~/ardupilot \
@@ -166,14 +144,11 @@ RUN cd ~/ardupilot/Tools/autotest \
     && sudo pip3 install MAVProxy \
     && sudo pip3 install MAVProxy[joystick]
 
-
-#Build
 RUN source /opt/ros/humble/setup.bash \
     && source ~/ws/install/setup.bash \
     && cd ~/ros2_ws/ \
     && colcon build --packages-up-to ardupilot_sitl
 
-#ROS2 with SITL in GAZEBO
 RUN source /opt/ros/humble/setup.bash \
     && cd ~/ros2_ws \
     && vcs import --input https://raw.githubusercontent.com/Jagadeesh-pradhani/ROS2_ardupilot_Iris_docker/main/ros2_gz.repos --recursive src \
@@ -181,13 +156,10 @@ RUN source /opt/ros/humble/setup.bash \
     && rosdep update \
     && rosdep install -y --from-paths src --ignore-src -r
 
-
-#Build
 RUN source /opt/ros/humble/setup.bash \
     && source ~/ws/install/setup.bash \
     && cd ~/ros2_ws \
     && colcon build --packages-up-to ardupilot_gz_bringup
-
 
 RUN source /opt/ros/humble/setup.bash \
     && source ~/ws/install/setup.bash \
@@ -197,7 +169,6 @@ RUN source /opt/ros/humble/setup.bash \
     && rosdep install --from-paths src --ignore-src -r -y --skip-keys gazebo-ros-pkgs \
     && colcon build --packages-up-to ardupilot_ros --parallel-workers 12
 
-# Copy local src folder to ros_ws
 COPY ros2_ws/src/ /home/${USERNAME}/ros2_ws/src/
 COPY run.sh /home/${USERNAME}/
 COPY run_mavrouter.sh /home/${USERNAME}/
@@ -212,15 +183,10 @@ RUN cd ros2_ws/src/mavlink-router && \
     meson setup build --wipe && \
     ninja -C build && \
     sudo ninja -C build install
-####################################################################################################
 
-
-
-# Copy the entrypoint and bashrc scripts so we have our container's environment set up correctly
 COPY entrypoint.sh /entrypoint.sh
 COPY bashrc /home/${USERNAME}/.bashrc
 
-
-# Set up entrypoint and default command
+# Source ROS and built packages
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 CMD ["bash"]
