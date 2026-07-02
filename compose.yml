@@ -12,8 +12,6 @@ services:
     working_dir: /home/Drone
     devices:
       - /dev/dri:/dev/dri
-      ## Flight Controller
-      #- /dev/ttyAMA0:/dev/ttyAMA0
       ## H.264 decoder
       #- /dev/video10:/dev/video10
       ## H.264 encoder

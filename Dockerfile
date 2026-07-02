@@ -1,6 +1,8 @@
 FROM osrf/ros:humble-desktop
 
-# Install necessary programs
+# Use bash for all RUN steps so `source` works as expected
+SHELL ["/bin/bash", "-c"]
+
 RUN apt-get update \
     && apt-get install -y \
     nano \
@@ -52,13 +54,17 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
 RUN groupadd --gid $USER_GID $USERNAME \
+  && groupadd -f video \
+  && groupadd -f render \
   && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
+  && usermod -aG video,render $USERNAME \
   && mkdir /home/$USERNAME/.config && chown $USER_UID:$USER_GID /home/$USERNAME/.config
 
 # Set up sudo
 RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
   && chmod 0440 /etc/sudoers.d/$USERNAME
-
+ENV GZ_VERSION=harmonic
+ENV PATH="/home/${USERNAME}/Micro-XRCE-DDS-Gen/scripts:${PATH}"
 # Install gz-harmonic
 RUN curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null \
@@ -91,7 +97,7 @@ RUN cd ~/ \
     && git submodule update --init --recursive \
     && git submodule init \
     && git submodule update \
-    && git status 
+    && git status
 
 RUN cd ~/ardupilot \
     # clean objects produced by build
@@ -101,22 +107,21 @@ RUN cd ~/ardupilot \
 
 # Extra WS
 
-RUN mkdir -p ~/ws/src \
-    && cd ~/ws
+RUN mkdir -p ~/ws/src
 
 COPY extra.repos /home/${USERNAME}/ws/extra.repos
 
-RUN cd ~/ws/ \
-    && vcs import --recursive --input  https://raw.githubusercontent.com/Jagadeesh-pradhani/ROS2_ardupilot_Iris_docker/main/extra.repos src    \
+RUN source /opt/ros/humble/setup.bash \
+    && cd ~/ws/ \
+    && vcs import --recursive --input https://raw.githubusercontent.com/Jagadeesh-pradhani/ROS2_ardupilot_Iris_docker/main/extra.repos src \
     && sudo apt update \
     && rosdep update \
-    && /bin/bash -c "source /opt/ros/humble/setup.bash"   \
     && rosdep install -y --from-paths src --ignore-src
 
-#BUild ws
-RUN cd ~/ws \
-    && colcon build || true
-RUN /bin/bash -c "source ~/ws/install/setup.bash"
+#Build ws
+RUN source /opt/ros/humble/setup.bash \
+    && cd ~/ws \
+    && colcon build
 
 
 #### ROS2 WS
@@ -129,68 +134,70 @@ COPY ros2_gz.repos /home/${USERNAME}/ros2_ws/ros2_gz.repos
 
 
 
-RUN cd ~/ros2_ws/ \
-    && vcs import --recursive --input  https://raw.githubusercontent.com/Jagadeesh-pradhani/ROS2_ardupilot_Iris_docker/main/ros2.repos src    \
+RUN source /opt/ros/humble/setup.bash \
+    && cd ~/ros2_ws/ \
+    && vcs import --recursive --input https://raw.githubusercontent.com/Jagadeesh-pradhani/ROS2_ardupilot_Iris_docker/main/ros2.repos src \
     && sudo apt update \
     && rosdep update \
-    && /bin/bash -c "source /opt/ros/humble/setup.bash"   \
     && rosdep install -y --from-paths src --ignore-src
-    
 
-#BUild
-RUN cd ~/ros2_ws \
-    && colcon build --packages-up-to ardupilot_dds_tests || true
-RUN /bin/bash -c "source ~/ros2_ws/install/setup.bash"
+#Build
+RUN sudo pip3 install pexpect
+RUN  source /opt/ros/humble/setup.bash \
+    && source ~/ws/install/setup.bash \
+    && cd ~/ros2_ws \
+    && colcon build --packages-up-to ardupilot_dds_tests --event-handlers console_direct+
 
-RUN sudo rm /home/${USERNAME}/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh
-COPY install-prereqs-ubuntu.sh /home/${USERNAME}/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh
+# RUN sudo rm /home/${USERNAME}/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh
+# COPY install-prereqs-ubuntu.sh /home/${USERNAME}/ardupilot/Tools/environment_install/install-prereqs-ubuntu.sh
 
-
+ARG USER=$USERNAME
 RUN cd ~/ardupilot \
     && sudo apt-get install -y python3-pip \
     && sudo pip3 install future \
-    && Tools/environment_install/install-prereqs-ubuntu.sh -y || true \
+    && sudo chmod +x Tools/environment_install/install-prereqs-ubuntu.sh \
+    && Tools/environment_install/install-prereqs-ubuntu.sh -y \
     && sudo apt-get install -y python3-pexpect \
     && ./waf clean \
     && ./waf configure --board sitl \
-    && ./waf copter -v 
+    && ./waf copter -v
 
 RUN cd ~/ardupilot/Tools/autotest \
     && sudo pip3 install MAVProxy \
     && sudo pip3 install MAVProxy[joystick]
-    
 
-
-#ROS2 with SITL
-RUN /bin/bash -c "source /opt/ros/humble/setup.bash"
 
 #Build
-RUN cd ~/ros2_ws/ \
-    && colcon build --packages-up-to ardupilot_sitl || true
-RUN /bin/bash -c "source ~/ros2_ws/install/setup.bash"
+RUN source /opt/ros/humble/setup.bash \
+    && source ~/ws/install/setup.bash \
+    && cd ~/ros2_ws/ \
+    && colcon build --packages-up-to ardupilot_sitl
 
 #ROS2 with SITL in GAZEBO
-RUN cd ~/ros2_ws \
-    && vcs import --input https://raw.githubusercontent.com/Jagadeesh-pradhani/ROS2_ardupilot_Iris_docker/main/ros2_gz.repos --recursive src || true  \
-    && /bin/bash -c "source /opt/ros/humble/setup.bash" \
+RUN source /opt/ros/humble/setup.bash \
+    && cd ~/ros2_ws \
+    && vcs import --input https://raw.githubusercontent.com/Jagadeesh-pradhani/ROS2_ardupilot_Iris_docker/main/ros2_gz.repos --recursive src \
     && sudo apt update \
     && rosdep update \
-    && rosdep install -y --from-paths src --ignore-src -r || true
+    && rosdep install -y --from-paths src --ignore-src -r
 
 
 #Build
-RUN cd ~/ros2_ws \
-    && colcon build --packages-up-to ardupilot_gz_bringup || true
-RUN /bin/bash -c "source ~/ros2_ws/install/setup.bash"
+RUN source /opt/ros/humble/setup.bash \
+    && source ~/ws/install/setup.bash \
+    && cd ~/ros2_ws \
+    && colcon build --packages-up-to ardupilot_gz_bringup
 
 
-RUN cd ~/ros2_ws/src/ \
+RUN source /opt/ros/humble/setup.bash \
+    && source ~/ws/install/setup.bash \
+    && cd ~/ros2_ws/src/ \
     && git clone https://github.com/ArduPilot/ardupilot_ros.git \
     && cd ~/ros2_ws/ \
     && rosdep install --from-paths src --ignore-src -r -y --skip-keys gazebo-ros-pkgs \
-    && colcon build --packages-up-to ardupilot_ros --parallel-workers 12 || true
+    && colcon build --packages-up-to ardupilot_ros --parallel-workers 12
 
-# Copy local src folder to ros_ws 
+# Copy local src folder to ros_ws
 COPY ros2_ws/src/ /home/${USERNAME}/ros2_ws/src/
 COPY run.sh /home/${USERNAME}/
 COPY run_mavrouter.sh /home/${USERNAME}/
